@@ -9,7 +9,7 @@ int main(void){
     FILE* archivoSalida = fopen(nombreArchivoSalida, "w+b");
 
     // Cadenas en la que voy leyendo
-    char cadena[20];
+    char cadena[50];
     int tipoCadena = -1;
 
     obtenerToken(archivoEntrada, cadena);
