@@ -12,17 +12,23 @@ int main(void){
     char cadena[20];
     int tipoCadena = -1;
 
-    obtenerToken(archivoEntrada, cadena);
+    if(feof(archivoEntrada)){
+        printf("Archivo ingresado esta vacio \n");
+    }    
     // Recorro ArchprocesarTokenarCadena(archivoEntrada, &cadena);
     while( !feof(archivoEntrada) ){
-        tipoCadena = procesarToken(archivoEntrada, cadena);
-        imprimirCadena(archivoSalida, cadena, tipoCadena);
-
         obtenerToken(archivoEntrada, cadena);
+        /*tipoCadena = procesarToken(archivoEntrada, cadena);
+        imprimirCadena(archivoSalida, cadena, tipoCadena);*/
+        printf("Token encontrado: %s\n",cadena);
+        int largoCadena = strlen(cadena);
+        printf("Largo de la cadena encontrada %d\n",largoCadena);
+        printf("------------\n");
+        limpiarBuffer(cadena);
     }
     // Imprimo y Proceso el ultima Token
-    tipoCadena = procesarToken(archivoEntrada, cadena);
-    imprimirCadena(archivoSalida, cadena, tipoCadena);
+    /*tipoCadena = procesarToken(archivoEntrada, cadena);
+    imprimirCadena(archivoSalida, cadena, tipoCadena);*/
 
     // Cierro archivos
     fclose(archivoEntrada);
