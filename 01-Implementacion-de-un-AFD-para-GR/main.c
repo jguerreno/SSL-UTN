@@ -10,19 +10,27 @@ int main(void){
 
     // Cadenas en la que voy leyendo
     char cadena[20];
-    int tipoCadena = -1;
+    int tipoToken = -1;
 
     obtenerToken(archivoEntrada, cadena);
     // Recorro ArchprocesarTokenarCadena(archivoEntrada, &cadena);
     while( !feof(archivoEntrada) ){
-        tipoCadena = procesarToken(archivoEntrada, cadena);
+        tipoToken = procesarToken(cadena);
+        char *tipoCadena = tipoDeToken(tipoToken);
         imprimirCadena(archivoSalida, cadena, tipoCadena);
-
+        //Libero la memoria usada por el puntero
+        free(tipoCadena);
         obtenerToken(archivoEntrada, cadena);
     }
     // Imprimo y Proceso el ultima Token
-    tipoCadena = procesarToken(archivoEntrada, cadena);
+    tipoToken = procesarToken(cadena);
+    char *tipoCadena = tipoDeToken(tipoToken);
+    tipoCadena = procesarToken(cadena);
     imprimirCadena(archivoSalida, cadena, tipoCadena);
+    
+    //Libero la memoria usada por el puntero
+    free(tipoCadena);
+    
 
     // Cierro archivos
     fclose(archivoEntrada);
