@@ -1,4 +1,6 @@
 #include "lib.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int main(void){
     char nombreArchivoEntrada[] = "entrada.txt";
@@ -25,7 +27,6 @@ int main(void){
     // Imprimo y Proceso el ultima Token
     tipoToken = procesarToken(cadena);
     char *tipoCadena = tipoDeToken(tipoToken);
-    tipoCadena = procesarToken(cadena);
     imprimirCadena(archivoSalida, cadena, tipoCadena);
     
     //Libero la memoria usada por el puntero

@@ -6,6 +6,7 @@
 void obtenerToken(FILE*, char[]);
 int procesarToken(char*);
 char* tipoDeToken (int);
-void imprimirCadena(FILE*, char[], int);
+int grupoCaracter(char caracter);
+void imprimirCadena(FILE*, char[], char*);
 
 #endif  // NUESTRA_LIB_
