@@ -20,10 +20,12 @@ int main(void){
         obtenerToken(archivoEntrada, cadena);
         /*tipoCadena = procesarToken(archivoEntrada, cadena);
         imprimirCadena(archivoSalida, cadena, tipoCadena);*/
-        printf("Token encontrado: %s\n",cadena);
         int largoCadena = strlen(cadena);
-        printf("Largo de la cadena encontrada %d\n",largoCadena);
-        printf("------------\n");
+        if(largoCadena > 0 ){
+            printf("Token encontrado: %s\n",cadena);
+            printf("Largo de la cadena encontrada %d\n",largoCadena);
+            printf("------------\n");
+        }
         limpiarBuffer(cadena);
     }
     // Imprimo y Proceso el ultima Token
