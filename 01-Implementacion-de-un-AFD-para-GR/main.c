@@ -1,4 +1,6 @@
 #include "lib.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int main(void){
     char nombreArchivoEntrada[] = "entrada.txt";
@@ -10,7 +12,7 @@ int main(void){
 
     // Cadenas en la que voy leyendo
     char cadena[20];
-    int tipoCadena = -1;
+    int tipoToken = -1;
 
     if(feof(archivoEntrada)){
         printf("Archivo ingresado esta vacio \n");
@@ -18,8 +20,13 @@ int main(void){
     // Recorro ArchprocesarTokenarCadena(archivoEntrada, &cadena);
     while( !feof(archivoEntrada) ){
         obtenerToken(archivoEntrada, cadena);
-        /*tipoCadena = procesarToken(archivoEntrada, cadena);
-        imprimirCadena(archivoSalida, cadena, tipoCadena);*/
+        
+        tipoToken = procesarToken(cadena);
+        char *tipoCadena = tipoDeToken(tipoToken);
+        imprimirCadena(archivoSalida, cadena, tipoCadena);
+        //Libero la memoria usada por el puntero
+        free(tipoCadena);
+      
         int largoCadena = strlen(cadena);
         if(largoCadena > 0 ){
             printf("Token encontrado: %s\n",cadena);
@@ -28,10 +35,15 @@ int main(void){
         }
         limpiarBuffer(cadena);
     }
-    // Imprimo y Proceso el ultima Token
-    /*tipoCadena = procesarToken(archivoEntrada, cadena);
-    imprimirCadena(archivoSalida, cadena, tipoCadena);*/
-
+  
+    // Imprimo y Proceso el ultimo Token
+    tipoToken = procesarToken(cadena);
+    char *tipoCadena = tipoDeToken(tipoToken);
+    imprimirCadena(archivoSalida, cadena, tipoCadena);
+    
+    //Libero la memoria usada por el puntero
+    free(tipoCadena);
+    
     // Cierro archivos
     fclose(archivoEntrada);
     fclose(archivoSalida);
