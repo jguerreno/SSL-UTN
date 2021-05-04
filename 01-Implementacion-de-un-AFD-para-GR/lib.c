@@ -6,7 +6,6 @@ void limpiarBuffer(char cadena[]){
     memset(cadena, 0,20);
 }
 
-
 void obtenerToken(FILE* fileName, char cadena[]){
     char c; 
     int i = 0;
@@ -115,4 +114,18 @@ int grupoCaracter(char caracter){
         }
     }
     return 5; //Error  
+}
+
+//Todo: Actualizar
+void imprimirCadena(FILE* archivo, char cadena[]){
+    int i=0;
+    char tipoToken[25];
+
+    obtenerTipoToken(tipoToken, tipo);
+    strcat(cadena, tipoToken);
+
+    while(cadena[i] != '\0'){
+        fwrite(&cadena[i], sizeof(char), 1, archivo);
+        i++;
+    }
 }

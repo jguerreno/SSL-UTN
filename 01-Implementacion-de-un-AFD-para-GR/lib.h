@@ -6,6 +6,7 @@
 #include <string.h>
 
 void obtenerToken(FILE*, char[]);
+void imprimirCadena(FILE*, char[], int);
 void limpiarBuffer(char cadena[]);
 int procesarToken(char*);
 char* tipoDeToken (int);

@@ -11,8 +11,9 @@ int main(void){
     FILE* archivoSalida = fopen(nombreArchivoSalida, "w+b");
 
     // Cadenas en la que voy leyendo
-    char cadena[20];
-    int tipoToken = -1;
+    char cadena[50];
+    int tipoCadena = -1;
+
 
     if(feof(archivoEntrada)){
         printf("Archivo ingresado esta vacio \n");
