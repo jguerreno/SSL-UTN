@@ -52,6 +52,7 @@ int procesarToken (char *cadena){
 
     return estado;
 }
+
 /**
  * Funcion Auxiliar: Clasifica el tipo de Token segun la matriz de transicion dada en el ejercicio
  * @author Nicolas Garcia
@@ -83,6 +84,7 @@ char* tipoDeToken (int tipoToken){
     }
     return cadena;
 }
+
 /**
  * Funcion Auxiliar que clasifica el caracter segun la columna correspondiente de la matriz de transicion
  *  
@@ -116,16 +118,7 @@ int grupoCaracter(char caracter){
     return 5; //Error  
 }
 
-//Todo: Actualizar
-void imprimirCadena(FILE* archivo, char cadena[]){
-    int i=0;
-    char tipoToken[25];
-
-    obtenerTipoToken(tipoToken, tipo);
-    strcat(cadena, tipoToken);
-
-    while(cadena[i] != '\0'){
-        fwrite(&cadena[i], sizeof(char), 1, archivo);
-        i++;
-    }
+//Todo: Descripcion
+void imprimirCadena(FILE* archivo, char *cadena, char* tipoToken){
+    fprintf(archivo, "%-40s\t\t\t%s\n",cadena,tipoToken);
 }
