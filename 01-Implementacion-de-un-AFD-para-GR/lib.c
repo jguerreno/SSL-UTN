@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 void limpiarBuffer(char cadena[]){
-    memset(cadena, 0,20);
+    memset(cadena, 0,50);
 }
 
 void obtenerToken(FILE* fileName, char cadena[]){
@@ -120,5 +120,5 @@ int grupoCaracter(char caracter){
 
 //Todo: Descripcion
 void imprimirCadena(FILE* archivo, char *cadena, char* tipoToken){
-    fprintf(archivo, "%-40s\t\t\t%s\n",cadena,tipoToken);
+    fprintf(archivo, "%-20s\t\t\t%s\n",cadena,tipoToken);
 }
