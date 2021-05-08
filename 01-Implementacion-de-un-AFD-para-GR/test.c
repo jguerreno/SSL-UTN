@@ -28,14 +28,14 @@ int test_ProcesarToken(void)
     assert(procesarToken("0245") == 5);
     assert(procesarToken("0912") == 6);
     assert(procesarToken("0") == 1);
-    assert(procesarToken("9999") == 2);
-    assert(procesarToken("abcd") == 6);
+    assert(procesarToken("09999") == 6);
+    assert(procesarToken("012345") == 5);
     printf("Passed\n");
 
     // Test a Decimal string:
     printf("Testing a Decimal Number: ");
     assert(procesarToken("0245") == 5);
-    assert(procesarToken("hola") == 6);
+    assert(procesarToken("1702") == 2);
     assert(procesarToken("12345") == 2);
     assert(procesarToken("05989") == 6);
     printf("Passed\n");
@@ -44,6 +44,7 @@ int test_ProcesarToken(void)
     printf("Testing a 0x plus an Incorrect Number: ");
     assert(procesarToken("0xfgop") == 6);
     assert(procesarToken("0xxxxx") == 6);
+    assert(procesarToken("0xx675") == 6);
     printf("Passed\n");
 
     // Test a Hexa string:
@@ -57,9 +58,9 @@ int test_ProcesarToken(void)
     // Test a Error string:
     printf("Testing a non Alpha numeric character: ");
     assert(procesarToken("??") == 6);
-    assert(procesarToken("'()'") == 6);
-    assert(procesarToken("0a&&56") == 6);
-    assert(procesarToken("04+5") == 6);
+    assert(procesarToken("' '") == 6);
+    assert(procesarToken("&&") == 6);
+    assert(procesarToken("?¡+!") == 6);
     printf("Passed\n");
 }
 
