@@ -16,6 +16,8 @@ int main(void){
     // Cadenas en la que voy leyendo
     char cadena[50];
 
+    limpiarBuffer(cadena);
+    
     if(feof(archivoEntrada)){
         printf("Archivo ingresado esta vacio \n");
     }    
