@@ -5,11 +5,13 @@
 int main(void){
     char nombreArchivoEntrada[] = "entrada.txt";
     char nombreArchivoSalida[] = "salida.txt";
+    char archivoLectura[]= "r+";
+    char archivoEscritura[]= "w+";
     int tipoToken;
-
+ 
     // Abro archivos
-    FILE* archivoEntrada = fopen(nombreArchivoEntrada, "r+");
-    FILE* archivoSalida = fopen(nombreArchivoSalida, "w+");
+    FILE*archivoEntrada= abrirArchivo(nombreArchivoEntrada, archivoLectura);
+    FILE*archivoSalida= abrirArchivo(nombreArchivoSalida, archivoEscritura);
 
     // Cadenas en la que voy leyendo
     char cadena[50];

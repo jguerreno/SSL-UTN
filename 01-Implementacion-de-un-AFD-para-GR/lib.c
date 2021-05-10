@@ -122,3 +122,13 @@ int grupoCaracter(char caracter){
 void imprimirCadena(FILE* archivo, char *cadena, char* tipoToken){
     fprintf(archivo, "%-20s\t\t\t%s\n",cadena,tipoToken);
 }
+
+//Abro un archivo 
+FILE *abrirArchivo (const char*nombreArchivo, const char*modoApertura) {
+    FILE* fp = fopen(nombreArchivo, modoApertura);
+    if (!fp)
+    {
+        printf ("Error al abrir el archivo\n");
+    }
+  return fp;
+	}
