@@ -11,5 +11,7 @@ int procesarToken(char*);
 char* tipoDeToken (int);
 int grupoCaracter(char caracter);
 void imprimirCadena(FILE*, char*, char*);
+FILE *abrirArchivo (const char*, const char*);
+
 
 #endif  // NUESTRA_LIB_
