@@ -5,11 +5,13 @@
 
 int test_TipoDeToken(void);
 int test_ProcesarToken(void);
+int test_abrirArchivo(void);
 
 int main(void){
 
     test_TipoDeToken();
     test_ProcesarToken();
+    test_abrirArchivo();
     return 0;
 }
 
@@ -80,5 +82,10 @@ int test_TipoDeToken(void)
     assert(strcmp(tipoDeToken(8) , "NO RECONOCIDA") == 0);
     assert(strcmp(tipoDeToken(85) , "NO RECONOCIDA") == 0);
     assert(strcmp(tipoDeToken(3) , "NO RECONOCIDA") == 0);
+    printf("Passed\n");
+}
+int test_abrirArchivo (){
+    printf ("Testeando abrir un archivo que no existe: ");
+    assert (abrirArchivo ("hola.txt", "r")==NULL);
     printf("Passed\n");
 }
