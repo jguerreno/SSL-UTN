@@ -64,6 +64,8 @@ int test_ProcesarToken(void)
     assert(procesarToken("&&") == 6);
     assert(procesarToken("?¡+!") == 6);
     printf("Passed\n");
+
+    return 0;
 }
 
 int test_TipoDeToken(void)
@@ -83,9 +85,12 @@ int test_TipoDeToken(void)
     assert(strcmp(tipoDeToken(85) , "NO RECONOCIDA") == 0);
     assert(strcmp(tipoDeToken(3) , "NO RECONOCIDA") == 0);
     printf("Passed\n");
+    return 0;
 }
+
 int test_abrirArchivo (){
     printf ("Testeando abrir un archivo que no existe: ");
     assert (abrirArchivo ("hola.txt", "r")==NULL);
     printf("Passed\n");
+    return 0;
 }
