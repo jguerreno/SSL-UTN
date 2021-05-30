@@ -63,3 +63,81 @@ int grupoCaracter(char caracter){
     }
     return 5; //Error  
 }
+
+/**
+ * Funcion Auxiliar que elimina los espacios blancos dentro de toda la cadena
+ *  
+ * @param cadena Caracter a modificar
+ * @return Misma cadena sin los espacios en blanco
+ * @author Matias Planchuelo
+ */
+void myTrimm (char *cadena)
+{
+    int i=0;
+    int largo = strlen(cadena);
+    leftTrimm (cadena); rightTrimm(cadena);
+    while (cadena[i] != '\0')
+    {
+        if (cadena[i] == ' ')
+        {
+            for (int j=i;j<largo;j++)
+            {
+                cadena[j]=cadena[j+1];
+            }
+        largo--;
+        }
+        if (cadena[i]!=' ')
+        {
+            i++;
+        }
+    }
+    return;
+}
+
+void rightTrimm (char *cadena)
+{
+    int largo = strlen (cadena) - 1;
+    while (largo>0)
+    {
+        switch (cadena[largo])
+        {
+            case '\t':
+            case '\n':
+                cadena[largo] = '\0';
+                largo--;
+                break;
+
+            default:
+                return;
+        }
+    }
+}
+
+void leftTrimm (char *cadena)
+{
+    reverse(cadena);
+    rightTrimm(cadena);
+    reverse(cadena);
+}
+
+/**
+ * Funcion Auxiliar que invierte el orden de toda la cadena
+ *  
+ * @param cadena Caracter a modificar
+ * @return Misma cadena invertido su orden
+ * @author Matias Planchuelo
+ */
+void reverse (char *cadena)
+{
+    int i, j;
+    char *dup;
+    dup=strdup(cadena);
+    j=strlen(cadena) - 1;
+
+    for (i=0;i<strlen(cadena);i++)
+    {
+        cadena[i]=dup[j];
+        j--;
+    }
+    free(dup); 
+}    
