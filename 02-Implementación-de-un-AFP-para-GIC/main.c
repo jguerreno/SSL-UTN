@@ -2,12 +2,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
 int main(void){
-    
-    //Leer una cadena de caracteres
-
-    //Procesar la cadena
-
-    //Imprimir si fue reconocida o no
+    struct Stack* stack = createStack(100);
+ 
+    push(stack, 10);
+    push(stack, 20);
+    push(stack, 30);
+ 
+    printf("%d SACADO DE LA PILA\n", pop(stack));
+ 
     return 0;
 }
