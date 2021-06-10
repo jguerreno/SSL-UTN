@@ -14,6 +14,10 @@ struct Stack {
 void limpiarBuffer(char cadena[]);
 int procesarToken(char*);
 int grupoCaracter(char caracter);
+void myTrimm (char *cadena);
+void leftTrimm (char *cadena);
+void rightTrimm (char *cadena);
+void reverse (char *cadena);
 
 
 int pop(struct Stack* stack);
