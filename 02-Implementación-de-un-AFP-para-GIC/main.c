@@ -14,7 +14,14 @@ int main(void){
     printf("Nueva cadena:\n%s\n",cadena);
 
     //Procesar la cadena
-
-    //Imprimir si fue reconocida o no
+    
+        struct Stack* stack = createStack(100);
+ 
+    push(stack, 10);
+    push(stack, 20);
+    push(stack, 30);
+ 
+    printf("%d SACADO DE LA PILA\n", pop(stack));
+ 
     return 0;
-}
+
