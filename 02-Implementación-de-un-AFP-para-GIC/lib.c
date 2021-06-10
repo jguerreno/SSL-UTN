@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+int ERROR_PILA=-1;
+
 void limpiarBuffer(char cadena[]){
     memset(cadena, 0,50);
 }
@@ -63,3 +65,45 @@ int grupoCaracter(char caracter){
     }
     return 5; //Error  
 }
+
+struct Stack* createStack(unsigned capacity)
+{
+    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+    stack->capacity = capacity;
+    stack->top = -1;
+    stack->array = (int*)malloc(stack->capacity * sizeof(int));
+    return stack;
+}
+ 
+int isFull(struct Stack* stack)
+{
+    return stack->top == stack->capacity - 1;
+}
+ 
+
+int isEmpty(struct Stack* stack)
+{
+    return stack->top == -1;
+}
+ 
+
+void push(struct Stack* stack, int item)
+{
+    if (isFull(stack)){
+        printf("PILA LLENA");
+        return;
+    } 
+    stack->array[++stack->top] = item;
+    printf("%d AÑADIDO A LA PILA\n", item);
+}
+ 
+
+int pop(struct Stack* stack)
+{
+    if (isEmpty(stack)){
+        printf("PILA VACIA");
+        return ERROR_PILA;
+    } 
+    return stack->array[stack->top--];
+}
+
