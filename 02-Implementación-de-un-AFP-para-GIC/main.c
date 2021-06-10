@@ -15,8 +15,7 @@ int main(void){
 
     //Procesar la cadena
     
-        struct Stack* stack = createStack(100);
- 
+    struct Stack* stack = createStack(100);
     push(stack, 10);
     push(stack, 20);
     push(stack, 30);
@@ -24,4 +23,4 @@ int main(void){
     printf("%d SACADO DE LA PILA\n", pop(stack));
  
     return 0;
-
+}
