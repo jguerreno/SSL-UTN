@@ -70,7 +70,7 @@ int procesarToken (char *cadena){
     }
 
     // No olvidarnos de esto.
-    free(stack);
+    freeStack(stack);
 
     return estado;
 }
@@ -227,4 +227,18 @@ int pop(struct Stack* stack)
         return ERROR_PILA;
     } 
     return stack->array[stack->top--];
+}
+
+/**
+ * Funcion Auxiliar que destruye el stack
+ *  
+ * @param stack Puntero al stack actual
+ * @return 1
+ * @author Nicolas Garcia
+ */
+
+int freeStack(struct Stack* stack){
+    free(stack->array);
+    free(stack);
+    return 1;
 }

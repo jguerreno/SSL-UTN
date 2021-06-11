@@ -25,5 +25,6 @@ void push(struct Stack* stack, int item);
 int isEmpty(struct Stack* stack);
 int isFull(struct Stack* stack);
 struct Stack* createStack(unsigned capacity);
+int freeStack(struct Stack* stack);
 
 #endif  // NUESTRA_LIB_
