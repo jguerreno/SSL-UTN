@@ -1,2 +1,5 @@
 # IOS files
 .DS_Store
+.vscode
+
+*.exe
