@@ -12,6 +12,7 @@ struct Stack {
 };
 
 void limpiarBuffer(char cadena[]);
+void ingresarCadena(char[]);
 int procesarToken(char*);
 int grupoCaracter(char caracter);
 void myTrimm (char *cadena);
