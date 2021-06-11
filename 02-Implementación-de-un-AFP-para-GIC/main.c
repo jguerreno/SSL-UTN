@@ -1,26 +1,30 @@
 #include "lib.h"
-#include <stdlib.h>
 #include <stdio.h>
 
 int main(void){
     
+    char s[200];
+    int estado_final;
+
+    //Repetir
+
     //Leer una cadena de caracteres
+    printf("Ingrese una cadena: ");
+    fgets(s, sizeof s, stdin);
+	s[strcspn(s, "\n")] = '\0';
+
 
     //Eliminar los espacios en blanco de la cadena
-    printf("Ejemplo para probar Trimm: \n"); //Solo a modo de prueba, cuando este listo todo esto se saca
-    char cadena[]="\t  (2 + 4)+ 86 - 2 /     (10 + 6) = \t\t\n\n";
-    printf("%s",cadena);
-    myTrimm(cadena);
-    printf("Nueva cadena:\n%s\n",cadena);
+    myTrimm(s);
 
-    //Procesar la cadena
+    printf("Comenzando procesamiento de Token: \n");
+    estado_final = procesarToken(s);
+    if(estado_final == 1 || estado_final == 2){
+        printf("Cadena reconocida correctamente, estado final: %d\n", estado_final);
+    }else{
+        printf("Cadena NO reconocida, estado final: %d\n", estado_final);
+    }
     
-    struct Stack* stack = createStack(100);
-    push(stack, 10);
-    push(stack, 20);
-    push(stack, 30);
- 
-    printf("%d SACADO DE LA PILA\n", pop(stack));
  
     return 0;
 }

@@ -14,18 +14,57 @@ void limpiarBuffer(char cadena[]){
  * @param cadena Token a clasificar
  * @return Entero correspondiente al estado en la matriz de transicion 
  * @see "grupoCaracter"
- * TODO: Rewrite
+ * 
  */
 int procesarToken (char *cadena){
     //Estado 0 = Estado Inicial
     int estado = 0;
-    //La matriz: 7 x 6
-    int matriz[7][6] = {{1,2,2,6,6,6},{5,5,6,6,3,6},{2,2,2,6,6,6},{4,4,4,4,6,6},{4,4,4,4,6,6},{5,5,6,6,6,6},{6,6,6,6,6,6}};
+    int cima_pila = 0;
+    int cima_pila_bool = 0;
+    int grupo_caracter = 0;
+    //La matriz: 2 x 4 x 6
+    int matriz[2][4][6] = {
+        //La 'primera' matriz son los estados siguientes si la pila esta vacia
+        //La 'segunda' matriz son los estados siguientes si la pila NO esta vacia
+        {{4,1,4,0,4,4},{1,1,0,4,4,4},{4,4,0,4,4,4},{4,4,4,4,4,4}},
+        {{4,1,4,0,4,4},{1,1,0,4,2,4},{4,4,0,4,2,4},{4,4,4,4,4,4}}
+    };
+    // Creo el Stack
+    struct Stack* stack = createStack(200);
+    push(stack, '$');
+    
+    printf("Analizando cadena: %s \n", cadena);
     for(int i=0;i<strlen(cadena);i++){
-        estado=matriz[estado][grupoCaracter(cadena[i])];
+        
+        cima_pila = pop(stack);
+        grupo_caracter = grupoCaracter(cadena[i]);
+        
+        //Bool
+        cima_pila_bool = (cima_pila == '$') ? 0 : 1;
+
+        estado=matriz[cima_pila_bool][estado][grupoCaracter(cadena[i])];
+
+        //Debug
+        printf("Loop %d: cima_pila[%c] estado[%d] - Caracter [%c] - Grupo[%d]\n",i, cima_pila, estado, cadena[i], grupo_caracter);
+        
+        //Como detecto los casos en los que tengo que hacer un push extra?
+        if(cima_pila == 'R'){
+            if(grupo_caracter!=4)
+            push(stack, 'R');
+            //Extra si es un '('
+            if(estado==0 && grupo_caracter == 3)
+            push(stack, 'R');
+        }else{
+            //Asumo cima_pila == '$'
+            push(stack, '$');
+            if(estado==0 && grupo_caracter==3)
+            push(stack, 'R');
+        }
+        
         // Estado de error para evitar que siga procesando.
         // Solo para ahorrar tiempo en tokens largos
-        if (estado ==  6){
+        //TODO: Puedo identificar el caracter que causa error acá
+        if (estado ==  4){
             break;
         }
     }
@@ -44,19 +83,19 @@ int grupoCaracter(char caracter){
     if(caracter == '0'){
         return 0;
     }else{
-        if (caracter >= '1' && caracter <= '7'){
+        if (caracter >= '1' && caracter <= '9'){
             return 1;
         }
         else{
-            if (caracter >= '8' && caracter <='9'){
+            if (caracter == '-' || caracter == '+'|| caracter == '*'|| caracter == '/'){
                 return 2;
             }
             else{
-                if((caracter >= 'a' && caracter<='f') || (caracter >= 'A' && caracter<='F')){
+                if(caracter == '('){
                     return 3;
                 }
                 else{
-                    if (caracter == 'x' || caracter == 'X'){
+                    if (caracter == ')'){
                         return 4;
                     }
                 }
@@ -174,7 +213,7 @@ void push(struct Stack* stack, int item)
         return;
     } 
     stack->array[++stack->top] = item;
-    printf("%d AÑADIDO A LA PILA\n", item);
+    //printf("%d Aniadido a la pila\n", item);
 }
  
 
