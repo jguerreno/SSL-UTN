@@ -5,7 +5,7 @@
 int ERROR_PILA=-1;
 
 void limpiarBuffer(char cadena[]){
-    memset(cadena, 0,50);
+    memset(cadena, 0,strlen(cadena));
 }
 
 /**
@@ -68,6 +68,9 @@ int procesarToken (char *cadena){
             break;
         }
     }
+
+    // No olvidarnos de esto.
+    free(stack);
 
     return estado;
 }
