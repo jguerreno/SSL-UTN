@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TAM 200
+
 struct Stack {
     int top;
     unsigned capacity;

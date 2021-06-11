@@ -244,6 +244,6 @@ int freeStack(struct Stack* stack){
 
 void ingresarCadena(char cadena[]){
     printf("Ingrese una cadena (Enter para finalizar): ");
-    fgets(cadena, sizeof cadena, stdin);
+    fgets(cadena, TAM-1, stdin);
 	cadena[strcspn(cadena, "\n")] = '\0';
 }

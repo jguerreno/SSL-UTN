@@ -3,7 +3,7 @@
 
 int main(void){
     
-    char s[200];
+    char s[TAM];
     int estado_final;
 
     //Leer una cadena de caracteres
@@ -15,7 +15,7 @@ int main(void){
         myTrimm(s);
 
         printf("Comenzando procesamiento de Token: \n");
-        
+
         estado_final = procesarToken(s);
         if(estado_final == 1 || estado_final == 2){
             printf("Cadena reconocida correctamente, estado final: %d\n", estado_final);
