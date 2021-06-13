@@ -42,7 +42,7 @@ int procesarToken (char *cadena){
         //Bool
         cima_pila_bool = (cima_pila == '$') ? 0 : 1;
 
-        estado=matriz[cima_pila_bool][estado][grupoCaracter(cadena[i])];
+        estado=matriz[cima_pila_bool][estado][grupo_caracter];
 
         //Debug
         printf("Loop %d: cima_pila[%c] estado[%d] - Caracter [%c] - Grupo[%d]\n",i, cima_pila, estado, cadena[i], grupo_caracter);
@@ -64,9 +64,8 @@ int procesarToken (char *cadena){
         // Estado de error para evitar que siga procesando.
         // Solo para ahorrar tiempo en tokens largos
         //TODO: Puedo identificar el caracter que causa error acá
-        if (estado ==  4){
+        if (estado ==  4)
             break;
-        }
     }
 
     // No olvidarnos de esto.
@@ -241,4 +240,10 @@ int freeStack(struct Stack* stack){
     free(stack->array);
     free(stack);
     return 1;
+}
+
+void ingresarCadena(char cadena[]){
+    printf("Ingrese una cadena (Enter para finalizar): ");
+    fgets(cadena, TAM-1, stdin);
+	cadena[strcspn(cadena, "\n")] = '\0';
 }

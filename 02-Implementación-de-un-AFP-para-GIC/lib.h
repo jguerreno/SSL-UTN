@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TAM 200
+
 struct Stack {
     int top;
     unsigned capacity;
@@ -12,6 +14,7 @@ struct Stack {
 };
 
 void limpiarBuffer(char cadena[]);
+void ingresarCadena(char[]);
 int procesarToken(char*);
 int grupoCaracter(char caracter);
 void myTrimm (char *cadena);
