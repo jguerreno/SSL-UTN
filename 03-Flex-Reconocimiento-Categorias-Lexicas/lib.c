@@ -4,30 +4,28 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void push(struct Node** head_ref, int new_data)
-{
+void push(struct Node** head_ref, int new_data){
     /* 1. allocate node */
     struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
-  
     /* 2. put in the data  */
     new_node->data  = new_data;
-  
+
     /* 3. Make next of new node as head */
     new_node->next = (*head_ref);
-  
+
     /* 4. move the head to point to the new node */
     (*head_ref)    = new_node;
 }
 
 void insertAfter(struct Node* prev_node, int new_data)
-{
-    /*1. check if the given prev_node is NULL */
+{    /*1. check if the given prev_node is NULL */
+
     if (prev_node == NULL)
     {
-    printf("the given previous node cannot be NULL");    
-    return;
+        printf("the given previous node cannot be NULL");    
+        return;
     }
-         
+     
     /* 2. allocate new node */
     struct Node* new_node =(struct Node*) malloc(sizeof(struct Node));
  
@@ -41,11 +39,10 @@ void insertAfter(struct Node* prev_node, int new_data)
     prev_node->next = new_node;
 }
 
-void append(struct Node** head_ref, int new_data)
-{
+void append(struct Node** head_ref, int new_data){
     /* 1. allocate node */
     struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
- 
+
     struct Node *last = *head_ref;  /* used in step 5*/
   
     /* 2. put in the data  */
@@ -54,14 +51,14 @@ void append(struct Node** head_ref, int new_data)
     /* 3. This new node is going to be the last node, so make next
           of it as NULL*/
     new_node->next = NULL;
- 
+     
     /* 4. If the Linked List is empty, then make the new node as head */
     if (*head_ref == NULL)
     {
        *head_ref = new_node;
        return;
     } 
-      
+  
     /* 5. Else traverse till the last node */
     while (last->next != NULL)
         last = last->next;
@@ -71,20 +68,18 @@ void append(struct Node** head_ref, int new_data)
     return;   
 }
 
-void printList(struct Node *node)
-{
-  while (node != NULL)
-  {
-     printf(" %d ", node->data);
+
+void printList(struct Node *node){
+  while (node != NULL){
+     printf("%d\n", node->data);
      node = node->next;
   }
 }
 
-void deleteNode(struct Node** head_ref, int key)
-{
+void deleteNode(struct Node** head_ref, int key){
     // Store head node
     struct Node *temp = *head_ref, *prev;
- 
+
     // If head node itself holds the key to be deleted
     if (temp != NULL && temp->data == key) {
         *head_ref = temp->next; // Changed head
@@ -180,11 +175,43 @@ int getListLength(struct Node* head)
 int search(struct Node* head, int x)
 {
     struct Node* current = head;  // Initialize current
-    while (current != NULL)
-    {
-        if (current->data == x)
-            return 1;
+    while (current != NULL){
+        if (current->data == x) return 1;
         current = current->next;
     }
-    return 0;
+   return 0;
 }
+
+int octalToDec(int octal){
+    int decimal = 0, i= 0;
+    while(octal!=0){
+        decimal = decimal + (octal % 10) * pow(8,i++);
+        octal = octal / 10;
+    }
+    return decimal;
+}
+
+int hexToDec(char *hex){
+    int decimal = 0, i = 0, length = strlen(hex),base = 1;
+    for(i = length --; i>=0; i--){
+        if(hex[i] >= '0' && hex[i] <= '9')
+        {
+            decimal += (hex[i] - 48) * base;
+            base *= 16;
+        }
+        else if(hex[i] >= 'A' && hex[i] <= 'F')
+        {
+            decimal += (hex[i] - 55) * base;
+            base *= 16;
+        }
+        else if(hex[i] >= 'a' && hex[i] <= 'f')
+        {
+            decimal += (hex[i] - 87) * base;
+            base *= 16;
+        }
+    }
+    return decimal;
+}
+
+
+//Falta real a dec con mantisa y exponente
