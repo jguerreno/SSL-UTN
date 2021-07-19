@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/* Given a reference (pointer to pointer) to the head of a list
-   and an int,  inserts a new node on the front of the list. */
 void push(struct Node** head_ref, int new_data)
 {
     /* 1. allocate node */
@@ -21,8 +19,6 @@ void push(struct Node** head_ref, int new_data)
     (*head_ref)    = new_node;
 }
 
-/* Given a node prev_node, insert a new node after the given
-prev_node */
 void insertAfter(struct Node* prev_node, int new_data)
 {
     /*1. check if the given prev_node is NULL */
@@ -45,9 +41,6 @@ void insertAfter(struct Node* prev_node, int new_data)
     prev_node->next = new_node;
 }
 
-
-/* Given a reference (pointer to pointer) to the head
-   of a list and an int, appends a new node at the end  */
 void append(struct Node** head_ref, int new_data)
 {
     /* 1. allocate node */
@@ -78,7 +71,6 @@ void append(struct Node** head_ref, int new_data)
     return;   
 }
 
-// This function prints contents of linked list starting from head
 void printList(struct Node *node)
 {
   while (node != NULL)
@@ -88,10 +80,6 @@ void printList(struct Node *node)
   }
 }
 
-
-/* Given a reference (pointer to pointer) to the head of a
-   list and a key, deletes the first occurrence of key in
-   linked list */
 void deleteNode(struct Node** head_ref, int key)
 {
     // Store head node
@@ -121,8 +109,7 @@ void deleteNode(struct Node** head_ref, int key)
     free(temp); // Free memory
 }
 
-/* Given a reference (pointer to pointer) to the head of a list
-   and a position, deletes the node at the given position */
+
 void deleteNodeAt(struct Node **head_ref, int position)
 {
    // If linked list is empty
@@ -158,7 +145,7 @@ void deleteNodeAt(struct Node **head_ref, int position)
     temp->next = next;  // Unlink the deleted node from list
 }
 
-/* Function to delete the entire linked list */
+
 void deleteList(struct Node** head_ref)
 {
    /* deref head_ref to get the real head */
@@ -177,7 +164,7 @@ void deleteList(struct Node** head_ref)
    *head_ref = NULL;
 }
 
-/* Counts no. of nodes in linked list */
+
 int getListLength(struct Node* head)
 {
     int count = 0;  // Initialize count
@@ -190,8 +177,6 @@ int getListLength(struct Node* head)
     return count;
 }
 
-
-/* Checks whether the value x is present in linked list */
 int search(struct Node* head, int x)
 {
     struct Node* current = head;  // Initialize current
