@@ -11,9 +11,5 @@ int main(){
     push(&lista, 14);
 
     printList(lista);
-
-    
-
-
     return 0;
 }
