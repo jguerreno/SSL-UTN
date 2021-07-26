@@ -19,6 +19,6 @@ void add(IdentifierNode** head, char identificador[]);
 void push(IdentifierNode** head, char identificador[]);
 Data newDataIdentifier(char identificador[]);
 IdentifierNode* search(IdentifierNode* head, char identificador[]);
-// Falta el sort
+void sortIdentidier(IdentifierNode** head);
 void printList(IdentifierNode* node);
 void deleteList(IdentifierNode** head);

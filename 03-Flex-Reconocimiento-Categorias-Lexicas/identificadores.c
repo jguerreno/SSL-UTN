@@ -83,3 +83,6 @@ void deleteList(IdentifierNode** head){
     *head = NULL;
 }
 
+
+void sortIdentidier(IdentifierNode** head){
+}
