@@ -1,13 +1,13 @@
-#include "identificadores.h"
+#include "literalesCadena.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 
-void add(IdentifierNode** head, char identificador[]){
+void add(LiteralCadenaNode** head, char identificador[]){
 
-    IdentifierNode* node = search(*head, identificador);
+    LiteralCadenaNode* node = search(*head, identificador);
 
     if(node != NULL){
         node->data.repeticion++;
@@ -18,9 +18,9 @@ void add(IdentifierNode** head, char identificador[]){
 }
 
 
-void push(IdentifierNode** head, char identificador[]){
+void push(LiteralCadenaNode** head, char identificador[]){
     /* 1. allocate node */
-    IdentifierNode* new_node = (IdentifierNode*) malloc(sizeof(IdentifierNode));
+    LiteralCadenaNode* new_node = (LiteralCadenaNode*) malloc(sizeof(LiteralCadenaNode));
 
     /* 2. put in the data  */
     new_node->data  = newDataIdentifier(identificador);
@@ -43,8 +43,8 @@ Data newDataIdentifier(char identificador[]){
 }
 
 
-IdentifierNode* search(IdentifierNode* head, char identificador[]){
-    IdentifierNode* current = head;  // Initialize current
+LiteralCadenaNode* search(LiteralCadenaNode* head, char identificador[]){
+    LiteralCadenaNode* current = head;  // Initialize current
 
     while (current != NULL || strcmp(current->data.identificador, identificador)==0){
         current = current->next;
@@ -54,7 +54,7 @@ IdentifierNode* search(IdentifierNode* head, char identificador[]){
 }
 
 
-void printList(IdentifierNode* node){
+void printList(LiteralCadenaNode* node){
 
     printf("Identificador\tCantidad de Repeticiones\n");
 
@@ -67,10 +67,10 @@ void printList(IdentifierNode* node){
 }
 
 
-void deleteList(IdentifierNode** head){
+void deleteList(LiteralCadenaNode** head){
     /* deref head_ref to get the real head */
-    IdentifierNode* current = *head;
-    IdentifierNode* next;
+    LiteralCadenaNode* current = *head;
+    LiteralCadenaNode* next;
  
     while (current != NULL)
     {
@@ -84,11 +84,11 @@ void deleteList(IdentifierNode** head){
 }
 
 
-void sortIdentidier(IdentifierNode** head){
+void sortIdentidier(LiteralCadenaNode** head){
 }
 
 
-void reporteIdentificadores(IdentifierNode** head,char identificador[]){
+void reporteIdentificadores(LiteralCadenaNode** head,char identificador[]){
     add(head,identificador);
 }
 
