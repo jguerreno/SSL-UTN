@@ -14,8 +14,7 @@ typedef struct PalabrasReservadasNode{
 
 
 
-void add(PalabrasReservadasNode** head, char palabraReservada[]);
-void push(PalabrasReservadasNode** head, char palabraReservada[]);
+void append(PalabrasReservadasNode** head_ref, char palabraReservada[]);
 Data newDataIdentifier(char palabraReservada[]);
 PalabrasReservadasNode* search(PalabrasReservadasNode* head, char palabraReservada[]);
 void sortIdentidier(PalabrasReservadasNode** head);
