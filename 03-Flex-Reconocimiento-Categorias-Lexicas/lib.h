@@ -12,6 +12,9 @@ struct Node{
 
 void push(struct Node** head_ref, int new_data);
 void push(struct Node** head_ref, int new_data);
+void insertAtTheBegin(struct Node **start_ref, int data);
+void bubbleSort(struct Node *start);
+void swap(struct Node *a, struct Node *b);
 void insertAfter(struct Node* prev_node, int new_data);
 void append(struct Node** head_ref, int new_data);
 void printList(struct Node *node);
