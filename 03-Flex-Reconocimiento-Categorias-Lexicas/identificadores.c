@@ -46,7 +46,7 @@ Data newDataIdentifier(char identificador[]){
 IdentifierNode* search(IdentifierNode* head, char identificador[]){
     IdentifierNode* current = head;  // Initialize current
 
-    while (current != NULL || strcmp(current->data.identificador, identificador)==0){
+    while (current != NULL || strcmp(current->data.identificador, identificador)!=0){
         current = current->next;
     }
 
