@@ -30,18 +30,7 @@ Data newDataIdentifier(char comentario[]){
 }
 
 
-ComentarioNode* search(ComentarioNode* head, char comentario[]){
-    ComentarioNode* current = head;  // Initialize current
-
-    while (current != NULL || strcmp(current->data.comentario, comentario)!=0){
-        current = current->next;
-    }
-
-   return current;
-}
-
-
-void printList(ComentarioNode* node, char tipo[]){
+void printComentarios(ComentarioNode* node, char tipo[]){
 
     printf("Comentarios %s\n", tipo);
 
@@ -68,14 +57,5 @@ void deleteList(ComentarioNode** head){
    
     /* deref head to affect the real head back in the caller. */
     *head = NULL;
-}
-
-
-void sortIdentidier(ComentarioNode** head){
-}
-
-
-void reporteComentarios(ComentarioNode** head,char comentario[]){
-    push(head,comentario);
 }
 

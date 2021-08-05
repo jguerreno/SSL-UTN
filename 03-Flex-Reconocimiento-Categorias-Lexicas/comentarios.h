@@ -16,9 +16,5 @@ typedef struct ComentarioNode{
 
 void push(ComentarioNode** head, char comentario[]);
 Data newDataIdentifier(char comentario[]);
-ComentarioNode* search(ComentarioNode* head, char comentario[]);
-void sortIdentidier(ComentarioNode** head);
-void printList(ComentarioNode* node, char tipo[]);
+void printComentarios(ComentarioNode* node, char tipo[]);
 void deleteList(ComentarioNode** head);
-
-void reportecomentarios(ComentarioNode** head,char comentario[]);
