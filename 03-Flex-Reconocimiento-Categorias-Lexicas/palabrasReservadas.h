@@ -9,7 +9,7 @@ typedef struct Data{
 
 typedef struct PalabrasReservadasNode{
     Data data;
-    struct Node* next;
+    struct PalabrasReservadasNode* next;
 } PalabrasReservadasNode;
 
 
