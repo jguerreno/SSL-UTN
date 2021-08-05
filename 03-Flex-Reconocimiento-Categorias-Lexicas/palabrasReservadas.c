@@ -37,7 +37,7 @@ Data newDataIdentifier(char palabraReservada[]){
 }
 
 
-void printList(PalabrasReservadasNode* node){
+void printPalabrasReservadas(PalabrasReservadasNode* node){
 
     printf("Palabra Reservada\n");
 
@@ -49,7 +49,7 @@ void printList(PalabrasReservadasNode* node){
 }
 
 
-void deleteList(PalabrasReservadasNode** head){
+void deletePalabrasReservadas(PalabrasReservadasNode** head){
     /* deref head_ref to get the real head */
     PalabrasReservadasNode* current = *head;
     PalabrasReservadasNode* next;

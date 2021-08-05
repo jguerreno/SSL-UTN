@@ -69,14 +69,14 @@ Listado de palabras reservadas en el orden en el que han aparecido en el archivo
 **/
 
 int main(void){    
-     yyin = fopen("entrada.txt", "r");
+    yyin = fopen("entrada.txt", "r");
     yyout = fopen("salida.txt", "w");	
 
     yylex();
 
     // Palabras reservadas
-    printList(listaPalabrasReservadas);
-    deleteList(&listaPalabrasReservadas);
+    printPalabrasReservadas(listaPalabrasReservadas);
+    deletePalabrasReservadas(&listaPalabrasReservadas);
 	
     return 0;
 }
