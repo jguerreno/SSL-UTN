@@ -59,11 +59,11 @@ LETRA [a-zA-Z]
 [\(\)\{\}\,\;\[\]] {printf("Reconoci un carac de puntuacion\n"); numeroDeLinea++;}
 
 \/\/.*\n {
-    push(&listaComentariosSimples, yytext); numeroDeLinea++;
+    pushComentario(&listaComentariosSimples, yytext); numeroDeLinea++;
 }
 
 \/\*.*\*\/ {
-    push(&listaComentariosCompuestos, yytext); numeroDeLinea++;
+    pushComentario(&listaComentariosCompuestos, yytext); numeroDeLinea++;
 }
 
 .+  {
@@ -109,10 +109,12 @@ int main(void){
     // Simples
     char comentariosSimples[] = "Simples";
     printComentarios(listaComentariosSimples, comentariosSimples);
+    deleteListaComentarios(&listaComentariosSimples);
 
     // Compuestos
     char comentariosCompuestos[] = "Compuestos";
     printComentarios(listaComentariosCompuestos, comentariosCompuestos);
+    deleteListaComentarios(&listaComentariosCompuestos);
 
 
 	// Palabras No Reconocidas

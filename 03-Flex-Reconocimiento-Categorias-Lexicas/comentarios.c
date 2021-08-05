@@ -6,7 +6,7 @@
 
 
 
-void push(ComentarioNode** head, char comentario[]){
+void pushComentario(ComentarioNode** head, char comentario[]){
     /* 1. allocate node */
     ComentarioNode* new_node = (ComentarioNode*) malloc(sizeof(ComentarioNode));
 
@@ -43,7 +43,7 @@ void printComentarios(ComentarioNode* node, char tipo[]){
 }
 
 
-void deleteList(ComentarioNode** head){
+void deleteListaComentarios(ComentarioNode** head){
     /* deref head_ref to get the real head */
     ComentarioNode* current = *head;
     ComentarioNode* next;
