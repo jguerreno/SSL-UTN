@@ -37,17 +37,6 @@ Data newDataIdentifier(char palabraReservada[]){
 }
 
 
-PalabrasReservadasNode* search(PalabrasReservadasNode* head, char palabraReservada[]){
-    PalabrasReservadasNode* current = head;  // Initialize current
-
-    while (current != NULL || strcmp(current->data.palabraReservada, palabraReservada)!=0){
-        current = current->next;
-    }
-
-   return current;
-}
-
-
 void printList(PalabrasReservadasNode* node){
 
     printf("Palabra Reservada\n");
@@ -74,15 +63,5 @@ void deleteList(PalabrasReservadasNode** head){
    
     /* deref head to affect the real head back in the caller. */
     *head = NULL;
-}
-
-
-void sortIdentidier(PalabrasReservadasNode** head){
-    // Para desarrollar
-}
-
-
-void reportepalabrasReservadas(PalabrasReservadasNode** head,char palabraReservada[]){
-    add(head, palabraReservada);
 }
 
