@@ -6,6 +6,7 @@
 #include "identificadores.h"
 #include "comentarios.h"
 #include "palabrasReservadas.h"
+#include "palabrasNoReconocidas.h"
 
 
 #define MAX_TAM_IDENTIFIER 50
@@ -22,6 +23,10 @@ ComentarioNode* listaComentariosSimples = NULL;
 
 // Comentarios Compuestos
 ComentarioNode* listaComentariosCompuestos = NULL;
+
+// Palabras no reconocidas
+NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
+
 
 
 IdentifierNode *listaIdentificadores = NULL;
@@ -61,7 +66,9 @@ LETRA [a-zA-Z]
     push(&listaComentariosCompuestos, yytext); numeroDeLinea++;
 }
 
-.+  {numeroDeLinea++;}
+.+  {
+    pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;
+}
 
 
 %%
@@ -107,6 +114,11 @@ int main(void){
     char comentariosCompuestos[] = "Compuestos";
     printComentarios(listaComentariosCompuestos, comentariosCompuestos);
 
-	
+
+	// Palabras No Reconocidas
+    printPalabrasNoReconocidas(listaPalabrasNoReconocidas);
+    deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
+
+
     return 0;
 }
