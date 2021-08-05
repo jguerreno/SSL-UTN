@@ -7,7 +7,10 @@
 #define MAX_TAM_IDENTIFIER 50
 
 int numeroDeLinea = 1;
-struct IdentifierNode *listaIdentificadores = NULL;
+
+PalabrasReservadasNode *listaPalabrasReservadas = NULL;
+
+IdentifierNode *listaIdentificadores = NULL;
 
 %}
 
@@ -26,7 +29,9 @@ LETRA [a-zA-Z]
 
 \".*\" {printf("Encontra un literal cadena"); numeroDeLinea++;}
 
-(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {printf("Se reconocio una palabra reservada \n"); numeroDeLinea++;}
+(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
+    append(&listaPalabrasReservadas, yytext); numeroDeLinea++;
+}
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {printf("Se reconocio una identificador\n"); numeroDeLinea++;}
 
@@ -68,6 +73,10 @@ int main(void){
     yyout = fopen("salida.txt", "w");	
 
     yylex();
+
+    // Palabras reservadas
+    printList(listaPalabrasReservadas);
+    deleteList(&listaPalabrasReservadas);
 	
     return 0;
 }
