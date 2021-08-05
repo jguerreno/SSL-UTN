@@ -6,6 +6,7 @@
 #include "identificadores.h"
 #define MAX_TAM_IDENTIFIER 50
 
+int numeroDeLinea = 1;
 struct IdentifierNode *listaIdentificadores = NULL;
 
 %}
@@ -16,26 +17,28 @@ DIGITO_HEXADECIMAL [a-fA-F0-9]
 LETRA [a-zA-Z] 
 
 %%
-[1-9]{DIGITO_DECIMAL}* {printf("Encontre la constante entera decimal: %s de longitud %d \n",yytext,yyleng);}
-0{DIGITO_OCTAL}* {printf("Encontre la constante entera octal: %s de longitud %d \n",yytext,yyleng);}
-0[xX]{DIGITO_HEXADECIMAL}+ {printf("Encontre la constante entera hexadecimal: %s de longitud %d \n",yytext,yyleng);}
+[1-9]{DIGITO_DECIMAL}* {printf("Encontre la constante entera decimal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
+0{DIGITO_OCTAL}* {printf("Encontre la constante entera octal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
+0[xX]{DIGITO_HEXADECIMAL}+ {printf("Encontre la constante entera hexadecimal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
 
 
-\'.\' {printf("Encontre una constante caracter");}
+\'.\' {printf("Encontre una constante caracter"); numeroDeLinea++;}
 
-\".*\" {printf("Encontra un literal cadena");}
+\".*\" {printf("Encontra un literal cadena"); numeroDeLinea++;}
 
-(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {printf("Se reconocio una palabra reservada \n");}
+(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {printf("Se reconocio una palabra reservada \n"); numeroDeLinea++;}
 
-(_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {printf("Se reconocio una identificador\n");}
+(_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {printf("Se reconocio una identificador\n"); numeroDeLinea++;}
 
-(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {printf("Se reconocio un operador\n");}
+(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {printf("Se reconocio un operador\n"); numeroDeLinea++;}
 
-[\(\)\{\}\,\;\[\]] {printf("Reconoci un carac de puntuacion\n");}
+[\(\)\{\}\,\;\[\]] {printf("Reconoci un carac de puntuacion\n"); numeroDeLinea++;}
 
-\/\/.*\n {printf("Encontre un comentario simple\n");}
+\/\/.*\n {printf("Encontre un comentario simple\n"); numeroDeLinea++;}
 
-\/\*.*\*\/ {printf("Encontre un comentario de multiple linea\n");}
+\/\*.*\*\/ {printf("Encontre un comentario de multiple linea\n"); numeroDeLinea++;}
+
+.+  {numeroDeLinea++;}
 
 
 %%
