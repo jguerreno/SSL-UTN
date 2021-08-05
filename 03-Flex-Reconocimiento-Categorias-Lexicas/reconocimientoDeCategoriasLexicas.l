@@ -49,7 +49,7 @@ LETRA [a-zA-Z]
 \".*\" {printf("Encontra un literal cadena"); numeroDeLinea++;}
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
-    append(&listaPalabrasReservadas, yytext); numeroDeLinea++;
+    appendPalabraReservada(&listaPalabrasReservadas, yytext); numeroDeLinea++;
 }
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {printf("Se reconocio una identificador\n"); numeroDeLinea++;}

@@ -11,7 +11,7 @@ void pushComentario(ComentarioNode** head, char comentario[]){
     ComentarioNode* new_node = (ComentarioNode*) malloc(sizeof(ComentarioNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataIdentifier(comentario);
+    new_node->data  = newDataComentario(comentario);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -21,8 +21,8 @@ void pushComentario(ComentarioNode** head, char comentario[]){
 }
 
 
-Data newDataIdentifier(char comentario[]){
-    Data data;
+DataComentario newDataComentario(char comentario[]){
+    DataComentario data;
 
     strcpy(data.comentario, comentario);
 

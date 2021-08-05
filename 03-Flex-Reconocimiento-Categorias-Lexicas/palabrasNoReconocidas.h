@@ -2,19 +2,19 @@
 #define MAX_TAM_IDENTIFIER 50
 
 
-typedef struct Data{
+typedef struct DataPalabraNoReconocida{
     char noReconocida[MAX_TAM_IDENTIFIER];
     int linea;
-} Data;
+} DataPalabraNoReconocida;
 
 typedef struct NoReconocidoNode{
-    Data data;
+    DataPalabraNoReconocida data;
     struct NoReconocidoNode* next;
 } NoReconocidoNode;
 
 
 
 void pushPalabraNoReconocida(NoReconocidoNode** head, char palabraNoReconocida[], int linea);
-Data newDataIdentifier(char palabraNoReconocida[], int linea);
+DataPalabraNoReconocida newDataPalabraNoReconocida(char palabraNoReconocida[], int linea);
 void printPalabrasNoReconocidas(NoReconocidoNode* node);
 void deleteListaPalabrasNoReconocidas(NoReconocidoNode** head);

@@ -11,7 +11,7 @@ void pushPalabraNoReconocida(NoReconocidoNode** head, char palabraNoReconocida[]
     NoReconocidoNode* new_node = (NoReconocidoNode*) malloc(sizeof(NoReconocidoNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataIdentifier(palabraNoReconocida, linea);
+    new_node->data  = newDataPalabraNoReconocida(palabraNoReconocida, linea);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -21,8 +21,8 @@ void pushPalabraNoReconocida(NoReconocidoNode** head, char palabraNoReconocida[]
 }
 
 
-Data newDataIdentifier(char palabraNoReconocida[], int linea){
-    Data data;
+DataPalabraNoReconocida newDataPalabraNoReconocida(char palabraNoReconocida[], int linea){
+    DataPalabraNoReconocida data;
 
     strcpy(data.noReconocida, palabraNoReconocida);
     data.linea = linea;

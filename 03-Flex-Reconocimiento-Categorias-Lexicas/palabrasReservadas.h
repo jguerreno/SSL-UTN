@@ -3,18 +3,18 @@
 
 
 
-typedef struct Data{
+typedef struct DataPalabraReservada{
     char palabraReservada[MAX_TAM_IDENTIFIER];
-} Data;
+} DataPalabraReservada;
 
 typedef struct PalabrasReservadasNode{
-    Data data;
+    DataPalabraReservada data;
     struct PalabrasReservadasNode* next;
 } PalabrasReservadasNode;
 
 
 
-void append(PalabrasReservadasNode** head_ref, char palabraReservada[]);
-Data newDataIdentifier(char palabraReservada[]);
+void appendPalabraReservada(PalabrasReservadasNode** head_ref, char palabraReservada[]);
+DataPalabraReservada newDataPalabraReservada(char palabraReservada[]);
 void printPalabrasReservadas(PalabrasReservadasNode* node);
 void deletePalabrasReservadas(PalabrasReservadasNode** head);

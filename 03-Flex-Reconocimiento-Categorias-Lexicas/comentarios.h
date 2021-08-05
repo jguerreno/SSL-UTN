@@ -3,18 +3,18 @@
 
 
 
-typedef struct Data{
+typedef struct DataComentario{
     char comentario[MAX_TAM_IDENTIFIER];
-} Data;
+} DataComentario;
 
 typedef struct ComentarioNode{
-    Data data;
+    DataComentario data;
     struct ComentarioNode* next;
 } ComentarioNode;
 
 
 
 void pushComentario(ComentarioNode** head, char comentario[]);
-Data newDataIdentifier(char comentario[]);
+DataComentario newDataComentario(char comentario[]);
 void printComentarios(ComentarioNode* node, char tipo[]);
 void deleteListaComentarios(ComentarioNode** head);

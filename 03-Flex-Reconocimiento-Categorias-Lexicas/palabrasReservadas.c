@@ -4,14 +4,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void append(PalabrasReservadasNode** head_ref, char palabraReservada[]){
+void appendPalabraReservada(PalabrasReservadasNode** head_ref, char palabraReservada[]){
     /* 1. allocate node */
     PalabrasReservadasNode* new_node = (PalabrasReservadasNode*) malloc(sizeof(PalabrasReservadasNode));
 
     PalabrasReservadasNode *last = *head_ref;  /* used in step 5*/
   
     /* 2. put in the data  */
-    strcpy(new_node->data.palabraReservada, palabraReservada);
+    new_node->data = newDataPalabraReservada(palabraReservada);
+    //strcpy(new_node->data.palabraReservada, palabraReservada);
  
     /* 3. This new node is going to be the last node, so make next of it as NULL*/
     new_node->next = NULL;
@@ -28,8 +29,8 @@ void append(PalabrasReservadasNode** head_ref, char palabraReservada[]){
     last->next = new_node;
 }
 
-Data newDataIdentifier(char palabraReservada[]){
-    Data data;
+DataPalabraReservada newDataPalabraReservada(char palabraReservada[]){
+    DataPalabraReservada data;
 
     strcpy(data.palabraReservada, palabraReservada);
 
