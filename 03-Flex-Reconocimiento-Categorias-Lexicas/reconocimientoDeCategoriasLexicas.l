@@ -4,11 +4,25 @@
 #include<stdio.h> 
 #include "lib.h"   
 #include "identificadores.h"
+#include "comentarios.h"
+#include "palabrasReservadas.h"
+
+
 #define MAX_TAM_IDENTIFIER 50
 
+
+// Cantidad de lineas
 int numeroDeLinea = 1;
 
-PalabrasReservadasNode *listaPalabrasReservadas = NULL;
+// Palabras Reservadas
+PalabrasReservadasNode* listaPalabrasReservadas = NULL;
+
+// Comentarios Simples
+ComentarioNode* listaComentariosSimples = NULL;
+
+// Comentarios Compuestos
+ComentarioNode* listaComentariosCompuestos = NULL;
+
 
 IdentifierNode *listaIdentificadores = NULL;
 
@@ -39,9 +53,13 @@ LETRA [a-zA-Z]
 
 [\(\)\{\}\,\;\[\]] {printf("Reconoci un carac de puntuacion\n"); numeroDeLinea++;}
 
-\/\/.*\n {printf("Encontre un comentario simple\n"); numeroDeLinea++;}
+\/\/.*\n {
+    push(&listaComentariosSimples, yytext); numeroDeLinea++;
+}
 
-\/\*.*\*\/ {printf("Encontre un comentario de multiple linea\n"); numeroDeLinea++;}
+\/\*.*\*\/ {
+    push(&listaComentariosCompuestos, yytext); numeroDeLinea++;
+}
 
 .+  {numeroDeLinea++;}
 
@@ -74,9 +92,21 @@ int main(void){
 
     yylex();
 
+
     // Palabras reservadas
     printPalabrasReservadas(listaPalabrasReservadas);
     deletePalabrasReservadas(&listaPalabrasReservadas);
+
+
+    // Comentarios
+    // Simples
+    char comentariosSimples[] = "Simples";
+    printComentarios(listaComentariosSimples, comentariosSimples);
+
+    // Compuestos
+    char comentariosCompuestos[] = "Compuestos";
+    printComentarios(listaComentariosCompuestos, comentariosCompuestos);
+
 	
     return 0;
 }
