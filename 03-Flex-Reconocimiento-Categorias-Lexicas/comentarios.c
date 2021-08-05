@@ -70,11 +70,7 @@ void deleteList(ComentarioNode** head){
 }
 
 
-void sortIdentidier(ComentarioNode** head){
-
-}
-
-void sort(ComentarioNode **head)
+void sortIdentidier(ComentarioNode **head)
 {
     ComentarioNode *aux, *aux2, *temp;
     
