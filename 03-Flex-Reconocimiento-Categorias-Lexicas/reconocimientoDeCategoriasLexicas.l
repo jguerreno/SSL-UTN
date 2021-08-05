@@ -7,6 +7,7 @@
 #include "comentarios.h"
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
+#include "operadoresYcaracteresDePuntuacion.h"
 
 
 #define MAX_TAM_IDENTIFIER 50
@@ -27,6 +28,8 @@ ComentarioNode* listaComentariosCompuestos = NULL;
 // Palabras no reconocidas
 NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 
+// Operadores y Caracteres de Puntuacion
+OperadoresNode* listaOperadores = NULL;
 
 
 IdentifierNode *listaIdentificadores = NULL;
@@ -54,9 +57,13 @@ LETRA [a-zA-Z]
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {printf("Se reconocio una identificador\n"); numeroDeLinea++;}
 
-(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {printf("Se reconocio un operador\n"); numeroDeLinea++;}
+(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {
+    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
+}
 
-[\(\)\{\}\,\;\[\]] {printf("Reconoci un carac de puntuacion\n"); numeroDeLinea++;}
+[\(\)\{\}\,\;\[\]] {
+    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
+}
 
 \/\/.*\n {
     pushComentario(&listaComentariosSimples, yytext); numeroDeLinea++;
@@ -120,6 +127,11 @@ int main(void){
 	// Palabras No Reconocidas
     printPalabrasNoReconocidas(listaPalabrasNoReconocidas);
     deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
+
+
+    // Operadores y Caracteres de Puntuacion
+    printOperadores(listaOperadores);
+    deleteListaOperadores(&listaOperadores);
 
 
     return 0;

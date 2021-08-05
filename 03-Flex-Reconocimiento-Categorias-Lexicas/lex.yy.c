@@ -457,6 +457,7 @@ char *yytext;
 #include "comentarios.h"
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
+#include "operadoresYcaracteresDePuntuacion.h"
 
 
 #define MAX_TAM_IDENTIFIER 50
@@ -477,11 +478,13 @@ ComentarioNode* listaComentariosCompuestos = NULL;
 // Palabras no reconocidas
 NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 
+// Operadores y Caracteres de Puntuacion
+OperadoresNode* listaOperadores = NULL;
 
 
 IdentifierNode *listaIdentificadores = NULL;
 
-#line 485 "lex.yy.c"
+#line 488 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -632,9 +635,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 41 "reconocimientoDeCategoriasLexicas.l"
+#line 44 "reconocimientoDeCategoriasLexicas.l"
 
-#line 638 "lex.yy.c"
+#line 641 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -719,78 +722,82 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 42 "reconocimientoDeCategoriasLexicas.l"
+#line 45 "reconocimientoDeCategoriasLexicas.l"
 {printf("Encontre la constante entera decimal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 43 "reconocimientoDeCategoriasLexicas.l"
+#line 46 "reconocimientoDeCategoriasLexicas.l"
 {printf("Encontre la constante entera octal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 44 "reconocimientoDeCategoriasLexicas.l"
+#line 47 "reconocimientoDeCategoriasLexicas.l"
 {printf("Encontre la constante entera hexadecimal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 47 "reconocimientoDeCategoriasLexicas.l"
+#line 50 "reconocimientoDeCategoriasLexicas.l"
 {printf("Encontre una constante caracter"); numeroDeLinea++;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 49 "reconocimientoDeCategoriasLexicas.l"
+#line 52 "reconocimientoDeCategoriasLexicas.l"
 {printf("Encontra un literal cadena"); numeroDeLinea++;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 51 "reconocimientoDeCategoriasLexicas.l"
+#line 54 "reconocimientoDeCategoriasLexicas.l"
 {
-    append(&listaPalabrasReservadas, yytext); numeroDeLinea++;
+    appendPalabraReservada(&listaPalabrasReservadas, yytext); numeroDeLinea++;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 55 "reconocimientoDeCategoriasLexicas.l"
+#line 58 "reconocimientoDeCategoriasLexicas.l"
 {printf("Se reconocio una identificador\n"); numeroDeLinea++;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 57 "reconocimientoDeCategoriasLexicas.l"
-{printf("Se reconocio un operador\n"); numeroDeLinea++;}
+#line 60 "reconocimientoDeCategoriasLexicas.l"
+{
+    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
+}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 59 "reconocimientoDeCategoriasLexicas.l"
-{printf("Reconoci un carac de puntuacion\n"); numeroDeLinea++;}
+#line 64 "reconocimientoDeCategoriasLexicas.l"
+{
+    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
+}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 61 "reconocimientoDeCategoriasLexicas.l"
+#line 68 "reconocimientoDeCategoriasLexicas.l"
 {
     pushComentario(&listaComentariosSimples, yytext); numeroDeLinea++;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 65 "reconocimientoDeCategoriasLexicas.l"
+#line 72 "reconocimientoDeCategoriasLexicas.l"
 {
     pushComentario(&listaComentariosCompuestos, yytext); numeroDeLinea++;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 69 "reconocimientoDeCategoriasLexicas.l"
+#line 76 "reconocimientoDeCategoriasLexicas.l"
 {
     pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 74 "reconocimientoDeCategoriasLexicas.l"
+#line 81 "reconocimientoDeCategoriasLexicas.l"
 ECHO;
 	YY_BREAK
-#line 794 "lex.yy.c"
+#line 801 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1676,7 +1683,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 74 "reconocimientoDeCategoriasLexicas.l"
+#line 81 "reconocimientoDeCategoriasLexicas.l"
 
 
 /**FALTA HACER ERX DE CONSTANTES REALES **/
@@ -1726,6 +1733,11 @@ int main(void){
 	// Palabras No Reconocidas
     printPalabrasNoReconocidas(listaPalabrasNoReconocidas);
     deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
+
+
+    // Operadores y Caracteres de Puntuacion
+    printOperadores(listaOperadores);
+    deleteListaOperadores(&listaOperadores);
 
 
     return 0;
