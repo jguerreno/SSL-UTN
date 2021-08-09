@@ -23,4 +23,6 @@ void deleteList(struct Node** head_ref);
 void deleteNodeAt(struct Node **head_ref, int position);
 int getListLength(struct Node* head);
 int search(struct Node* head, int x);
+int mantisaToEntero(char *real);
+int realToEntero(char *real);
 #endif  // NUESTRA_LIB_
