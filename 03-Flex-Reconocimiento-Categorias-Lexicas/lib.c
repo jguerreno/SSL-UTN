@@ -236,6 +236,7 @@ int octalToDec(int octal){
         decimal = decimal + (octal % 10) * pow(8,i++);
         octal = octal / 10;
     }
+    printf("Valor decimal del numero octal encontrado: %d\n", decimal);
     return decimal;
 }
 
@@ -258,6 +259,7 @@ int hexToDec(char *hex){
             base *= 16;
         }
     }
+    printf("Valor decimal del numero hexadecimal encontrado: %d\n", decimal);
     return decimal;
 }
 
@@ -268,7 +270,7 @@ int realToEntero(char *real){
     for(int i = 0; real[i] != '.' ; i++){
         aux[i] = real[i];
     }
-    atoi(aux);
+    return (atoi(aux));
 }
 
 /**
@@ -298,10 +300,5 @@ int mantisaToEntero(char *real){
      * **/
     
     int res = atoi(aux);
-    int l = strlen(aux);
-    float res2 = ( res / pow(10,l) ) * 10;
-    printf("%f\n",res2);
-
-
-    return 0;
+    return res;
 }

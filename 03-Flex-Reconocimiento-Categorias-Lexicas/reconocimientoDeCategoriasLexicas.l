@@ -3,7 +3,7 @@
 %{
 #include<stdio.h> 
 #include "lib.h"   
-#include "identificadores.h"
+//#include "identificadores.h"
 #include "comentarios.h"
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
@@ -15,6 +15,9 @@
 
 // Cantidad de lineas
 int numeroDeLinea = 1;
+
+//ACUMULADOR DE CONSTANTES DECIMALES
+int acumDecimal = 0;
 
 // Palabras Reservadas
 PalabrasReservadasNode* listaPalabrasReservadas = NULL;
@@ -32,7 +35,7 @@ NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 OperadoresNode* listaOperadores = NULL;
 
 
-IdentifierNode *listaIdentificadores = NULL;
+//IdentifierNode *listaIdentificadores = NULL;
 
 %}
 
@@ -42,10 +45,21 @@ DIGITO_HEXADECIMAL [a-fA-F0-9]
 LETRA [a-zA-Z] 
 
 %%
-[1-9]{DIGITO_DECIMAL}* {printf("Encontre la constante entera decimal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
-0{DIGITO_OCTAL}* {printf("Encontre la constante entera octal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
-0[xX]{DIGITO_HEXADECIMAL}+ {printf("Encontre la constante entera hexadecimal: %s de longitud %d \n",yytext,yyleng); numeroDeLinea++;}
+[1-9]{DIGITO_DECIMAL}* {printf("Encontre la constante entera decimal: %s de longitud %d \n",yytext,yyleng); 
+                        acumDecimal += atoi(yytext);
+                        numeroDeLinea++;
+                        }
+0{DIGITO_OCTAL}* {printf("Encontre la constante entera octal: %s de longitud %d \n",yytext,yyleng); 
+                  numeroDeLinea++;
+                  int octal = atoi(yytext);
+                  octalToDec(octal);
+                  }
+0[xX]{DIGITO_HEXADECIMAL}+ {printf("Encontre la constante entera hexadecimal: %s de longitud %d \n",yytext,yyleng); 
+                            numeroDeLinea++;
+                            hexToDec(yytext);
+                            }
 
+[0-9]+\.[0-9]+[Ee]((\+?)|\-)[0-9]+ {printf("Encontre una constante real: %s\n",yytext);}
 
 \'.\' {printf("Encontre una constante caracter"); numeroDeLinea++;}
 
@@ -79,26 +93,6 @@ LETRA [a-zA-Z]
 
 
 %%
-
-/**FALTA HACER ERX DE CONSTANTES REALES **/
-
-/**FALTA HACER EL ORDENAMIENTO DE LA LISTA EN IDENTIFICADORES**/
-
-/**FALTA HACER EL ORDENAMIENTO EN CADENAS LITERALES**/
-
-/**
-Listado de identificadores encontrados indicando la cantidad de veces que aparece cada uno de ellos. 
-El listado debe estar ordenado alfabéticamente.
-**/
-
-/**
-Listado de literales cadena encontrados indicando la longitud de los mismos y ordenados por longitud ascendente. 
-En caso de igual longitud no importa el orden.
-**/
-
-/**
-Listado de palabras reservadas en el orden en el que han aparecido en el archivo.
-**/
 
 int main(void){    
     yyin = fopen("entrada.txt", "r");
@@ -136,3 +130,11 @@ int main(void){
 
     return 0;
 }
+
+/**
+ACLARACION: POR CUESTIONES DE SIMPLICIDAD, NO TENEMOS EN CUENTA EL SIGUIENTE CASO: 
+.4E3
+
+TAMPOCO EL SIGUIENTE CASO: 
+4.
+**/
