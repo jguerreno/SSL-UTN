@@ -7,13 +7,13 @@
 
 void addIdentifier(IdentifierNode** head, char identificador[]){
 
-    IdentifierNode* node = search(*head, identificador);
+    IdentifierNode* node = searchIdentifier(*head, identificador);
 
     if(node != NULL){
         node->data.repeticion++;
     }
     else{
-        push(head, identificador);
+        pushIdentifier(head, identificador);
     }
 }
 

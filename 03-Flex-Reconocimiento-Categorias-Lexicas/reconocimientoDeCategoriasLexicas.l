@@ -118,8 +118,8 @@ int main(void){
     deleteListaOperadores(&listaOperadores);
 
    // Identificadores
-    printIdentifier(listaIdentificadores);
-    deleteListaIdentifier(&listaIdentificadores);
+    printListIdentifier(listaIdentificadores);
+    deleteListIdentifier(&listaIdentificadores);
 
     return 0;
 }

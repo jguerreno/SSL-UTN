@@ -7,13 +7,13 @@
 
 void addOperadores(OperadoresNode** head, char operador){
 
-    OperadoresNode* node = search(*head, operador);
+    OperadoresNode* node = searchOperadores(*head, operador);
 
     if(node != NULL){
         node->data.repeticion++;
     }
     else{
-        push(head, operador);
+        pushOperadores(head, operador);
     }
 }
 
@@ -33,7 +33,7 @@ void pushOperadores(OperadoresNode** head, char operador){
 }
 
 
-DataOperadores newDataIdentifierOperadores(char operador){
+DataOperadores newDataOperadores(char operador){
     DataOperadores data = {operador, 0};
 
     return data;
@@ -53,7 +53,7 @@ OperadoresNode* searchOperadores(OperadoresNode* head, char operador){
 
 void printListaOperadores(OperadoresNode* node){
 
-    printf("Operadores \/ Caracteres de Puntuacion\tCantidad de Repeticiones\n");
+    printf("Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones\n");
 
     while (node != NULL){
      printf("%c\t\t%d\n", node->data.operador, node->data.repeticion);

@@ -10,7 +10,7 @@ typedef struct DataOperadores{
 
 typedef struct OperadoresNode{
     DataOperadores data;
-    struct Operadores* next;
+    struct OperadoresNode* next;
 } OperadoresNode;
 
 
