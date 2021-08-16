@@ -481,7 +481,7 @@ NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 // Operadores y Caracteres de Puntuacion
 OperadoresNode* listaOperadores = NULL;
 
-
+// Identificadores
 IdentifierNode *listaIdentificadores = NULL;
 
 #line 488 "lex.yy.c"
@@ -755,49 +755,51 @@ YY_RULE_SETUP
 case 7:
 YY_RULE_SETUP
 #line 58 "reconocimientoDeCategoriasLexicas.l"
-{printf("Se reconocio una identificador\n"); numeroDeLinea++;}
+{
+    addIdentifier(&listaIdentificadores, yytext); numeroDeLinea++;
+}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 60 "reconocimientoDeCategoriasLexicas.l"
+#line 62 "reconocimientoDeCategoriasLexicas.l"
 {
     addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 64 "reconocimientoDeCategoriasLexicas.l"
+#line 66 "reconocimientoDeCategoriasLexicas.l"
 {
     addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 68 "reconocimientoDeCategoriasLexicas.l"
+#line 70 "reconocimientoDeCategoriasLexicas.l"
 {
     pushComentario(&listaComentariosSimples, yytext); numeroDeLinea++;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 72 "reconocimientoDeCategoriasLexicas.l"
+#line 74 "reconocimientoDeCategoriasLexicas.l"
 {
     pushComentario(&listaComentariosCompuestos, yytext); numeroDeLinea++;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 76 "reconocimientoDeCategoriasLexicas.l"
+#line 78 "reconocimientoDeCategoriasLexicas.l"
 {
     pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 81 "reconocimientoDeCategoriasLexicas.l"
+#line 83 "reconocimientoDeCategoriasLexicas.l"
 ECHO;
 	YY_BREAK
-#line 801 "lex.yy.c"
+#line 803 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1683,28 +1685,10 @@ int main()
 	return 0;
 	}
 #endif
-#line 81 "reconocimientoDeCategoriasLexicas.l"
+#line 83 "reconocimientoDeCategoriasLexicas.l"
 
 
-/**FALTA HACER ERX DE CONSTANTES REALES **/
 
-/**FALTA HACER EL ORDENAMIENTO DE LA LISTA EN IDENTIFICADORES**/
-
-/**FALTA HACER EL ORDENAMIENTO EN CADENAS LITERALES**/
-
-/**
-Listado de identificadores encontrados indicando la cantidad de veces que aparece cada uno de ellos. 
-El listado debe estar ordenado alfabéticamente.
-**/
-
-/**
-Listado de literales cadena encontrados indicando la longitud de los mismos y ordenados por longitud ascendente. 
-En caso de igual longitud no importa el orden.
-**/
-
-/**
-Listado de palabras reservadas en el orden en el que han aparecido en el archivo.
-**/
 
 int main(void){    
     yyin = fopen("entrada.txt", "r");
@@ -1739,6 +1723,9 @@ int main(void){
     printOperadores(listaOperadores);
     deleteListaOperadores(&listaOperadores);
 
+   // Identificadores
+    printIdentifier(listaIdentificadores);
+    deleteListaIdentifier(&listaIdentificadores);
 
     return 0;
 }

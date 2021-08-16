@@ -31,7 +31,7 @@ NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 // Operadores y Caracteres de Puntuacion
 OperadoresNode* listaOperadores = NULL;
 
-
+// Identificadores
 IdentifierNode *listaIdentificadores = NULL;
 
 %}
@@ -55,7 +55,9 @@ LETRA [a-zA-Z]
     appendPalabraReservada(&listaPalabrasReservadas, yytext); numeroDeLinea++;
 }
 
-(_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {printf("Se reconocio una identificador\n"); numeroDeLinea++;}
+(_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
+    addIdentifier(&listaIdentificadores, yytext); numeroDeLinea++;
+}
 
 (\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {
     addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
@@ -80,25 +82,7 @@ LETRA [a-zA-Z]
 
 %%
 
-/**FALTA HACER ERX DE CONSTANTES REALES **/
 
-/**FALTA HACER EL ORDENAMIENTO DE LA LISTA EN IDENTIFICADORES**/
-
-/**FALTA HACER EL ORDENAMIENTO EN CADENAS LITERALES**/
-
-/**
-Listado de identificadores encontrados indicando la cantidad de veces que aparece cada uno de ellos. 
-El listado debe estar ordenado alfabéticamente.
-**/
-
-/**
-Listado de literales cadena encontrados indicando la longitud de los mismos y ordenados por longitud ascendente. 
-En caso de igual longitud no importa el orden.
-**/
-
-/**
-Listado de palabras reservadas en el orden en el que han aparecido en el archivo.
-**/
 
 int main(void){    
     yyin = fopen("entrada.txt", "r");
@@ -133,6 +117,9 @@ int main(void){
     printOperadores(listaOperadores);
     deleteListaOperadores(&listaOperadores);
 
+   // Identificadores
+    printIdentifier(listaIdentificadores);
+    deleteListaIdentifier(&listaIdentificadores);
 
     return 0;
 }
