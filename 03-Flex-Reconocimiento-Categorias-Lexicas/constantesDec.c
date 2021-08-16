@@ -34,7 +34,7 @@ DataConstDec newDataConstDec(char *dec){
 
 void printConstantesDecimales(ConstDecNode *node){
 
-    printf("Comentarios %s\n");
+    printf("CONSTANTES DECIMALES\n");
 
     while (node != NULL){
      printf("%s\n", node->data.constante);
