@@ -85,7 +85,39 @@ void deleteList(LiteralCadenaNode** head){
 
 
 void sortIdentidier(LiteralCadenaNode** head){
+
+    LiteralCadenaNode *aux, *aux2, *temp, * current = *head;
+    LiteralCadenaNode* next;
+    int mayor = 0;
+    
+    aux = (*head);
+    aux2 = aux;
+    
+    while (aux->next != NULL)
+    {
+        while (aux2 != NULL)
+        {
+            if (aux2->current >= mayor)
+                mayor = aux2->current;
+        }
+        
+        aux2 = aux;
+        
+        while (aux2->next != NULL)
+        {
+            if ((aux2->next)->current == mayor)
+            {
+                temp = (aux2->next)->next;
+                (aux2->next)->next = aux;
+                aux->next = temp;
+            }
+            aux2 = aux2->next;
+            
+        }
+        aux = aux->next;
+    }
 }
+
 
 
 void reporteIdentificadores(LiteralCadenaNode** head,char identificador[]){
