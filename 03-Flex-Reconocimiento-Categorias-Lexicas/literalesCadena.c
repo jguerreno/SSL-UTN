@@ -87,7 +87,7 @@ void sortIdentidier(LiteralCadenaNode** head){
 
     LiteralCadenaNode *aux, *aux2, *temp, * current = *head;
     LiteralCadenaNode* next;
-    
+
     int mayor = 0;
     
     aux = (*head);
@@ -118,9 +118,4 @@ void sortIdentidier(LiteralCadenaNode** head){
     }
 }
 
-
-
-void reporteIdentificadores(LiteralCadenaNode** head,char identificador[]){
-    add(head,identificador);
-}
 
