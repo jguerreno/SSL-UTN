@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 
 void push(struct Node** head_ref, int new_data){
     /* 1. allocate node */

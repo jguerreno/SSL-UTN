@@ -12,5 +12,5 @@ typedef struct ConstDecNode{
 
 void pushConstDec(ConstDecNode** head, char *dec);
 DataConstDec newDataConstDec(char *dec);
-void printConstDec(ConstDecNode* node);
+void printConstantesDecimales(ConstDecNode* node);
 void deleteListaConstanteDecimales(ConstDecNode** head);

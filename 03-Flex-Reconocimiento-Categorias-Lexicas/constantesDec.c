@@ -6,7 +6,7 @@
 
 void pushConstDec(ConstDecNode** head, char *dec);
 DataConstDec newDataConstDec(char *dec);
-void printConstDec(ConstDecNode* node);
+void printConstantesDecimales(ConstDecNode* node);
 void deleteListaConstanteDecimales(ConstDecNode** head);
 
 void pushConstDec(ConstDecNode** head, char *dec){
@@ -44,8 +44,7 @@ void printConstantesDecimales(ConstDecNode *node){
 
 }
 
-
-void deleteListaComentarios(ConstDecNode** head){
+void deleteListaConstanteDecimales(ConstDecNode** head){
     /* deref head_ref to get the real head */
     ConstDecNode* current = *head;
     ConstDecNode* next;
