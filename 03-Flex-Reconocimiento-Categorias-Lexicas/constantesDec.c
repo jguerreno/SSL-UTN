@@ -4,10 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void pushConstDec(ConstDecNode** head, char *dec);
-DataConstDec newDataConstDec(char *dec);
-void printConstantesDecimales(ConstDecNode* node);
-void deleteListaConstanteDecimales(ConstDecNode** head);
 
 void pushConstDec(ConstDecNode** head, char *dec){
     /* 1. allocate node */

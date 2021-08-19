@@ -97,15 +97,15 @@ void sortIdentidier(LiteralCadenaNode** head){
     {
         while (aux2 != NULL)
         {
-            if (aux2->current >= mayor)
-                mayor = aux2->current;
+            if (aux2->next >= mayor)
+                mayor = aux2->next;
         }
         
         aux2 = aux;
         
         while (aux2->next != NULL)
         {
-            if ((aux2->next)->current == mayor)
+            if ((aux2->next)->next == mayor)
             {
                 temp = (aux2->next)->next;
                 (aux2->next)->next = aux;

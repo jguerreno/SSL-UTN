@@ -26,12 +26,26 @@ ConstDecNode* listaConstantesDecimales = NULL;
 //Constantes Octales
 ConstOctNode* listaConstantesOctales = NULL;
 
-// Identificadores
-IdentifierNode *listaIdentificadores = NULL;
-
 //Constantes Hexadecimales
 ConstHexNode* listaConstantesHexadecimales = NULL;
 
+// Palabras Reservadas
+PalabrasReservadasNode* listaPalabrasReservadas = NULL;
+
+// Comentarios Simples
+ComentarioNode* listaComentariosSimples = NULL;
+
+// Comentarios Compuestos
+ComentarioNode* listaComentariosCompuestos = NULL;
+
+// Palabras no reconocidas
+NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
+
+// Operadores y Caracteres de Puntuacion
+OperadoresNode* listaOperadores = NULL;
+
+// Identificadores
+IdentifierNode *listaIdentificadores = NULL;
 %}
 
 DIGITO_DECIMAL [0-9] 

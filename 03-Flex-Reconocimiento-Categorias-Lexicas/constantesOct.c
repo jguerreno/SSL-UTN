@@ -5,10 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void pushConstOct(ConstOctNode** head, char *oct);
-DataConstOct newDataConstOct(char *oct);
-void printConstantesOctales(ConstOctNode* node);
-void deleteListaConstanteOctales(ConstOctNode** head);
+
 
 
 void pushConstOct(ConstOctNode** head, char *oct){

@@ -5,10 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void pushConstHex(ConstHexNode** head, char *hex);
-DataConstHex newDataConstHex(char *hex);
-void printConstantesHexadecimales(ConstHexNode* node);
-void deleteListaConstanteHexadecimales(ConstHexNode** head);
+
 
 
 void pushConstHex(ConstHexNode** head, char *hex){
