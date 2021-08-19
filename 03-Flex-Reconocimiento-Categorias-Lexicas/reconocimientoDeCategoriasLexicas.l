@@ -61,7 +61,7 @@ LETRA [a-zA-Z]
 \".*\" {printf("Encontra un literal cadena"); numeroDeLinea++;}
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
-     numeroDeLinea++;
+    appendPalabraReservada(&listaPalabrasReservadas, yytext); numeroDeLinea++;
 }
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
@@ -69,23 +69,23 @@ LETRA [a-zA-Z]
 }
 
 (\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {
-
+    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
 }
 
 [\(\)\{\}\,\;\[\]] {
-
+    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
 }
 
 \/\/.*\n {
-
+    pushComentario(&listaComentariosSimples, yytext); numeroDeLinea++;
 }
 
 \/\*.*\*\/ {
-
+    pushComentario(&listaComentariosCompuestos, yytext); numeroDeLinea++;
 }
 
 .+  {
-
+    pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;
 }
 
 %%
