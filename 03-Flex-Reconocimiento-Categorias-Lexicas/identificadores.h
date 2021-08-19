@@ -3,24 +3,22 @@
 
 
 
-typedef struct Data{
+typedef struct DataIdentifier{
     char identificador[MAX_TAM_IDENTIFIER];
     int repeticion;
-} Data;
+} DataIdentifier;
 
 typedef struct IdentifierNode{
-    Data data;
-    struct Node* next;
+    DataIdentifier data;
+    struct IdentifierNode* next;
 } IdentifierNode;
 
 
 
-void add(IdentifierNode** head, char identificador[]);
-void push(IdentifierNode** head, char identificador[]);
-Data newDataIdentifier(char identificador[]);
-IdentifierNode* search(IdentifierNode* head, char identificador[]);
+void addIdentifier(IdentifierNode** head, char identificador[]);
+void pushIdentifier(IdentifierNode** head, char identificador[]);
+DataIdentifier newDataIdentifier(char identificador[]);
+IdentifierNode* searchIdentifier(IdentifierNode* head, char identificador[]);
 void sortIdentidier(IdentifierNode** head);
-void printList(IdentifierNode* node);
-void deleteList(IdentifierNode** head);
-
-void reporteIdentificadores(IdentifierNode** head,char identificador[]);
+void printListIdentifier(IdentifierNode* node);
+void deleteListIdentifier(IdentifierNode** head);

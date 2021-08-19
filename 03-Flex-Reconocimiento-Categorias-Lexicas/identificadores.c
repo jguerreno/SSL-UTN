@@ -5,20 +5,20 @@
 #include <stdbool.h>
 
 
-void add(IdentifierNode** head, char identificador[]){
+void addIdentifier(IdentifierNode** head, char identificador[]){
 
-    IdentifierNode* node = search(*head, identificador);
+    IdentifierNode* node = searchIdentifier(*head, identificador);
 
     if(node != NULL){
         node->data.repeticion++;
     }
     else{
-        push(head, identificador);
+        pushIdentifier(head, identificador);
     }
 }
 
 
-void push(IdentifierNode** head, char identificador[]){
+void pushIdentifier(IdentifierNode** head, char identificador[]){
     /* 1. allocate node */
     IdentifierNode* new_node = (IdentifierNode*) malloc(sizeof(IdentifierNode));
 
@@ -33,8 +33,8 @@ void push(IdentifierNode** head, char identificador[]){
 }
 
 
-Data newDataIdentifier(char identificador[]){
-    Data data;
+DataIdentifier newDataIdentifier(char identificador[]){
+    DataIdentifier data;
 
     strcpy(data.identificador, identificador);
     data.repeticion = 0;
@@ -43,10 +43,10 @@ Data newDataIdentifier(char identificador[]){
 }
 
 
-IdentifierNode* search(IdentifierNode* head, char identificador[]){
+IdentifierNode* searchIdentifier(IdentifierNode* head, char identificador[]){
     IdentifierNode* current = head;  // Initialize current
 
-    while (current != NULL || strcmp(current->data.identificador, identificador)!=0){
+    while (current != NULL && strcmp(current->data.identificador, identificador)!=0){
         current = current->next;
     }
 
@@ -54,7 +54,7 @@ IdentifierNode* search(IdentifierNode* head, char identificador[]){
 }
 
 
-void printList(IdentifierNode* node){
+void printListIdentifier(IdentifierNode* node){
 
     printf("Identificador\tCantidad de Repeticiones\n");
 
@@ -67,7 +67,7 @@ void printList(IdentifierNode* node){
 }
 
 
-void deleteList(IdentifierNode** head){
+void deleteListIdentifier(IdentifierNode** head){
     /* deref head_ref to get the real head */
     IdentifierNode* current = *head;
     IdentifierNode* next;
@@ -85,10 +85,39 @@ void deleteList(IdentifierNode** head){
 
 
 void sortIdentidier(IdentifierNode** head){
+    IdentifierNode *aux, *aux2, *temp;
+    
+    int mayor = 0;
+    
+    aux = (*head);
+    
+    aux2 = aux;
+    
+    while (aux->next != NULL)
+    {
+        while (aux2 != NULL)
+        {
+            if (aux2->data.repeticion >= mayor)
+                mayor = aux2->data.repeticion;
+        }
+        
+        aux2 = aux;
+        
+        while (aux2->next != NULL)
+        {
+            if ((aux2->next)->data.repeticion == mayor)
+            {
+                temp = (aux2->next)->next;
+                (aux2->next)->next= aux;
+                aux->next = temp;
+            }
+            aux2 = aux2->next;
+            
+        }
+        aux = aux->next;
+    }
 }
 
 
-void reporteIdentificadores(IdentifierNode** head,char identificador[]){
-    add(head,identificador);
-}
+
 

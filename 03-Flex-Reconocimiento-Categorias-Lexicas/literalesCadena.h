@@ -10,7 +10,7 @@ typedef struct Data{
 
 typedef struct LiteralCadenaNode{
     Data data;
-    struct Node* next;
+    struct LiteralCadenaNode* next;
 } LiteralCadenaNode;
 
 
