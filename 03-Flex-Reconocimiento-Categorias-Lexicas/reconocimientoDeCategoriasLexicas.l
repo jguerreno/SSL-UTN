@@ -3,11 +3,11 @@
 %{
 #include<stdio.h> 
 #include "lib.h"   
-/**#include "identificadores.h"
+#include "identificadores.h"
 #include "comentarios.h"
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
-#include "operadoresYcaracteresDePuntuacion.h"**/
+#include "operadoresYcaracteresDePuntuacion.h"
 #include "constantesDec.h"
 #include "constantesOct.h"
 #include "constantesHex.h"
