@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 
 void push(struct Node** head_ref, int new_data){
     /* 1. allocate node */
@@ -236,6 +237,7 @@ int octalToDec(int octal){
         decimal = decimal + (octal % 10) * pow(8,i++);
         octal = octal / 10;
     }
+    printf("Valor decimal del numero octal encontrado: %d\n", decimal);
     return decimal;
 }
 
@@ -258,9 +260,46 @@ int hexToDec(char *hex){
             base *= 16;
         }
     }
+    printf("Valor decimal del numero hexadecimal encontrado: %d\n", decimal);
     return decimal;
 }
 
 
+int realToEntero(char *real){
+    char aux[100];
+    memset(aux, 0,strlen(aux));
+    for(int i = 0; real[i] != '.' ; i++){
+        aux[i] = real[i];
+    }
+    return (atoi(aux));
+}
 
-//Falta real a dec con mantisa y exponente
+/**
+ * 15.75
+1.575E1    = 15.75   
+1575e-2    = 15.75   
+-2.5e-3    = -0.0025 
+25E-4      =  0.0025 
+**/
+
+int mantisaToEntero(char *real){
+    char aux[100],charMult[10];
+    int i = 0,k = 0,m = 0,j;
+    
+    memset(aux, 0,strlen(aux));
+
+    for(k; real[k] != '.';k++);
+
+    for(j = (k + 1) ; real[j] != 'E' ; j++){
+        aux[i] = real[j];
+        i++;
+    }
+    
+    /**
+     * Remaining to get the rest of the number
+     * 
+     * **/
+    
+    int res = atoi(aux);
+    return res;
+}
