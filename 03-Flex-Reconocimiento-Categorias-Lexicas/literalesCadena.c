@@ -5,25 +5,25 @@
 #include <stdbool.h>
 
 
-void add(LiteralCadenaNode** head, char identificador[]){
+void addLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]){
 
-    LiteralCadenaNode* node = search(*head, identificador);
+    LiteralCadenaNode* node = searchLiteralCadena(*head, cadenaLiteral);
 
     if(node != NULL){
         node->data.repeticion++;
     }
     else{
-        push(head, identificador);
+        pushLiteralCadena(head, cadenaLiteral);
     }
 }
 
 
-void push(LiteralCadenaNode** head, char identificador[]){
+void pushLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]){
     /* 1. allocate node */
     LiteralCadenaNode* new_node = (LiteralCadenaNode*) malloc(sizeof(LiteralCadenaNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataIdentifier(identificador);
+    new_node->data  = newDataLiteralCadena(cadenaLiteral);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -33,20 +33,20 @@ void push(LiteralCadenaNode** head, char identificador[]){
 }
 
 
-Data newDataIdentifier(char identificador[]){
-    Data data;
+DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[]){
+    DataLiteralCadena data;
 
-    strcpy(data.identificador, identificador);
+    strcpy(data.cadenaLiteral, cadenaLiteral);
     data.repeticion = 0;
 
     return data;
 }
 
 
-LiteralCadenaNode* search(LiteralCadenaNode* head, char identificador[]){
+LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[]){
     LiteralCadenaNode* current = head;  // Initialize current
 
-    while (current != NULL || strcmp(current->data.identificador, identificador)==0){
+    while (current != NULL || strcmp(current->data.cadenaLiteral, cadenaLiteral)==0){
         current = current->next;
     }
 
@@ -54,12 +54,12 @@ LiteralCadenaNode* search(LiteralCadenaNode* head, char identificador[]){
 }
 
 
-void printList(LiteralCadenaNode* node){
+void printListLiteralCadena(LiteralCadenaNode* node){
 
-    printf("Identificador\tCantidad de Repeticiones\n");
+    printf("cadenaLiteral\tCantidad de Repeticiones\n");
 
     while (node != NULL){
-     printf("%s\t%d\n", node->data.identificador, node->data.repeticion);
+     printf("%s\t%d\n", node->data.cadenaLiteral, node->data.repeticion);
 
      node = node->next;
   }
@@ -67,7 +67,7 @@ void printList(LiteralCadenaNode* node){
 }
 
 
-void deleteList(LiteralCadenaNode** head){
+void deleteListLiteralCadena(LiteralCadenaNode** head){
     /* deref head_ref to get the real head */
     LiteralCadenaNode* current = *head;
     LiteralCadenaNode* next;
@@ -83,7 +83,7 @@ void deleteList(LiteralCadenaNode** head){
     *head = NULL;
 }
 
-void sortIdentidier(LiteralCadenaNode** head){
+void sortLiteralCadena(LiteralCadenaNode** head){
 
     LiteralCadenaNode *aux, *aux2, *temp, * current = *head;
     LiteralCadenaNode* next;
@@ -97,15 +97,15 @@ void sortIdentidier(LiteralCadenaNode** head){
     {
         while (aux2 != NULL)
         {
-            if (aux2->next >= mayor)
-                mayor = aux2->next;
+            if (aux2->next->data.repeticion >= mayor)
+                mayor = aux2->next->data.repeticion;
         }
         
         aux2 = aux;
         
         while (aux2->next != NULL)
         {
-            if ((aux2->next)->next == mayor)
+            if ((aux2->next)->next->data.repeticion == mayor)
             {
                 temp = (aux2->next)->next;
                 (aux2->next)->next = aux;

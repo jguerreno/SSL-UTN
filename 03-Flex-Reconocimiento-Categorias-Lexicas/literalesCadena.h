@@ -3,24 +3,23 @@
 
 
 
-typedef struct Data{
-    char identificador[MAX_TAM_IDENTIFIER];
+typedef struct DataLiteralCadena{
+    char cadenaLiteral[MAX_TAM_IDENTIFIER];
     int repeticion;
-} Data;
+} DataLiteralCadena;
 
 typedef struct LiteralCadenaNode{
-    Data data;
+    DataLiteralCadena data;
     struct LiteralCadenaNode* next;
 } LiteralCadenaNode;
 
 
 
-void add(LiteralCadenaNode** head, char identificador[]);
-void push(LiteralCadenaNode** head, char identificador[]);
-Data newDataIdentifier(char identificador[]);
-LiteralCadenaNode* search(LiteralCadenaNode* head, char identificador[]);
-void sortIdentidier(LiteralCadenaNode** head);
-void printList(LiteralCadenaNode* node);
-void deleteList(LiteralCadenaNode** head);
+void addLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]);
+void pushLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]);
+DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[]);
+LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[]);
+void sortLiteralCadena(LiteralCadenaNode** head);
+void printListLiteralCadena(LiteralCadenaNode* node);
+void deleteListLiteralCadena(LiteralCadenaNode** head);
 
-void reporteLiteralCadenas(LiteralCadenaNode** head,char identificador[]);
