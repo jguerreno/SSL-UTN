@@ -97,6 +97,36 @@ int main(void){
 
     yylex();
 
+    // Palabras reservadas
+    printPalabrasReservadas(listaPalabrasReservadas);
+    deletePalabrasReservadas(&listaPalabrasReservadas);
+
+
+    // Comentarios
+    // Simples
+    char comentariosSimples[] = "Simples";
+    printComentarios(listaComentariosSimples, comentariosSimples);
+    deleteListaComentarios(&listaComentariosSimples);
+
+    // Compuestos
+    char comentariosCompuestos[] = "Compuestos";
+    printComentarios(listaComentariosCompuestos, comentariosCompuestos);
+    deleteListaComentarios(&listaComentariosCompuestos);
+
+
+	// Palabras No Reconocidas
+    printPalabrasNoReconocidas(listaPalabrasNoReconocidas);
+    deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
+
+
+    // Operadores y Caracteres de Puntuacion
+    printOperadores(listaOperadores);
+    deleteListaOperadores(&listaOperadores);
+
+   // Identificadores
+    printListIdentifier(listaIdentificadores);
+    deleteListIdentifier(&listaIdentificadores);
+    
     //Constantes Decimales
     printConstantesDecimales(listaConstantesDecimales);
     deleteListaConstanteDecimales(&listaConstantesDecimales);
