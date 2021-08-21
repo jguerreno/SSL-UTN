@@ -98,10 +98,6 @@ LETRA [a-zA-Z]
     pushComentario(&listaComentariosCompuestos, yytext); numeroDeLinea++;
 }
 
-.+  {
-    pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;
-}
-
 %%
 
 
