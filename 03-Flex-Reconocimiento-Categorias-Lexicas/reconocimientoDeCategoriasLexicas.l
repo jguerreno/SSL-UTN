@@ -4,14 +4,17 @@
 #include<stdio.h> 
 #include "lib.h"   
 #include "identificadores.h"
-#include "comentarios.h"
-#include "palabrasReservadas.h"
+/*
 #include "palabrasNoReconocidas.h"
+*/
+#include "palabrasReservadas.h"
 #include "operadoresYcaracteresDePuntuacion.h"
 #include "constantesDec.h"
 #include "constantesOct.h"
 #include "constantesHex.h"
-
+#include "constantesReal.h"
+#include "constantesCaracter.h"
+#include "comentarios.h"
 #define MAX_TAM_IDENTIFIER 50
 
 // Cantidad de lineas
@@ -19,6 +22,9 @@ int numeroDeLinea = 1;
 
 //ACUMULADOR DE CONSTANTES DECIMALES
 int acumDecimal = 0;
+
+// Identificadores
+IdentifierNode *listaIdentificadores = NULL;
 
 //Constantes Decimales
 ConstDecNode* listaConstantesDecimales = NULL;
@@ -29,8 +35,17 @@ ConstOctNode* listaConstantesOctales = NULL;
 //Constantes Hexadecimales
 ConstHexNode* listaConstantesHexadecimales = NULL;
 
+//Constante Real
+ConstRealNode* listaConstantesReales = NULL;
+
+//Constante Caracter 
+ConstCaracNode* listaConstantesCaracter = NULL;
+
 // Palabras Reservadas
 PalabrasReservadasNode* listaPalabrasReservadas = NULL;
+
+// Operadores y Caracteres de Puntuacion
+OperadoresNode* listaOperadores = NULL;
 
 // Comentarios Simples
 ComentarioNode* listaComentariosSimples = NULL;
@@ -38,14 +53,6 @@ ComentarioNode* listaComentariosSimples = NULL;
 // Comentarios Compuestos
 ComentarioNode* listaComentariosCompuestos = NULL;
 
-// Palabras no reconocidas
-NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
-
-// Operadores y Caracteres de Puntuacion
-OperadoresNode* listaOperadores = NULL;
-
-// Identificadores
-IdentifierNode *listaIdentificadores = NULL;
 %}
 
 DIGITO_DECIMAL [0-9] 
@@ -54,48 +61,64 @@ DIGITO_HEXADECIMAL [a-fA-F0-9]
 LETRA [a-zA-Z] 
 
 %%
-[1-9]{DIGITO_DECIMAL}* {printf("Encontre la constante entera decimal: %s de longitud %d \n",yytext,yyleng); 
-                        pushConstDec(&listaConstantesDecimales, yytext);
+[1-9]{DIGITO_DECIMAL}* {
                         acumDecimal += atoi(yytext);
+                        pushConstDec(&listaConstantesDecimales, yytext);
                         numeroDeLinea++;
                         }
-0{DIGITO_OCTAL}* {printf("Encontre la constante entera octal: %s de longitud %d \n",yytext,yyleng); 
+0{DIGITO_OCTAL}* {
                   pushConstOct(&listaConstantesOctales,yytext);
                   numeroDeLinea++;
                   }
-0[xX]{DIGITO_HEXADECIMAL}+ {printf("Encontre la constante entera hexadecimal: %s de longitud %d \n",yytext,yyleng); 
-                            numeroDeLinea++;
+0[xX]{DIGITO_HEXADECIMAL}+ { 
                             pushConstHex(&listaConstantesHexadecimales,yytext);
+                            numeroDeLinea++;
                             }
 
-[0-9]+\.[0-9]+[Ee]((\+?)|\-)[0-9]+ {printf("Encontre una constante real: %s\n",yytext);}
+[0-9]+\.[0-9]+[Ee]((\+?)|\-)[0-9]+ {
+                              pushConstReal(&listaConstantesReales,yytext);
+                              numeroDeLinea++;
+                    }
 
-\'.\' {printf("Encontre una constante caracter"); numeroDeLinea++;}
+\'.\' {
+        char constanteCaracter = yytext[1];
+        pushConstCarac(&listaConstantesCaracter, yytext[1]);
+        numeroDeLinea++;
+      }
 
-\".*\" {printf("Encontra un literal cadena"); numeroDeLinea++;}
+\".*\" { 
+        printf("Encontra un literal cadena \n"); 
+         numeroDeLinea++;
+       }
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
-    appendPalabraReservada(&listaPalabrasReservadas, yytext); numeroDeLinea++;
+     appendPalabraReservada(&listaPalabrasReservadas, yytext); 
+     numeroDeLinea++;
 }
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
-    addIdentifier(&listaIdentificadores, yytext); numeroDeLinea++;
-}
+                                        addIdentifier(&listaIdentificadores, yytext); 
+                                        numeroDeLinea++;
+                                        }
 
 (\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {
-    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
+     addOperadores(&listaOperadores, yytext[0]); 
+     numeroDeLinea++;
 }
 
 [\(\)\{\}\,\;\[\]] {
-    addOperadores(&listaOperadores, yytext[0]); numeroDeLinea++;
+     addOperadores(&listaOperadores, yytext[0]); 
+     numeroDeLinea++;
 }
 
 \/\/.*\n {
-    pushComentario(&listaComentariosSimples, yytext); numeroDeLinea++;
+     pushComentario(&listaComentariosSimples, yytext); 
+     numeroDeLinea++;
 }
 
 \/\*.*\*\/ {
-    pushComentario(&listaComentariosCompuestos, yytext); numeroDeLinea++;
+     pushComentario(&listaComentariosSimples, yytext); 
+     numeroDeLinea++;
 }
 
 %%
@@ -107,48 +130,38 @@ int main(void){
 
     yylex();
 
-    // Palabras reservadas
-    printPalabrasReservadas(listaPalabrasReservadas);
-    deletePalabrasReservadas(&listaPalabrasReservadas);
-
-
-    // Comentarios
-    // Simples
-    char comentariosSimples[] = "Simples";
-    printComentarios(listaComentariosSimples, comentariosSimples);
-    deleteListaComentarios(&listaComentariosSimples);
-
-    // Compuestos
-    char comentariosCompuestos[] = "Compuestos";
-    printComentarios(listaComentariosCompuestos, comentariosCompuestos);
-    deleteListaComentarios(&listaComentariosCompuestos);
-
-
-	// Palabras No Reconocidas
-    printPalabrasNoReconocidas(listaPalabrasNoReconocidas);
-    deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
-
-
-    // Operadores y Caracteres de Puntuacion
-    printOperadores(listaOperadores);
-    deleteListaOperadores(&listaOperadores);
-
    // Identificadores
     printListIdentifier(listaIdentificadores);
-    deleteListIdentifier(&listaIdentificadores);
-    
+
     //Constantes Decimales
     printConstantesDecimales(listaConstantesDecimales);
-    deleteListaConstanteDecimales(&listaConstantesDecimales);
     printf("Acumulado valor decimal %d\n",acumDecimal);
 
     //Constanes Octales
     printConstantesOctales(listaConstantesOctales);
-    deleteListaConstanteDecimales(&listaConstantesOctales);
 
     //Constantes Hexadecimales
     printConstantesHexadecimales(listaConstantesHexadecimales);
 
+    //Constantes Reales
+    printConstantesReales(listaConstantesReales);
+
+    //Consantes Caracter
+    printConstantesCaracter(listaConstantesCaracter);
+
+    //Palabras Reservadas
+    printPalabrasReservadas(listaPalabrasReservadas);
+
+    //Operadores y caracteres de Puntuacion
+    printOperadores(listaOperadores);
+
+    // Comentarios simples
+    char comentariosSimples[] = "Simples";
+    printComentarios(listaComentariosSimples, comentariosSimples);
+
+    // Comentarios compuestos
+    char comentariosCompuestos[] = "Compuestos";
+    printComentarios(listaComentariosCompuestos, comentariosCompuestos);
 
     return 0;
 }

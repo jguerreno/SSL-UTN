@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
-
-
 void pushConstOct(ConstOctNode** head, char *oct){
     /* 1. allocate node */
     ConstOctNode* new_node = (ConstOctNode*) malloc(sizeof(ConstOctNode));
@@ -36,7 +33,7 @@ void printConstantesOctales(ConstOctNode *node){
     printf("CONSTANTES OCTALES\n");
 
     while (node != NULL){
-     printf("%s\n", node->data.constante);
+     printf("%s ", node->data.constante);
      int octal = atoi(node->data.constante);
      printf("Valor Decimal: %d\n",octalToDec(octal));
 

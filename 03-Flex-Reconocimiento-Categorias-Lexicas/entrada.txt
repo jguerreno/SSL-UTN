@@ -1,6 +1,17 @@
-hola
-_hola
-hola19
-_
-a
-1919
+/*
+Comentario
+*/
+
+//Prueba simple
+
+int main () {
+    printf("Hola");
+    int a = 3;
+    int b = 0xAF;
+    int c = 052;
+    int d  = 4.3E+21;
+    char *aa = "hola";
+    char aaa = 'f';
+    char bb = 'g';
+    return 0;
+}

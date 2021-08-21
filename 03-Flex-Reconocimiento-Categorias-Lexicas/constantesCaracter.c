@@ -1,11 +1,11 @@
-#include "constCaracter.h"
+#include "constantesCaracter.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 
-void pushConstCarac(ConstCaracNode** head, char *constCarac){
+void pushConstCarac(ConstCaracNode** head, char constCarac){
     /* 1. allocate node */
     ConstCaracNode* new_node = (ConstCaracNode*) malloc(sizeof(ConstCaracNode));
 
@@ -20,7 +20,7 @@ void pushConstCarac(ConstCaracNode** head, char *constCarac){
 }
 
 
-DataConstCarac newDataConstDec(char constCarac){
+DataConstCarac newDataConstCarac(char constCarac){
     DataConstCarac data;
 
     data.constanteCaracter = constCarac;
@@ -31,19 +31,17 @@ DataConstCarac newDataConstDec(char constCarac){
 void printConstantesCaracter(ConstCaracNode *node){
 
     int i = 0;
-    printf("CONSTANTES CARACTER\n");
+    printf("CONSTANTES CARACTER \n");
 
     while (node != NULL){
-     printf("%s %d\n", i, node->data.constanteCaracter);
+     printf("%c %d\n", node->data.constanteCaracter,i);
      i++;
-
      node = node->next;
   }
 
 }
 
 void deleteListaConstantesCaracter(ConstCaracNode** head){
-    /* deref head_ref to get the real head */
     ConstCaracNode* current = *head;
     ConstCaracNode* next;
  
@@ -52,9 +50,7 @@ void deleteListaConstantesCaracter(ConstCaracNode** head){
         next = current->next;
         free(current);
         current = next;
-    }
-   
-    /* deref head to affect the real head back in the caller. */
+    }   
     *head = NULL;
 }
 

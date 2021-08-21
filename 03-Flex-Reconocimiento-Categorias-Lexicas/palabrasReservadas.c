@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void appendPalabraReservada(PalabrasReservadasNode** head_ref, char palabraReservada[]){
+void appendPalabraReservada(PalabrasReservadasNode** head_ref, char *palabraReservada){
     /* 1. allocate node */
     PalabrasReservadasNode* new_node = (PalabrasReservadasNode*) malloc(sizeof(PalabrasReservadasNode));
 
@@ -12,21 +12,12 @@ void appendPalabraReservada(PalabrasReservadasNode** head_ref, char palabraReser
   
     /* 2. put in the data  */
     new_node->data = newDataPalabraReservada(palabraReservada);
-    //strcpy(new_node->data.palabraReservada, palabraReservada);
- 
-    /* 3. This new node is going to be the last node, so make next of it as NULL*/
-    new_node->next = NULL;
-     
-    /* 4. If the Linked List is empty, then make the new node as head */
-    if (*head_ref == NULL)
-       *head_ref = new_node;
-  
-    /* 5. Else traverse till the last node */
-    while (last->next != NULL)
-        last = last->next;
-  
-    /* 6. Change the next of last node */
-    last->next = new_node;
+    
+    /* 3. Make next of new node as head */
+    new_node->next = (*head_ref);
+
+    /* 4. move the head to point to the new node */
+    (*head_ref)    = new_node;
 }
 
 DataPalabraReservada newDataPalabraReservada(char palabraReservada[]){

@@ -237,7 +237,6 @@ int octalToDec(int octal){
         decimal = decimal + (octal % 10) * pow(8,i++);
         octal = octal / 10;
     }
-    printf("Valor decimal del numero octal encontrado: %d\n", decimal);
     return decimal;
 }
 
@@ -260,7 +259,6 @@ int hexToDec(char *hex){
             base *= 16;
         }
     }
-    printf("Valor decimal del numero hexadecimal encontrado: %d\n", decimal);
     return decimal;
 }
 

@@ -36,7 +36,7 @@ void printConstantesHexadecimales(ConstHexNode *node){
     printf("CONSTANTES HEXADECIMALES\n");
 
     while (node != NULL){
-     printf("%s\n", node->data.constante);
+     printf("%s ", node->data.constante);
      printf("Valor Decimal: %d\n",hexToDec(node->data.constante));
 
      node = node->next;
