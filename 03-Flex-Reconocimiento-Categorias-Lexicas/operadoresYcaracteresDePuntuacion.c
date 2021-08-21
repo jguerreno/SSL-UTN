@@ -51,7 +51,7 @@ OperadoresNode* searchOperadores(OperadoresNode* head, char operador){
 }
 
 
-void printListaOperadores(OperadoresNode* node){
+void printOperadores(OperadoresNode* node){
 
     printf("Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones\n");
 

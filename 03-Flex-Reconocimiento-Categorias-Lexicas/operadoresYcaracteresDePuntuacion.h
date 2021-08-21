@@ -1,8 +1,6 @@
 
 #define MAX_TAM_IDENTIFIER 50
 
-
-
 typedef struct DataOperadores{
     char operador;
     int repeticion;
@@ -12,8 +10,6 @@ typedef struct OperadoresNode{
     DataOperadores data;
     struct OperadoresNode* next;
 } OperadoresNode;
-
-
 
 void addOperadores(OperadoresNode** head, char operador);
 void pushOperadores(OperadoresNode** head, char operador);
