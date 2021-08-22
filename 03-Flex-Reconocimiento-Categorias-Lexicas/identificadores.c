@@ -37,7 +37,7 @@ DataIdentifier newDataIdentifier(char identificador[]){
     DataIdentifier data;
 
     strcpy(data.identificador, identificador);
-    data.repeticion = 0;
+    data.repeticion = 1;
 
     return data;
 }
