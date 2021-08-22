@@ -54,12 +54,12 @@ LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiter
 }
 
 
-void printListLiteralCadena(LiteralCadenaNode* node){
+void printListLiteralCadena(FILE *reporte, LiteralCadenaNode* node){
 
-    printf("cadenaLiteral\tCantidad de Repeticiones\n");
+    fprintf(reporte,"cadenaLiteral\tCantidad de Repeticiones\n");
 
     while (node != NULL){
-     printf("%s\t%d\n", node->data.cadenaLiteral, node->data.repeticion);
+     fprintf(reporte,"%s\t%d\n", node->data.cadenaLiteral, node->data.repeticion);
 
      node = node->next;
   }

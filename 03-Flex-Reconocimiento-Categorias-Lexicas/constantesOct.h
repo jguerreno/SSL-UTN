@@ -1,5 +1,7 @@
+#include <stdio.h>
 
 #define MAX_TAM_IDENTIFIER 50
+
 
 typedef struct DataConstOct{
     char constante[MAX_TAM_IDENTIFIER];
@@ -12,5 +14,5 @@ typedef struct ConstOctNode{
 
 void pushConstOct(ConstOctNode** head, char *oct);
 DataConstOct newDataConstOct(char *oct);
-void printConstantesOctales(ConstOctNode* node);
+void printConstantesOctales(FILE *reporte, ConstOctNode* node);
 void deleteListaConstanteOctales(ConstOctNode** head);

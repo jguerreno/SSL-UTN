@@ -28,12 +28,12 @@ DataConstDec newDataConstDec(char *dec){
     return data;
 }
 
-void printConstantesDecimales(ConstDecNode *node){
+void printConstantesDecimales(FILE *reporte, ConstDecNode *node){
 
-    printf("CONSTANTES DECIMALES\n");
+    fprintf(reporte,"CONSTANTES DECIMALES\n");
 
     while (node != NULL){
-     printf("%s\n", node->data.constante);
+     fprintf(reporte,"%s\n", node->data.constante);
 
      node = node->next;
   }

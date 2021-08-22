@@ -1,6 +1,6 @@
+#include <stdio.h>
 
 #define MAX_TAM_IDENTIFIER 50
-
 
 
 typedef struct DataIdentifier{
@@ -20,5 +20,5 @@ void pushIdentifier(IdentifierNode** head, char identificador[]);
 DataIdentifier newDataIdentifier(char identificador[]);
 IdentifierNode* searchIdentifier(IdentifierNode* head, char identificador[]);
 void sortIdentidier(IdentifierNode** head);
-void printListIdentifier(IdentifierNode* node);
+void printListIdentifier(FILE *reporte, IdentifierNode* node);
 void deleteListIdentifier(IdentifierNode** head);

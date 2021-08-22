@@ -1,6 +1,6 @@
+#include <stdio.h>
 
 #define MAX_TAM_IDENTIFIER 50
-
 
 
 typedef struct DataLiteralCadena{
@@ -20,6 +20,6 @@ void pushLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]);
 DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[]);
 LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[]);
 void sortLiteralCadena(LiteralCadenaNode** head);
-void printListLiteralCadena(LiteralCadenaNode* node);
+void printListLiteralCadena(FILE *reporte, LiteralCadenaNode* node);
 void deleteListLiteralCadena(LiteralCadenaNode** head);
 

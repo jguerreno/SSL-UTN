@@ -29,17 +29,17 @@ DataConstReal newDataConstReal(char *real){
     return data;
 }
 
-void printConstantesReales(ConstRealNode *node){
+void printConstantesReales(FILE *reporte, ConstRealNode *node){
 
-    printf("CONSTANTES REALES\n");
+    fprintf(reporte,"CONSTANTES REALES\n");
 
     while (node != NULL){
-     printf("%s\n", node->data.constante);
+     fprintf(reporte,"%s\n", node->data.constante);
      int parteEntera = realToEntero(node->data.constante);
-     printf("Parte entera: %d\n",parteEntera);
+     fprintf(reporte,"Parte entera: %d\n",parteEntera);
 
      int parteMantisa = mantisaToEntero(node->data.constante);
-     printf("Parte mantisa: %d\n",parteMantisa);
+     fprintf(reporte,"Parte mantisa: %d\n",parteMantisa);
 
      node = node->next;
   }

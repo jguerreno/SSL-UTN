@@ -1,5 +1,7 @@
+#include <stdio.h>
 
 #define MAX_TAM_IDENTIFIER 50
+
 typedef struct DataPalabraReservada{
     char palabraReservada[MAX_TAM_IDENTIFIER];
 } DataPalabraReservada;
@@ -11,5 +13,5 @@ typedef struct PalabrasReservadasNode{
 
 void appendPalabraReservada(PalabrasReservadasNode** head_ref, char palabraReservada[]);
 DataPalabraReservada newDataPalabraReservada(char palabraReservada[]);
-void printPalabrasReservadas(PalabrasReservadasNode* node);
+void printPalabrasReservadas(FILE *reporte, PalabrasReservadasNode* node);
 void deletePalabrasReservadas(PalabrasReservadasNode** head);

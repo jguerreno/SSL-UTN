@@ -54,12 +54,12 @@ IdentifierNode* searchIdentifier(IdentifierNode* head, char identificador[]){
 }
 
 
-void printListIdentifier(IdentifierNode* node){
+void printListIdentifier(FILE *reporte, IdentifierNode* node){
 
-    printf("Identificador\tCantidad de Repeticiones\n");
+    fprintf(reporte,"Identificador\tCantidad de Repeticiones\n");
 
     while (node != NULL){
-     printf("%s\t%d\n", node->data.identificador, node->data.repeticion);
+     fprintf(reporte,"%s\t%d\n", node->data.identificador, node->data.repeticion);
 
      node = node->next;
   }

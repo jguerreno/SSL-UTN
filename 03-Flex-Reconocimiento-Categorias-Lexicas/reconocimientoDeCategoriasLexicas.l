@@ -118,40 +118,45 @@ int main(void){
     yyin = fopen("entrada.txt", "r");
     yyout = fopen("salida.txt", "w");	
 
+    FILE *reporte;
+    reporte = fopen("reporte.txt", "w"); 
+
     yylex();
 
-   // Identificadores
-    printListIdentifier(listaIdentificadores);
+    //Identificadores
+    printListIdentifier(reporte, listaIdentificadores);
 
     //Constantes Decimales
-    printConstantesDecimales(listaConstantesDecimales);
-    printf("Acumulado valor decimal %d\n",acumDecimal);
+    printConstantesDecimales(reporte, listaConstantesDecimales);
+    fprintf(reporte,"Acumulado valor decimal %d\n",acumDecimal); 
 
     //Constanes Octales
-    printConstantesOctales(listaConstantesOctales);
+    printConstantesOctales(reporte, listaConstantesOctales);
 
     //Constantes Hexadecimales
-    printConstantesHexadecimales(listaConstantesHexadecimales);
+    printConstantesHexadecimales(reporte, listaConstantesHexadecimales);
 
     //Constantes Reales
-    printConstantesReales(listaConstantesReales);
+    printConstantesReales(reporte, listaConstantesReales);
 
     //Consantes Caracter
-    printConstantesCaracter(listaConstantesCaracter);
+    printConstantesCaracter(reporte, listaConstantesCaracter);
 
     //Palabras Reservadas
-    printPalabrasReservadas(listaPalabrasReservadas);
+    printPalabrasReservadas(reporte, listaPalabrasReservadas);
 
     //Operadores y caracteres de Puntuacion
-    printOperadores(listaOperadores);
+    printOperadores(reporte, listaOperadores);
 
     // Comentarios simples
     char comentariosSimples[] = "Simples";
-    printComentarios(listaComentariosSimples, comentariosSimples);
+    printComentarios(reporte, listaComentariosSimples, comentariosSimples);
 
     // Comentarios compuestos
     char comentariosCompuestos[] = "Compuestos";
-    printComentarios(listaComentariosCompuestos, comentariosCompuestos);
+    printComentarios(reporte, listaComentariosCompuestos, comentariosCompuestos);
+
+    fclose(reporte); 
 
     return 0;
 }

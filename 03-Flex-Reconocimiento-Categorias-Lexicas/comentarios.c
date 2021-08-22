@@ -30,12 +30,12 @@ DataComentario newDataComentario(char comentario[]){
 }
 
 
-void printComentarios(ComentarioNode* node, char tipo[]){
+void printComentarios(FILE *reporte, ComentarioNode* node, char tipo[]){
 
-    printf("Comentarios %s\n", tipo);
+    fprintf(reporte,"Comentarios %s\n", tipo);
 
     while (node != NULL){
-     printf("%s\n", node->data.comentario);
+     fprintf(reporte,"%s\n", node->data.comentario);
 
      node = node->next;
   }

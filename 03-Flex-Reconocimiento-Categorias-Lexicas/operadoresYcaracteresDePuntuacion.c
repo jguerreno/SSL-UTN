@@ -51,12 +51,12 @@ OperadoresNode* searchOperadores(OperadoresNode* head, char operador){
 }
 
 
-void printOperadores(OperadoresNode* node){
+void printOperadores(FILE *reporte, OperadoresNode* node){
 
-    printf("Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones\n");
+    fprintf(reporte,"Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones\n");
 
     while (node != NULL){
-     printf("%c\t\t%d\n", node->data.operador, node->data.repeticion);
+     fprintf(reporte,"%c\t\t%d\n", node->data.operador, node->data.repeticion);
 
      node = node->next;
   }

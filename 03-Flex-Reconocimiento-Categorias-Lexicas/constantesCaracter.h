@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 #define MAX_TAM_IDENTIFIER 50
 
@@ -12,5 +13,5 @@ typedef struct ConstCaracNode{
 
 void pushConstCarac(ConstCaracNode** head, char constCarac);
 DataConstCarac newDataConstCarac(char constCarac);
-void printConstantesCaracter(ConstCaracNode* node);
+void printConstantesCaracter(FILE *reporte, ConstCaracNode* node);
 void deleteListaConstantesCaracter(ConstCaracNode** head);

@@ -1,7 +1,6 @@
+#include <stdio.h>
 
 #define MAX_TAM_IDENTIFIER 50
-
-
 
 typedef struct DataComentario{
     char comentario[MAX_TAM_IDENTIFIER];
@@ -16,5 +15,5 @@ typedef struct ComentarioNode{
 
 void pushComentario(ComentarioNode** head, char comentario[]);
 DataComentario newDataComentario(char comentario[]);
-void printComentarios(ComentarioNode* node, char tipo[]);
+void printComentarios(FILE *reporte, ComentarioNode* node, char tipo[]);
 void deleteListaComentarios(ComentarioNode** head);

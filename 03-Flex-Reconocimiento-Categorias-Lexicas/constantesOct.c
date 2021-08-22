@@ -28,14 +28,14 @@ DataConstOct newDataConstOct(char *oct){
     return data;
 }
 
-void printConstantesOctales(ConstOctNode *node){
+void printConstantesOctales(FILE *reporte, ConstOctNode *node){
 
-    printf("CONSTANTES OCTALES\n");
+    fprintf(reporte,"CONSTANTES OCTALES\n");
 
     while (node != NULL){
-     printf("%s ", node->data.constante);
+     fprintf(reporte,"%s ", node->data.constante);
      int octal = atoi(node->data.constante);
-     printf("Valor Decimal: %d\n",octalToDec(octal));
+     fprintf(reporte,"Valor Decimal: %d\n",octalToDec(octal));
 
      node = node->next;
   }

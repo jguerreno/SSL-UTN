@@ -28,13 +28,13 @@ DataConstCarac newDataConstCarac(char constCarac){
     return data;
 }
 
-void printConstantesCaracter(ConstCaracNode *node){
+void printConstantesCaracter(FILE *reporte, ConstCaracNode *node){
 
     int i = 0;
-    printf("CONSTANTES CARACTER \n");
+    fprintf(reporte,"CONSTANTES CARACTER \n");
 
     while (node != NULL){
-     printf("%c %d\n", node->data.constanteCaracter,i);
+     fprintf(reporte,"%c %d\n", node->data.constanteCaracter,i);
      i++;
      node = node->next;
   }

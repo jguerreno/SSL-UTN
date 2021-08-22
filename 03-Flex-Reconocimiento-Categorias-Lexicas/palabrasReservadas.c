@@ -29,12 +29,12 @@ DataPalabraReservada newDataPalabraReservada(char palabraReservada[]){
 }
 
 
-void printPalabrasReservadas(PalabrasReservadasNode* node){
+void printPalabrasReservadas(FILE *reporte, PalabrasReservadasNode* node){
 
-    printf("Palabra Reservada\n");
+    fprintf(reporte,"Palabra Reservada\n");
 
     while (node != NULL){
-     printf("%s\n", node->data.palabraReservada);
+     fprintf(reporte,"%s\n", node->data.palabraReservada);
 
      node = node->next;
     }

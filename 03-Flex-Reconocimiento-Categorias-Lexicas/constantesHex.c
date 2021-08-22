@@ -31,13 +31,13 @@ DataConstHex newDataConstHex(char *hex){
     return data;
 }
 
-void printConstantesHexadecimales(ConstHexNode *node){
+void printConstantesHexadecimales(FILE *reporte, ConstHexNode *node){
 
-    printf("CONSTANTES HEXADECIMALES\n");
+    fprintf(reporte,"CONSTANTES HEXADECIMALES\n");
 
     while (node != NULL){
-     printf("%s ", node->data.constante);
-     printf("Valor Decimal: %d\n",hexToDec(node->data.constante));
+     fprintf(reporte,"%s ", node->data.constante);
+     fprintf(reporte,"Valor Decimal: %d\n",hexToDec(node->data.constante));
 
      node = node->next;
   }
