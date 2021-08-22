@@ -1,12 +1,12 @@
-/*
-Comentario
-*/
+/*Comentario*/
 
 //Prueba simple
 
 int main () {
     printf("Hola");
     int a = 3;
+    a++;
+    a++;
     int b = 0xAF;
     int c = 052;
     int d  = 4.3E+21;
@@ -15,3 +15,6 @@ int main () {
     char bb = 'g';
     return 0;
 }
+
+// Fin
+/*Fin*/
