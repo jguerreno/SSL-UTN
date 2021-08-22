@@ -116,11 +116,12 @@ LETRA [a-zA-Z]
      numeroDeLinea++;
 }
 
-\/\*.*\*\/ {
-     pushComentario(&listaComentariosSimples, yytext); 
+(\/\*.*\*\/)|(\/\*\n.*\n\*\/) {
+     pushComentario(&listaComentariosCompuestos, yytext); 
      numeroDeLinea++;
 }
 
+"\n" {printf("Hola rey\n\n");}
 %%
 
 
