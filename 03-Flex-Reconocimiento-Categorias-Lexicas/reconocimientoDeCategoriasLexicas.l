@@ -64,64 +64,53 @@ LETRA [a-zA-Z]
 [1-9]{DIGITO_DECIMAL}* {
                         acumDecimal += atoi(yytext);
                         pushConstDec(&listaConstantesDecimales, yytext);
-                        numeroDeLinea++;
                         }
 0{DIGITO_OCTAL}* {
                   pushConstOct(&listaConstantesOctales,yytext);
-                  numeroDeLinea++;
                   }
 0[xX]{DIGITO_HEXADECIMAL}+ { 
                             pushConstHex(&listaConstantesHexadecimales,yytext);
-                            numeroDeLinea++;
                             }
 
 [0-9]+\.[0-9]+[Ee]((\+?)|\-)[0-9]+ {
                               pushConstReal(&listaConstantesReales,yytext);
-                              numeroDeLinea++;
                     }
 
 \'.\' {
         char constanteCaracter = yytext[1];
         pushConstCarac(&listaConstantesCaracter, yytext[1]);
-        numeroDeLinea++;
       }
 
 \".*\" { 
         printf("Encontra un literal cadena \n"); 
-         numeroDeLinea++;
        }
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
      appendPalabraReservada(&listaPalabrasReservadas, yytext); 
-     numeroDeLinea++;
 }
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
                                         addIdentifier(&listaIdentificadores, yytext); 
-                                        numeroDeLinea++;
                                         }
 
 (\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {
      addOperadores(&listaOperadores, yytext[0]); 
-     numeroDeLinea++;
 }
 
 [\(\)\{\}\,\;\[\]] {
      addOperadores(&listaOperadores, yytext[0]); 
-     numeroDeLinea++;
 }
 
 \/\/.*\n {
      pushComentario(&listaComentariosSimples, yytext); 
-     numeroDeLinea++;
 }
 
 (\/\*.*\*\/)|(\/\*\n.*\n\*\/) {
      pushComentario(&listaComentariosCompuestos, yytext); 
-     numeroDeLinea++;
 }
 
-"\n" {printf("Hola rey\n\n");}
+\n {numeroDeLinea++;}
+
 %%
 
 
