@@ -34,7 +34,7 @@ void pushOperadores(OperadoresNode** head, char operador){
 
 
 DataOperadores newDataOperadores(char operador){
-    DataOperadores data = {operador, 0};
+    DataOperadores data = {operador, 1};
 
     return data;
 }
