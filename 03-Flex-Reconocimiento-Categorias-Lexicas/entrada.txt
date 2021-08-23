@@ -13,8 +13,13 @@ int main () {
     char *aa = "hola";
     char aaa = 'f';
     char bb = 'g';
+
+    ##Hola;
+
     return 0;
 }
 
 // Fin
-/*Fin*/
+/*
+Fin
+*/

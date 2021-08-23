@@ -36,7 +36,7 @@ void printPalabrasNoReconocidas(FILE *reporte, NoReconocidoNode* node){
     fprintf(reporte,"Palabras no reconocidas\n");
 
     while (node != NULL){
-        fprintf(reporte,"Linea: %d\tPalabra no Reconocida: %s", node->data.linea, node->data.noReconocida);
+        fprintf(reporte,"Linea: %d\tPalabra no Reconocida: %s\n", node->data.linea, node->data.noReconocida);
 
         node = node->next;
     }

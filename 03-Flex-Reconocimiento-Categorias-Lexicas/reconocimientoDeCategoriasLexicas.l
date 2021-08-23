@@ -4,9 +4,7 @@
 #include<stdio.h> 
 #include "lib.h"   
 #include "identificadores.h"
-/*
 #include "palabrasNoReconocidas.h"
-*/
 #include "palabrasReservadas.h"
 #include "operadoresYcaracteresDePuntuacion.h"
 #include "constantesDec.h"
@@ -53,6 +51,8 @@ ComentarioNode* listaComentariosSimples = NULL;
 // Comentarios Compuestos
 ComentarioNode* listaComentariosCompuestos = NULL;
 
+// Palabras no reconocidas
+NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 %}
 
 DIGITO_DECIMAL [0-9] 
@@ -110,6 +110,9 @@ LETRA [a-zA-Z]
 }
 
 \n {numeroDeLinea++;}
+" " {;}
+
+. {pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;}
 
 %%
 
@@ -155,6 +158,10 @@ int main(void){
     // Comentarios compuestos
     char comentariosCompuestos[] = "Compuestos";
     printComentarios(reporte, listaComentariosCompuestos, comentariosCompuestos);
+
+    // Palabras No Reconocidas
+    printPalabrasNoReconocidas(reporte, listaPalabrasNoReconocidas);
+    deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
 
     fclose(reporte); 
 
