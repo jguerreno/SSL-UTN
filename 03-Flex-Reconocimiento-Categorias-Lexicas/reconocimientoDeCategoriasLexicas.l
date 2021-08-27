@@ -4,6 +4,7 @@
 #include<stdio.h> 
 #include "lib.h"   
 #include "identificadores.h"
+#include "literalesCadena.h"
 #include "palabrasNoReconocidas.h"
 #include "palabrasReservadas.h"
 #include "operadoresYcaracteresDePuntuacion.h"
@@ -23,6 +24,9 @@ int acumDecimal = 0;
 
 // Identificadores
 IdentifierNode *listaIdentificadores = NULL;
+
+//Literales Cadena
+LiteralCadenaNode *listaLiteralCadena = NULL;
 
 //Constantes Decimales
 ConstDecNode* listaConstantesDecimales = NULL;
@@ -81,8 +85,9 @@ LETRA [a-zA-Z]
         pushConstCarac(&listaConstantesCaracter, yytext[1]);
       }
 
-\".*\" { 
-        printf("Encontra un literal cadena \n"); 
+\".*\" {
+          printf("Encontre un literal cadena %s %d\n", yytext, yyleng-2);
+          addLiteralCadena(&listaLiteralCadena, yytext, yyleng);
        }
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
@@ -128,6 +133,9 @@ int main(void){
 
     //Identificadores
     printListIdentifier(reporte, listaIdentificadores);
+
+    //LiteralesCadena
+    printListLiteralCadena(reporte, listaLiteralCadena);
 
     //Constantes Decimales
     printConstantesDecimales(reporte, listaConstantesDecimales);

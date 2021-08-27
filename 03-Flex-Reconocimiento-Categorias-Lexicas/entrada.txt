@@ -14,6 +14,11 @@ int main () {
     char aaa = 'f';
     char bb = 'g';
 
+    printf("Sintaxis");
+    printf("hola");
+    printf("AFD");
+    printf(" ");
+
     ##Hola;
 
     return 0;

@@ -5,25 +5,22 @@
 #include <stdbool.h>
 
 
-void addLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]){
+void addLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[], int longitudCadenaLiteral){
 
-    LiteralCadenaNode* node = searchLiteralCadena(*head, cadenaLiteral);
+    LiteralCadenaNode* node = searchLiteralCadena(*head, cadenaLiteral, longitudCadenaLiteral);
 
     if(node != NULL){
-        node->data.repeticion++;
-    }
-    else{
-        pushLiteralCadena(head, cadenaLiteral);
+        pushLiteralCadena(head, cadenaLiteral, longitudCadenaLiteral);
     }
 }
 
 
-void pushLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]){
+void pushLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[], int longitudCadenaLiteral){
     /* 1. allocate node */
     LiteralCadenaNode* new_node = (LiteralCadenaNode*) malloc(sizeof(LiteralCadenaNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataLiteralCadena(cadenaLiteral);
+    new_node->data  = newDataLiteralCadena(cadenaLiteral, longitudCadenaLiteral);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -33,17 +30,17 @@ void pushLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[]){
 }
 
 
-DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[]){
+DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[], int longitudCadenaLiteral){
     DataLiteralCadena data;
 
     strcpy(data.cadenaLiteral, cadenaLiteral);
-    data.repeticion = 0;
+    data.longitud = longitudCadenaLiteral;
 
     return data;
 }
 
 
-LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[]){
+LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[], int longitudCadenaLiteral){
     LiteralCadenaNode* current = head;  // Initialize current
 
     while (current != NULL || strcmp(current->data.cadenaLiteral, cadenaLiteral)==0){
@@ -56,11 +53,12 @@ LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiter
 
 void printListLiteralCadena(FILE *reporte, LiteralCadenaNode* node){
 
-    fprintf(reporte,"cadenaLiteral\tCantidad de Repeticiones\n");
+    fprintf(reporte,"cadenaLiteral\tLongitud\n");
+
+    //sortLiteralCadena(&node);
 
     while (node != NULL){
-     fprintf(reporte,"%s\t%d\n", node->data.cadenaLiteral, node->data.repeticion);
-
+     fprintf(reporte,"%-20s\t%d\n", node->data.cadenaLiteral, node->data.longitud);
      node = node->next;
   }
 
@@ -97,15 +95,15 @@ void sortLiteralCadena(LiteralCadenaNode** head){
     {
         while (aux2 != NULL)
         {
-            if (aux2->next->data.repeticion >= mayor)
-                mayor = aux2->next->data.repeticion;
+            if (aux2->next->data.longitud >= mayor)
+                mayor = aux2->next->data.longitud;
         }
         
         aux2 = aux;
         
         while (aux2->next != NULL)
         {
-            if ((aux2->next)->next->data.repeticion == mayor)
+            if ((aux2->next)->next->data.longitud == mayor)
             {
                 temp = (aux2->next)->next;
                 (aux2->next)->next = aux;
