@@ -17,9 +17,9 @@ void limpiarBuffer(char cadena[]);
 void ingresarCadena(char[]);
 int procesarToken(char*);
 int grupoCaracter(char caracter);
-void myTrimm (char *cadena);
-void leftTrimm (char *cadena);
-void rightTrimm (char *cadena);
+void myTrim (char *cadena);
+void leftTrim (char *cadena);
+void rightTrim (char *cadena);
 void reverse (char *cadena);
 
 
