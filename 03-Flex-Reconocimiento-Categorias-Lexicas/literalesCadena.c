@@ -46,7 +46,7 @@ DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[]){
 LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[]){
     LiteralCadenaNode* current = head;  // Initialize current
 
-    while (current != NULL || strcmp(current->data.cadenaLiteral, cadenaLiteral)==0){
+    while (current != NULL || strcmp(current->data.cadenaLiteral, cadenaLiteral)!=0){
         current = current->next;
     }
 
