@@ -115,11 +115,11 @@ int grupoCaracter(char caracter){
  * @return Misma cadena sin los espacios en blanco
  * @author Matias Planchuelo
  */
-void myTrimm (char *cadena)
+void myTrim (char *cadena)
 {
     int i=0;
     int largo = strlen(cadena);
-    leftTrimm (cadena); rightTrimm(cadena);
+    leftTrim (cadena); rightTrim(cadena);
     while (cadena[i] != '\0')
     {
         if (cadena[i] == ' ')
@@ -138,7 +138,7 @@ void myTrimm (char *cadena)
     return;
 }
 
-void rightTrimm (char *cadena)
+void rightTrim (char *cadena)
 {
     int largo = strlen (cadena) - 1;
     while (largo>0)
@@ -157,10 +157,10 @@ void rightTrimm (char *cadena)
     }
 }
 
-void leftTrimm (char *cadena)
+void leftTrim (char *cadena)
 {
     reverse(cadena);
-    rightTrimm(cadena);
+    rightTrim(cadena);
     reverse(cadena);
 }
 

@@ -446,12 +446,13 @@ static char *yy_last_accepting_cpos;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "reconocimientoDeCategoriasLexicas.l"
+#line 1 ".\\reconocimientoDeCategoriasLexicas.l"
 #define INITIAL 0
-#line 4 "reconocimientoDeCategoriasLexicas.l"
+#line 4 ".\\reconocimientoDeCategoriasLexicas.l"
 #include<stdio.h> 
 #include "lib.h"   
 #include "identificadores.h"
+#include "literalesCadena.h"
 #include "palabrasNoReconocidas.h"
 #include "palabrasReservadas.h"
 #include "operadoresYcaracteresDePuntuacion.h"
@@ -471,6 +472,9 @@ int acumDecimal = 0;
 
 // Identificadores
 IdentifierNode *listaIdentificadores = NULL;
+
+//Literales Cadena
+LiteralCadenaNode *listaLiteralCadena = NULL;
 
 //Constantes Decimales
 ConstDecNode* listaConstantesDecimales = NULL;
@@ -501,7 +505,7 @@ ComentarioNode* listaComentariosCompuestos = NULL;
 
 // Palabras no reconocidas
 NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
-#line 505 "lex.yy.c"
+#line 509 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -652,9 +656,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 63 "reconocimientoDeCategoriasLexicas.l"
+#line 67 ".\\reconocimientoDeCategoriasLexicas.l"
 
-#line 658 "lex.yy.c"
+#line 662 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -739,7 +743,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 64 "reconocimientoDeCategoriasLexicas.l"
+#line 68 ".\\reconocimientoDeCategoriasLexicas.l"
 {
                         acumDecimal += atoi(yytext);
                         pushConstDec(&listaConstantesDecimales, yytext);
@@ -747,28 +751,28 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 68 "reconocimientoDeCategoriasLexicas.l"
+#line 72 ".\\reconocimientoDeCategoriasLexicas.l"
 {
                   pushConstOct(&listaConstantesOctales,yytext);
                   }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 71 "reconocimientoDeCategoriasLexicas.l"
+#line 75 ".\\reconocimientoDeCategoriasLexicas.l"
 { 
                             pushConstHex(&listaConstantesHexadecimales,yytext);
                             }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 75 "reconocimientoDeCategoriasLexicas.l"
+#line 79 ".\\reconocimientoDeCategoriasLexicas.l"
 {
                               pushConstReal(&listaConstantesReales,yytext);
                     }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 79 "reconocimientoDeCategoriasLexicas.l"
+#line 83 ".\\reconocimientoDeCategoriasLexicas.l"
 {
         char constanteCaracter = yytext[1];
         pushConstCarac(&listaConstantesCaracter, yytext[1]);
@@ -776,74 +780,75 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 84 "reconocimientoDeCategoriasLexicas.l"
-{ 
-        printf("Encontra un literal cadena \n"); 
+#line 88 ".\\reconocimientoDeCategoriasLexicas.l"
+{
+          printf("Encontre un literal cadena %s %d\n", yytext, yyleng-2);
+          addLiteralCadena(&listaLiteralCadena, yytext, yyleng);
        }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 88 "reconocimientoDeCategoriasLexicas.l"
+#line 93 ".\\reconocimientoDeCategoriasLexicas.l"
 {
      appendPalabraReservada(&listaPalabrasReservadas, yytext); 
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 92 "reconocimientoDeCategoriasLexicas.l"
+#line 97 ".\\reconocimientoDeCategoriasLexicas.l"
 {
                                         addIdentifier(&listaIdentificadores, yytext); 
                                         }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 96 "reconocimientoDeCategoriasLexicas.l"
+#line 101 ".\\reconocimientoDeCategoriasLexicas.l"
 {
      addOperadores(&listaOperadores, yytext[0]); 
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 100 "reconocimientoDeCategoriasLexicas.l"
+#line 105 ".\\reconocimientoDeCategoriasLexicas.l"
 {
      addOperadores(&listaOperadores, yytext[0]); 
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 104 "reconocimientoDeCategoriasLexicas.l"
+#line 109 ".\\reconocimientoDeCategoriasLexicas.l"
 {
      pushComentario(&listaComentariosSimples, yytext); 
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 108 "reconocimientoDeCategoriasLexicas.l"
+#line 113 ".\\reconocimientoDeCategoriasLexicas.l"
 {
      pushComentario(&listaComentariosCompuestos, yytext); 
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 112 "reconocimientoDeCategoriasLexicas.l"
+#line 117 ".\\reconocimientoDeCategoriasLexicas.l"
 {numeroDeLinea++;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 113 "reconocimientoDeCategoriasLexicas.l"
+#line 118 ".\\reconocimientoDeCategoriasLexicas.l"
 {;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 115 "reconocimientoDeCategoriasLexicas.l"
+#line 120 ".\\reconocimientoDeCategoriasLexicas.l"
 {pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 117 "reconocimientoDeCategoriasLexicas.l"
+#line 122 ".\\reconocimientoDeCategoriasLexicas.l"
 ECHO;
 	YY_BREAK
-#line 847 "lex.yy.c"
+#line 852 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1729,7 +1734,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 117 "reconocimientoDeCategoriasLexicas.l"
+#line 122 ".\\reconocimientoDeCategoriasLexicas.l"
 
 
 
@@ -1744,6 +1749,9 @@ int main(void){
 
     //Identificadores
     printListIdentifier(reporte, listaIdentificadores);
+
+    //LiteralesCadena
+    printListLiteralCadena(reporte, listaLiteralCadena);
 
     //Constantes Decimales
     printConstantesDecimales(reporte, listaConstantesDecimales);
