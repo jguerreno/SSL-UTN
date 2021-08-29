@@ -31,7 +31,7 @@ DataPalabraReservada newDataPalabraReservada(char palabraReservada[]){
 
 void printPalabrasReservadas(FILE *reporte, PalabrasReservadasNode* node){
 
-    fprintf(reporte,"Palabra Reservada\n");
+    fprintf(reporte,"------------- PALABRAS RESERVADAS -------------\n");
 
     while (node != NULL){
      fprintf(reporte,"%s\n", node->data.palabraReservada);

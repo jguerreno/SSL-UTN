@@ -9,8 +9,9 @@ void addLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[], int longit
 
     LiteralCadenaNode* node = searchLiteralCadena(*head, cadenaLiteral, longitudCadenaLiteral);
 
-    if(node != NULL){
+    if(node == NULL){
         pushLiteralCadena(head, cadenaLiteral, longitudCadenaLiteral);
+    }else{
     }
 }
 
@@ -53,6 +54,7 @@ LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiter
 
 void printListLiteralCadena(FILE *reporte, LiteralCadenaNode* node){
 
+    fprintf(reporte,"----------------- CADENAS LITERALES -----------------\n");
     fprintf(reporte,"cadenaLiteral\tLongitud\n");
 
     //sortLiteralCadena(&node);

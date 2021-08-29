@@ -31,7 +31,7 @@ DataConstReal newDataConstReal(char *real){
 
 void printConstantesReales(FILE *reporte, ConstRealNode *node){
 
-    fprintf(reporte,"CONSTANTES REALES\n");
+    fprintf(reporte,"------------- CONSTANTES REALES -------------\n");
 
     while (node != NULL){
      fprintf(reporte,"%s\n", node->data.constante);

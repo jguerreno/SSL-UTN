@@ -33,7 +33,7 @@ DataPalabraNoReconocida newDataPalabraNoReconocida(char palabraNoReconocida[], i
 
 void printPalabrasNoReconocidas(FILE *reporte, NoReconocidoNode* node){
 
-    fprintf(reporte,"Palabras no reconocidas\n");
+    fprintf(reporte,"------------- PALABRAS NO RECONOCIDAS -------------\n");
 
     while (node != NULL){
         fprintf(reporte,"Linea: %d\tPalabra no Reconocida: %s\n", node->data.linea, node->data.noReconocida);

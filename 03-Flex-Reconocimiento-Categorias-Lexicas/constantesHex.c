@@ -33,7 +33,7 @@ DataConstHex newDataConstHex(char *hex){
 
 void printConstantesHexadecimales(FILE *reporte, ConstHexNode *node){
 
-    fprintf(reporte,"CONSTANTES HEXADECIMALES\n");
+    fprintf(reporte,"----------------- CONSTANTES HEXADECIMALES -----------------\n");
 
     while (node != NULL){
      fprintf(reporte,"%s ", node->data.constante);

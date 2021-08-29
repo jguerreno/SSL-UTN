@@ -30,7 +30,7 @@ DataConstDec newDataConstDec(char *dec){
 
 void printConstantesDecimales(FILE *reporte, ConstDecNode *node){
 
-    fprintf(reporte,"CONSTANTES DECIMALES\n");
+    fprintf(reporte,"----------------- CONSTANTES DECIMALES -----------------\n");
 
     while (node != NULL){
      fprintf(reporte,"%s\n", node->data.constante);

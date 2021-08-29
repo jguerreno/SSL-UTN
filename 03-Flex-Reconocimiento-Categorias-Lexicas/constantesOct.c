@@ -30,7 +30,7 @@ DataConstOct newDataConstOct(char *oct){
 
 void printConstantesOctales(FILE *reporte, ConstOctNode *node){
 
-    fprintf(reporte,"CONSTANTES OCTALES\n");
+    fprintf(reporte,"----------------- CONSTANTES OCTALES -----------------\n");
 
     while (node != NULL){
      fprintf(reporte,"%s ", node->data.constante);

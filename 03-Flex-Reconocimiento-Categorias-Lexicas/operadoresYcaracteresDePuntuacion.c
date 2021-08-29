@@ -53,10 +53,10 @@ OperadoresNode* searchOperadores(OperadoresNode* head, char operador){
 
 void printOperadores(FILE *reporte, OperadoresNode* node){
 
-    fprintf(reporte,"Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones\n");
+    fprintf(reporte,"------------- Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones -------------\n");
 
     while (node != NULL){
-     fprintf(reporte,"%c\t\t%d\n", node->data.operador, node->data.repeticion);
+     fprintf(reporte,"\t\t%c\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t%d\n", node->data.operador, node->data.repeticion);
 
      node = node->next;
   }

@@ -293,11 +293,10 @@ int mantisaToEntero(char *real){
         i++;
     }
     
-    /**
-     * Remaining to get the rest of the number
-     * 
-     * **/
-    
     int res = atoi(aux);
     return res;
+}
+
+void writeIntroReporte(FILE *fp){
+    fprintf(fp,"------------------- REPORTE TP NUMERO 3 -------------------\n");
 }

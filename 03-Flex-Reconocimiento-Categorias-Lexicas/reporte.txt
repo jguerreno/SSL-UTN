@@ -1,0 +1,68 @@
+------------------- REPORTE TP NUMERO 3 -------------------
+-------------------- IDENTIFICADORES --------------------
+Identificador	 	 	 Cantidad de Repeticiones
+Hola	 	 	 	 	 	 	1
+bb	 	 	 	 	 	 	1
+aaa	 	 	 	 	 	 	1
+aa	 	 	 	 	 	 	1
+d	 	 	 	 	 	 	1
+c	 	 	 	 	 	 	1
+b	 	 	 	 	 	 	1
+a	 	 	 	 	 	 	3
+printf	 	 	 	 	 	 	5
+main	 	 	 	 	 	 	1
+----------------- CADENAS LITERALES -----------------
+cadenaLiteral	Longitud
+" "                 	3
+"AFD"               	5
+"Sintaxis"          	10
+"hola"              	6
+"Hola"              	6
+----------------- CONSTANTES DECIMALES -----------------
+3
+Acumulado valor decimal 3
+----------------- CONSTANTES OCTALES -----------------
+0 Valor Decimal: 0
+052 Valor Decimal: 42
+----------------- CONSTANTES HEXADECIMALES -----------------
+0xAF Valor Decimal: 175
+------------- CONSTANTES REALES -------------
+4.3E+21
+Parte entera: 4
+Parte mantisa: 3
+------------- CONSTANTES CARACTER -------------
+Caracter 	 	 	 Cantidad
+g 0 
+f 1 
+------------- PALABRAS RESERVADAS -------------
+return
+char
+char
+char
+int
+int
+int
+int
+int
+------------- Operadores y Caracteres de Puntuacion	Cantidad de Repeticiones -------------
+		}															1
+		*															1
+		+															2
+		=															7
+		;															16
+		{															1
+		)															6
+		(															6
+Comentarios Simples
+// Fin
+
+//Prueba simple
+
+Comentarios Compuestos
+/*
+Fin
+*/
+/*Comentario*/
+------------- PALABRAS NO RECONOCIDAS -------------
+Linea: 22	Palabra no Reconocida: #
+Linea: 21	Palabra no Reconocida: #

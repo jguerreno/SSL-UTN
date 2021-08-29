@@ -22,6 +22,8 @@ int numeroDeLinea = 1;
 //ACUMULADOR DE CONSTANTES DECIMALES
 int acumDecimal = 0;
 
+int firstTimeLitCadena = 1;
+
 // Identificadores
 IdentifierNode *listaIdentificadores = NULL;
 
@@ -86,8 +88,15 @@ LETRA [a-zA-Z]
       }
 
 \".*\" {
-          printf("Encontre un literal cadena %s %d\n", yytext, yyleng-2);
-          addLiteralCadena(&listaLiteralCadena, yytext, yyleng);
+          if(firstTimeLitCadena==1){
+               LiteralCadenaNode* new_node = (LiteralCadenaNode*) malloc(sizeof(LiteralCadenaNode));
+               new_node->data  = newDataLiteralCadena(yytext, yyleng);
+               new_node->next = listaLiteralCadena;
+               (listaLiteralCadena) = new_node;
+               firstTimeLitCadena = -1;
+          }else{
+               addLiteralCadena(&listaLiteralCadena, yytext, yyleng);
+          }
        }
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
@@ -130,6 +139,9 @@ int main(void){
     reporte = fopen("reporte.txt", "w"); 
 
     yylex();
+
+    //Intro al reporte
+    writeIntroReporte(reporte);
 
     //Identificadores
     printListIdentifier(reporte, listaIdentificadores);

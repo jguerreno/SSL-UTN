@@ -21,6 +21,7 @@ void printList(struct Node *node);
 void deleteNode(struct Node** head_ref, int key);
 void deleteList(struct Node** head_ref);
 void deleteNodeAt(struct Node **head_ref, int position);
+void writeIntroReporte(FILE *fp);
 int getListLength(struct Node* head);
 int search(struct Node* head, int x);
 int hexToDec(char *hex);
