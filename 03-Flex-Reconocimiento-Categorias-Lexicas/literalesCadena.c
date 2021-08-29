@@ -43,7 +43,7 @@ DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[], int longitudCadenaL
 LiteralCadenaNode* searchLiteralCadena(LiteralCadenaNode* head, char cadenaLiteral[], int longitudCadenaLiteral){
     LiteralCadenaNode* current = head;  // Initialize current
 
-    while (current != NULL || strcmp(current->data.cadenaLiteral, cadenaLiteral)!=0){
+    while (current != NULL && strcmp(current->data.cadenaLiteral, cadenaLiteral)!=0){
         current = current->next;
     }
 
