@@ -14,7 +14,7 @@
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
 #include "comentarios.h"
-#define MAX_TAM_IDENTIFIER 50
+
 
 // Cantidad de lineas
 int numeroDeLinea = 1;
@@ -79,7 +79,7 @@ LETRA [a-zA-Z]
                             pushConstHex(&listaConstantesHexadecimales,yytext);
                             }
 
-[0-9]+\.[0-9]+[Ee]((\+?)|\-)[0-9]+ {
+[0-9]+\.[0-9]+([Ee](\+|\-)?[0-9]+)? {
                          printf("ENCONTRE UNA CONSTANTE REAL %s\n",yytext);
                          pushConstReal(&listaConstantesReales,yytext);
                     }
@@ -109,7 +109,7 @@ LETRA [a-zA-Z]
                                         addIdentifier(&listaIdentificadores, yytext); 
                                         }
 
-(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=) {
+(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=|\-) {
      addOperadores(&listaOperadores, yytext[0]); 
 }
 
@@ -192,10 +192,3 @@ int main(void){
     return 0;
 }
 
-/**
-ACLARACION: POR CUESTIONES DE SIMPLICIDAD, NO TENEMOS EN CUENTA EL SIGUIENTE CASO: 
-.4E3
-
-TAMPOCO EL SIGUIENTE CASO: 
-4.
-**/
