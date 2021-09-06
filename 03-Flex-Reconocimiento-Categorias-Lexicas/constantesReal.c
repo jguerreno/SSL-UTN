@@ -32,8 +32,8 @@ DataConstReal newDataConstReal(char *real){
 void printConstantesReales(FILE *reporte, ConstRealNode *node){
 
     fprintf(reporte,"------------- CONSTANTES REALES -------------\n");
-
     while (node != NULL){
+    printf("CONSTANTE : %s\n",node->data.constante);
      fprintf(reporte,"%s\n", node->data.constante);
      int parteEntera = realToEntero(node->data.constante);
      fprintf(reporte,"Parte entera: %d\n",parteEntera);

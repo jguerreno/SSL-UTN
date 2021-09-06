@@ -1,68 +1,198 @@
 ------------------- REPORTE TP NUMERO 3 -------------------
 -------------------- IDENTIFICADORES --------------------
 Identificador	 	 	 Cantidad de Repeticiones
-Hola	 	 	 	 	 	 	1
-bb	 	 	 	 	 	 	1
-aaa	 	 	 	 	 	 	1
-aa	 	 	 	 	 	 	1
-d	 	 	 	 	 	 	1
-c	 	 	 	 	 	 	1
-b	 	 	 	 	 	 	1
-a	 	 	 	 	 	 	3
-printf	 	 	 	 	 	 	5
-main	 	 	 	 	 	 	1
+lptr	 	 	 	 	 	 	6
+swapped	 	 	 	 	 	 	8
+temp	 	 	 	 	 	 	14
+malloc	 	 	 	 	 	 	2
+ptr1	 	 	 	 	 	 	28
+getchar	 	 	 	 	 	 	2
+printf	 	 	 	 	 	 	8
+NULL	 	 	 	 	 	 	8
+i	 	 	 	 	 	 	12
+list_size	 	 	 	 	 	 	2
+arr3	 	 	 	 	 	 	1
+arr2	 	 	 	 	 	 	1
+e4	 	 	 	 	 	 	1
+E	 	 	 	 	 	 	1
+array	 	 	 	 	 	 	1
+arr	 	 	 	 	 	 	4
+main	 	 	 	 	 	 	2
+printList	 	 	 	 	 	 	8
+b	 	 	 	 	 	 	8
+a	 	 	 	 	 	 	8
+swap	 	 	 	 	 	 	6
+start	 	 	 	 	 	 	24
+bubbleSort	 	 	 	 	 	 	6
+start_ref	 	 	 	 	 	 	8
+insert	 	 	 	 	 	 	6
+next	 	 	 	 	 	 	14
+data	 	 	 	 	 	 	24
+Node	 	 	 	 	 	 	38
+constanteA	 	 	 	 	 	 	1
+define	 	 	 	 	 	 	1
+stdlib	 	 	 	 	 	 	2
+h	 	 	 	 	 	 	4
+stdio	 	 	 	 	 	 	2
+include	 	 	 	 	 	 	4
 ----------------- CADENAS LITERALES -----------------
 cadenaLiteral	Longitud
-" "                 	3
-"AFD"               	5
-"Sintaxis"          	10
-"hola"              	6
-"Hola"              	6
+"%d "               	5
+"\n"                	4
+"\n Linked list after sorting "	31
+"\n Linked list before sorting "	32
 ----------------- CONSTANTES DECIMALES -----------------
-3
-Acumulado valor decimal 3
+1
+6
+90
+1
+11
+2
+56
+12
+1
+99
+56
+33
+56
+4
+12
+90
+1
+11
+2
+56
+12
+Acumulado valor decimal 612
 ----------------- CONSTANTES OCTALES -----------------
 0 Valor Decimal: 0
-052 Valor Decimal: 42
+0 Valor Decimal: 0
+0 Valor Decimal: 0
+0 Valor Decimal: 0
+0 Valor Decimal: 0
+016 Valor Decimal: 14
+0123456 Valor Decimal: 42798
+04234 Valor Decimal: 2204
+02 Valor Decimal: 2
 ----------------- CONSTANTES HEXADECIMALES -----------------
-0xAF Valor Decimal: 175
+0xA Valor Decimal: 10
+0Xffdd Valor Decimal: 65501
+0xABC Valor Decimal: 2748
+0x99 Valor Decimal: 153
 ------------- CONSTANTES REALES -------------
-4.3E+21
-Parte entera: 4
-Parte mantisa: 3
+65.6e-1
+Parte entera: 65
+Parte mantisa: 0
 ------------- CONSTANTES CARACTER -------------
 Caracter 	 	 	 Cantidad
-g 0 
-f 1 
-------------- PALABRAS RESERVADAS -------------
-return
-char
-char
-char
-int
-int
-int
-int
-int
+a 0 
 ------------- Operadores y Caracteres de Puntuacion	Cantidad de Repeticiones -------------
-		}															1
-		*															1
+		!															4
+		&															2
 		+															2
-		=															7
-		;															16
-		{															1
-		)															6
-		(															6
-Comentarios Simples
-// Fin
-
-//Prueba simple
-
-Comentarios Compuestos
-/*
-Fin
-*/
-/*Comentario*/
-------------- PALABRAS NO RECONOCIDAS -------------
-Linea: 22	Palabra no Reconocida: #
-Linea: 21	Palabra no Reconocida: #
+		=															41
+		]															7
+		[															7
+		)															56
+		,															36
+		(															56
+		}															25
+		*															42
+		;															87
+		{															25
+		>															34
+		<															6
+------------- PALABRAS RESERVADAS -------------
+int
+struct
+struct
+void
+int
+struct
+struct
+void
+while
+if
+while
+do
+return
+if
+struct
+struct
+int
+struct
+void
+while
+struct
+struct
+void
+struct
+sizeof
+struct
+struct
+int
+struct
+void
+return
+for
+struct
+int
+int
+int
+struct
+void
+struct
+struct
+void
+struct
+void
+int
+struct
+void
+struct
+int
+struct
+while
+if
+while
+do
+return
+if
+struct
+struct
+int
+struct
+void
+while
+struct
+struct
+void
+struct
+sizeof
+struct
+struct
+int
+struct
+void
+return
+for
+struct
+int
+int
+int
+float
+int
+int
+struct
+void
+struct
+struct
+void
+struct
+void
+int
+struct
+void
+struct
+int
+struct

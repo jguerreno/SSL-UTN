@@ -266,7 +266,14 @@ int hexToDec(char *hex){
 int realToEntero(char *real){
     char aux[100];
     memset(aux, 0,strlen(aux));
-    for(int i = 0; real[i] != '.' ; i++){
+    for(int i = 0; i < strlen(real) ; i++){
+        if(real[i] == '.'){
+            break;
+        }else if(real[i] == 'E'){
+            break;
+        }else if(real[i] == 'e'){ 
+            break;
+        }
         aux[i] = real[i];
     }
     return (atoi(aux));
@@ -286,9 +293,28 @@ int mantisaToEntero(char *real){
     
     memset(aux, 0,strlen(aux));
 
-    for(k; real[k] != '.';k++);
+    for(k; k < strlen(real) ;k++){
+        if(real[k] == '.'){
+            break;
+        }else if(real[k] == 'E'){
+            break;
+        }else if(real[k] == 'e'){ 
+            break;
+        }
+    }
+//float array[] = {12E-4, 56e4, 33.56, 65.6e-1,};
+    if(real[k+1] == '-'){
+        printf("EL SIGNO\n");
+        k++;
+    }else if(real[k+1] == '+'){
+        printf("EL SIGNO +\n");
+        k++;
+    }else if(real[k+1] == '.'){
+        printf("NUEVO PUNTO \n");
+        k++;
+    }
 
-    for(j = (k + 1) ; real[j] != 'E' ; j++){
+    for(j = k ; j < strlen(real) ; j++){
         aux[i] = real[j];
         i++;
     }

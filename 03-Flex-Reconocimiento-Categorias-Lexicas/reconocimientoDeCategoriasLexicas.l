@@ -5,14 +5,14 @@
 #include "lib.h"   
 #include "identificadores.h"
 #include "literalesCadena.h"
-#include "palabrasNoReconocidas.h"
-#include "palabrasReservadas.h"
-#include "operadoresYcaracteresDePuntuacion.h"
 #include "constantesDec.h"
 #include "constantesOct.h"
 #include "constantesHex.h"
 #include "constantesReal.h"
 #include "constantesCaracter.h"
+#include "operadoresYcaracteresDePuntuacion.h"
+#include "palabrasReservadas.h"
+#include "palabrasNoReconocidas.h"
 #include "comentarios.h"
 #define MAX_TAM_IDENTIFIER 50
 
@@ -45,11 +45,11 @@ ConstRealNode* listaConstantesReales = NULL;
 //Constante Caracter 
 ConstCaracNode* listaConstantesCaracter = NULL;
 
-// Palabras Reservadas
-PalabrasReservadasNode* listaPalabrasReservadas = NULL;
-
 // Operadores y Caracteres de Puntuacion
 OperadoresNode* listaOperadores = NULL;
+
+// Palabras Reservadas
+PalabrasReservadasNode* listaPalabrasReservadas = NULL;
 
 // Comentarios Simples
 ComentarioNode* listaComentariosSimples = NULL;
@@ -59,6 +59,7 @@ ComentarioNode* listaComentariosCompuestos = NULL;
 
 // Palabras no reconocidas
 NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
+
 %}
 
 DIGITO_DECIMAL [0-9] 
@@ -79,7 +80,8 @@ LETRA [a-zA-Z]
                             }
 
 [0-9]+\.[0-9]+[Ee]((\+?)|\-)[0-9]+ {
-                              pushConstReal(&listaConstantesReales,yytext);
+                         printf("ENCONTRE UNA CONSTANTE REAL %s\n",yytext);
+                         pushConstReal(&listaConstantesReales,yytext);
                     }
 
 \'.\' {
@@ -100,7 +102,7 @@ LETRA [a-zA-Z]
        }
 
 (char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
-     appendPalabraReservada(&listaPalabrasReservadas, yytext); 
+          appendPalabraReservada(&listaPalabrasReservadas, yytext);
 }
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
@@ -116,17 +118,20 @@ LETRA [a-zA-Z]
 }
 
 \/\/.*\n {
-     pushComentario(&listaComentariosSimples, yytext); 
+
 }
 
 (\/\*.*\*\/)|(\/\*\n.*\n\*\/) {
-     pushComentario(&listaComentariosCompuestos, yytext); 
+     
 }
 
 \n {numeroDeLinea++;}
 " " {;}
 
-. {pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea); numeroDeLinea++;}
+. {
+      
+      numeroDeLinea++;
+     }
 
 %%
 
@@ -146,13 +151,13 @@ int main(void){
     //Identificadores
     printListIdentifier(reporte, listaIdentificadores);
 
-    //LiteralesCadena
+     //LiteralesCadena
     printListLiteralCadena(reporte, listaLiteralCadena);
 
     //Constantes Decimales
     printConstantesDecimales(reporte, listaConstantesDecimales);
     fprintf(reporte,"Acumulado valor decimal %d\n",acumDecimal); 
-
+    
     //Constanes Octales
     printConstantesOctales(reporte, listaConstantesOctales);
 
@@ -165,23 +170,22 @@ int main(void){
     //Consantes Caracter
     printConstantesCaracter(reporte, listaConstantesCaracter);
 
-    //Palabras Reservadas
-    printPalabrasReservadas(reporte, listaPalabrasReservadas);
-
     //Operadores y caracteres de Puntuacion
     printOperadores(reporte, listaOperadores);
 
-    // Comentarios simples
-    char comentariosSimples[] = "Simples";
-    printComentarios(reporte, listaComentariosSimples, comentariosSimples);
+     //Palabras Reservadas
+    printPalabrasReservadas(reporte, listaPalabrasReservadas);
+
+     // Comentarios simples
+    //char comentariosSimples[] = "Simples";
+    //printComentarios(reporte, listaComentariosSimples, comentariosSimples);
 
     // Comentarios compuestos
-    char comentariosCompuestos[] = "Compuestos";
-    printComentarios(reporte, listaComentariosCompuestos, comentariosCompuestos);
+    //char comentariosCompuestos[] = "Compuestos";
+    //printComentarios(reporte, listaComentariosCompuestos, comentariosCompuestos);
 
     // Palabras No Reconocidas
-    printPalabrasNoReconocidas(reporte, listaPalabrasNoReconocidas);
-    deleteListaPalabrasNoReconocidas(&listaPalabrasNoReconocidas);
+    //printPalabrasNoReconocidas(reporte, listaPalabrasNoReconocidas);
 
     fclose(reporte); 
 
