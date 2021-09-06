@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#define MAX_TAM_IDENTIFIER 50
 
 typedef struct DataConstCarac{
     char constanteCaracter;

@@ -14,7 +14,7 @@
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
 #include "comentarios.h"
-#define MAX_TAM_IDENTIFIER 50
+
 
 // Cantidad de lineas
 int numeroDeLinea = 1;
@@ -62,10 +62,12 @@ NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 
 %}
 
+
 DIGITO_DECIMAL [0-9] 
 DIGITO_OCTAL [0-7] 
 DIGITO_HEXADECIMAL [a-fA-F0-9] 
 LETRA [a-zA-Z] 
+
 
 %%
 \n {numeroDeLinea++;}
@@ -105,7 +107,6 @@ LETRA [a-zA-Z]
                     }
 
 \'.\' {
-        char constanteCaracter = yytext[1];
         pushConstCarac(&listaConstantesCaracter, yytext[1]);
       }
 
@@ -122,21 +123,17 @@ LETRA [a-zA-Z]
        }
 
 \/\/.* {
-     pushComentario(&listaComentariosCompuestos, yytext); 
-     printf("\n%s\n", yytext);
+     pushComentario(&listaComentariosSimples, yytext); 
 }
 
 \/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/ {
      pushComentario(&listaComentariosCompuestos, yytext); 
-     printf("\n%s\n", yytext);
 }
 
 
 . {
-      pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea);
-      numeroDeLinea++;
-     }
-
+     pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea);
+}
 %%
 
 

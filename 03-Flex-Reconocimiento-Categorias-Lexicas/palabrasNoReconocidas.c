@@ -21,10 +21,10 @@ void pushPalabraNoReconocida(NoReconocidoNode** head, char palabraNoReconocida[]
 }
 
 
-DataPalabraNoReconocida newDataPalabraNoReconocida(char palabraNoReconocida[], int linea){
+DataPalabraNoReconocida newDataPalabraNoReconocida(char* palabraNoReconocida, int linea){
     DataPalabraNoReconocida data;
 
-    strcpy(data.noReconocida, palabraNoReconocida);
+    data.noReconocida = strdup(palabraNoReconocida);
     data.linea = linea;
 
     return data;

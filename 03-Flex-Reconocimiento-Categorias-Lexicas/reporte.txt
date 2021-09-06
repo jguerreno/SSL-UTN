@@ -53,8 +53,6 @@ cadenaLiteral	Longitud
 1
 99
 56
-33
-56
 4
 12
 90
@@ -63,7 +61,7 @@ cadenaLiteral	Longitud
 2
 56
 12
-Acumulado valor decimal 612
+Acumulado valor decimal 523
 ----------------- CONSTANTES OCTALES -----------------
 0 Valor Decimal: 0
 0 Valor Decimal: 0
@@ -83,13 +81,17 @@ Acumulado valor decimal 612
 65.6e-1
 Parte entera: 65
 Parte mantisa: 0
+33.56
+Parte entera: 33
+Parte mantisa: 0
 ------------- CONSTANTES CARACTER -------------
 Caracter 	 	 	 Cantidad
-a 0 
+a 1968719520 
 ------------- Operadores y Caracteres de Puntuacion	Cantidad de Repeticiones -------------
 		!															4
 		&															2
 		+															2
+		-															29
 		=															41
 		]															7
 		[															7
@@ -196,3 +198,48 @@ void
 struct
 int
 struct
+Comentarios Simples
+// C program to implement Bubble Sort on singly linked list 
+// C program to implement Bubble Sort on singly linked list 
+Comentarios Compuestos
+/* function to swap data of two nodes a and b*/
+/* function to swap data of two nodes a and b*/
+/* Checking for empty list */
+/* Bubble sort the given linked list */
+/* Function to print nodes in a given linked list */
+/* Function to insert a node at the beginning of a linked list */
+/* print list after sorting */
+/* sort the linked list */
+/* print list before sorting */
+/* Create linked list from the array arr[]. Created linked list will be 1->11->2->56->12 */
+/* start with empty linked list */
+/* Function to print nodes in a given linked list */
+/* Function to swap data of two nodes a and b*/
+/* Function to bubble sort the given linked list */
+/* Function to insert a node at the beginning of a linked list */
+/* structure for a node */
+/* Checking for empty list */
+/* Bubble sort the given linked list */
+/* Function to print nodes in a given linked list */
+/* Function to insert a node at the beginning of a linked list */
+/* print list after sorting */
+/* sort the linked list */
+/* print list before sorting */
+/* Create linked list from the array arr[].Created linked list will be 1->11->2->56->12 */
+/* start with empty linked list */
+/* Function to print nodes in a given linked list */
+/* Function to swap data of two nodes a and b*/
+/* Function to bubble sort the given linked list */
+/* Function to insert a node at the beginning of a linked list */
+/* structure for a node */
+------------- PALABRAS NO RECONOCIDAS -------------
+Linea: 108	Palabra no Reconocida: .
+Linea: 108	Palabra no Reconocida: #
+Linea: 107	Palabra no Reconocida: .
+Linea: 107	Palabra no Reconocida: #
+Linea: 5	Palabra no Reconocida: $
+Linea: 4	Palabra no Reconocida: #
+Linea: 3	Palabra no Reconocida: .
+Linea: 3	Palabra no Reconocida: #
+Linea: 2	Palabra no Reconocida: .
+Linea: 2	Palabra no Reconocida: #

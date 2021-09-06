@@ -11,7 +11,6 @@ void addLiteralCadena(LiteralCadenaNode** head, char cadenaLiteral[], int longit
 
     if(node == NULL){
         pushLiteralCadena(head, cadenaLiteral, longitudCadenaLiteral);
-    }else{
     }
 }
 
