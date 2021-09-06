@@ -22,7 +22,9 @@ void pushComentario(ComentarioNode** head, char* comentario){
 
 
 DataComentario newDataComentario(char* comentario){
-    DataComentario data = {comentario};
+    DataComentario data;
+
+    data.comentario = strdup(comentario);
 
     return data;
 }
