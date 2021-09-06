@@ -6,7 +6,7 @@
 
 
 
-void pushComentario(ComentarioNode** head, char comentario[]){
+void pushComentario(ComentarioNode** head, char* comentario){
     /* 1. allocate node */
     ComentarioNode* new_node = (ComentarioNode*) malloc(sizeof(ComentarioNode));
 
@@ -21,10 +21,8 @@ void pushComentario(ComentarioNode** head, char comentario[]){
 }
 
 
-DataComentario newDataComentario(char comentario[]){
-    DataComentario data;
-
-    strcpy(data.comentario, comentario);
+DataComentario newDataComentario(char* comentario){
+    DataComentario data = {comentario};
 
     return data;
 }
