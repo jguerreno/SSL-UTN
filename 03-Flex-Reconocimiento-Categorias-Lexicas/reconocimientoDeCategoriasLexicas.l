@@ -68,6 +68,27 @@ DIGITO_HEXADECIMAL [a-fA-F0-9]
 LETRA [a-zA-Z] 
 
 %%
+\n {numeroDeLinea++;}
+" "|"\t"
+
+(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
+          appendPalabraReservada(&listaPalabrasReservadas, yytext);
+}
+
+(_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
+                                        addIdentifier(&listaIdentificadores, yytext); 
+                                        }
+
+(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=|\-) {
+     addOperadores(&listaOperadores, yytext[0]); 
+}
+
+[\(\)\{\}\,\;\[\]] {
+     addOperadores(&listaOperadores, yytext[0]); 
+}
+
+
+
 [1-9]{DIGITO_DECIMAL}* {
                         acumDecimal += atoi(yytext);
                         pushConstDec(&listaConstantesDecimales, yytext);
@@ -100,32 +121,16 @@ LETRA [a-zA-Z]
           }
        }
 
-(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
-          appendPalabraReservada(&listaPalabrasReservadas, yytext);
-}
-
-(_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
-                                        addIdentifier(&listaIdentificadores, yytext); 
-                                        }
-
-(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=|\-) {
-     addOperadores(&listaOperadores, yytext[0]); 
-}
-
-[\(\)\{\}\,\;\[\]] {
-     addOperadores(&listaOperadores, yytext[0]); 
-}
-
-\/\/.*\n {
+\/\/.* {
      pushComentario(&listaComentariosCompuestos, yytext); 
+     printf("\n%s\n", yytext);
 }
 
-(\/\*.*\*\/)|(\/\*\n.*\n\*\/) {
-      pushComentario(&listaComentariosCompuestos, yytext); 
+\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/ {
+     pushComentario(&listaComentariosCompuestos, yytext); 
+     printf("\n%s\n", yytext);
 }
 
-\n {numeroDeLinea++;}
-" " {;}
 
 . {
       pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea);
