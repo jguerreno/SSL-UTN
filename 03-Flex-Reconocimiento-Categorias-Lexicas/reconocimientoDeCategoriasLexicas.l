@@ -14,7 +14,7 @@
 #include "palabrasReservadas.h"
 #include "palabrasNoReconocidas.h"
 #include "comentarios.h"
-
+#define MAX_TAM_IDENTIFIER 50
 
 // Cantidad de lineas
 int numeroDeLinea = 1;
@@ -80,7 +80,6 @@ LETRA [a-zA-Z]
                             }
 
 [0-9]+\.[0-9]+([Ee](\+|\-)?[0-9]+)? {
-                         printf("ENCONTRE UNA CONSTANTE REAL %s\n",yytext);
                          pushConstReal(&listaConstantesReales,yytext);
                     }
 
@@ -118,18 +117,18 @@ LETRA [a-zA-Z]
 }
 
 \/\/.*\n {
-
+     pushComentario(&listaComentariosCompuestos, yytext); 
 }
 
 (\/\*.*\*\/)|(\/\*\n.*\n\*\/) {
-     
+      pushComentario(&listaComentariosCompuestos, yytext); 
 }
 
 \n {numeroDeLinea++;}
 " " {;}
 
 . {
-      
+      pushPalabraNoReconocida(&listaPalabrasNoReconocidas, yytext, numeroDeLinea);
       numeroDeLinea++;
      }
 
@@ -177,15 +176,15 @@ int main(void){
     printPalabrasReservadas(reporte, listaPalabrasReservadas);
 
      // Comentarios simples
-    //char comentariosSimples[] = "Simples";
-    //printComentarios(reporte, listaComentariosSimples, comentariosSimples);
+    char comentariosSimples[] = "Simples";
+    printComentarios(reporte, listaComentariosSimples, comentariosSimples);
 
     // Comentarios compuestos
-    //char comentariosCompuestos[] = "Compuestos";
-    //printComentarios(reporte, listaComentariosCompuestos, comentariosCompuestos);
+    char comentariosCompuestos[] = "Compuestos";
+    printComentarios(reporte, listaComentariosCompuestos, comentariosCompuestos);
 
     // Palabras No Reconocidas
-    //printPalabrasNoReconocidas(reporte, listaPalabrasNoReconocidas);
+    printPalabrasNoReconocidas(reporte, listaPalabrasNoReconocidas);
 
     fclose(reporte); 
 
