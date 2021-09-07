@@ -31,10 +31,10 @@ DataConstCarac newDataConstCarac(char constCarac){
 void printConstantesCaracter(FILE *reporte, ConstCaracNode *node){
 
     fprintf(reporte,"------------- CONSTANTES CARACTER -------------\n");
-    fprintf(reporte,"Caracter \t \t \t Cantidad\n");
+    fprintf(reporte,"Caracter\n");
 
     while (node != NULL){
-     fprintf(reporte,"%c %d \n", node->data.constanteCaracter);
+     fprintf(reporte,"%c\n", node->data.constanteCaracter);
      node = node->next;
   }
 
