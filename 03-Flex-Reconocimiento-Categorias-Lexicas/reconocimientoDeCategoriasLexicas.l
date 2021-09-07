@@ -107,7 +107,7 @@ LETRA [a-zA-Z]
                     }
 
 \'.\' {
-        pushConstCarac(&listaConstantesCaracter, yytext[1]);
+        appendConstantesCaracter(&listaConstantesCaracter, yytext[1]);
       }
 
 \".*\" {
