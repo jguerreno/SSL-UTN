@@ -63,6 +63,8 @@ NoReconocidoNode* listaPalabrasNoReconocidas = NULL;
 %}
 
 
+OPERADOR_CARACTER_DE_PUNTUACION ("*="|"/="|"%="|"+="|"*="|"<<="|">>="|"&="|"^="|"|="|"||"|"&&"|"|"|"^"|"=="|"!="|"<"|">"|"<="|">="|"<<"|">>"|"/"|"%"|"++"|"--"|","|"."|"?"|":"|"("|")"|"["|"]"|"="|"{"|"}"|";"|"*"|"&"|"+"|"-"|"~"|"!"|"->")
+
 DIGITO_DECIMAL [0-9] 
 DIGITO_OCTAL [0-7] 
 DIGITO_HEXADECIMAL [a-fA-F0-9] 
@@ -81,13 +83,7 @@ LETRA [a-zA-Z]
                                         addIdentifier(&listaIdentificadores, yytext); 
                                         }
 
-(\+\+|\-\-|\*|\+|&|\!|sizeof|%|\/|<|>|<=|>=|==|\!=|&&|\|\||=|\+=|\-=|\-) {
-     addOperadores(&listaOperadores, yytext[0]); 
-}
-
-[\(\)\{\}\,\;\[\]] {
-     addOperadores(&listaOperadores, yytext[0]); 
-}
+{OPERADOR_CARACTER_DE_PUNTUACION} {addOperadores(&listaOperadores, yytext);}
 
 
 
