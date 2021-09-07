@@ -48,8 +48,12 @@ ConstCaracNode* listaConstantesCaracter = NULL;
 // Operadores y Caracteres de Puntuacion
 OperadoresNode* listaOperadores = NULL;
 
+
 // Palabras Reservadas
-PalabrasReservadasNode* listaPalabrasReservadas = NULL;
+PalabrasReservadasNode* listaPalabrasReservadas_TipoDeDatos = NULL;
+PalabrasReservadasNode* listaPalabrasReservadas_Estructuras = NULL;
+PalabrasReservadasNode* listaPalabrasReservadas_Otros = NULL;
+
 
 // Comentarios Simples
 ComentarioNode* listaComentariosSimples = NULL;
@@ -75,8 +79,14 @@ LETRA [a-zA-Z]
 \n {numeroDeLinea++;}
 " "|"\t"
 
-(char|do|double|else|float|for|if|int|long|return|sizeof|struct|typeof|void|while) {
-          appendPalabraReservada(&listaPalabrasReservadas, yytext);
+(char|double|float|int|long|struct|void|enum|union|short) {
+          appendPalabraReservada(&listaPalabrasReservadas_TipoDeDatos, yytext);
+}
+(do|else|for|if|while|switch|case|default) {
+          appendPalabraReservada(&listaPalabrasReservadas_Estructuras, yytext);
+}
+(return|sizeof|typeof|typedef|auto|break|register|extern|const|unsigned|continue|signed|goto|volatile|static) {
+          appendPalabraReservada(&listaPalabrasReservadas_Otros, yytext);
 }
 
 (_|{LETRA})({DIGITO_DECIMAL}|{LETRA}|_)* {
@@ -171,7 +181,9 @@ int main(void){
     printOperadores(reporte, listaOperadores);
 
      //Palabras Reservadas
-    printPalabrasReservadas(reporte, listaPalabrasReservadas);
+    printPalabrasReservadas(reporte, listaPalabrasReservadas_TipoDeDatos, "Tipo de Datos");
+    printPalabrasReservadas(reporte, listaPalabrasReservadas_Estructuras, "Estructuras");
+    printPalabrasReservadas(reporte, listaPalabrasReservadas_Otros, "Otros");
 
      // Comentarios simples
     char comentariosSimples[] = "Simples";

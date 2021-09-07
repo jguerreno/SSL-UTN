@@ -13,5 +13,5 @@ typedef struct PalabrasReservadasNode{
 
 void appendPalabraReservada(PalabrasReservadasNode** head_ref, char* palabraReservada);
 DataPalabraReservada newDataPalabraReservada(char* palabraReservada);
-void printPalabrasReservadas(FILE *reporte, PalabrasReservadasNode* node);
+void printPalabrasReservadas(FILE *reporte, PalabrasReservadasNode* node, char* tipo);
 void deletePalabrasReservadas(PalabrasReservadasNode** head);
