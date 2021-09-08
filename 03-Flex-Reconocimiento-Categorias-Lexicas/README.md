@@ -8,3 +8,17 @@
 - Matias Planchuelo
 - Alejo Lovallo
 - Juan Guerreño 
+
+### RUN
+
+* flex reconocimientoDeCategoriasLexicas.l
+
+* gcc -o p lib.c lex.yy.c comentarios.c constantesCaracter.c constantesDec.c constantesOct.c constantesHex.c constantesReal.c identificadores.c literalesCadena.c operadoresYcaracteresDePuntuacion.c palabrasNoReconocidas.c palabrasReservadas.c 
+
+
+### DEBUG
+
+* IDENTIFICADORES OK
+* CADENAS LITREALES OK
+* PALABRAS NO RECONOCIDAS OK
+* PALABRAS RESERVADAS OK
