@@ -34,7 +34,7 @@ DataLiteralCadena newDataLiteralCadena(char cadenaLiteral[], int longitudCadenaL
     DataLiteralCadena data;
 
     strcpy(data.cadenaLiteral, cadenaLiteral);
-    data.longitud = longitudCadenaLiteral;
+    data.longitud = longitudCadenaLiteral-2;
 
     return data;
 }
@@ -57,7 +57,6 @@ void printListLiteralCadena(FILE *reporte, LiteralCadenaNode* node){
     fprintf(reporte,"cadenaLiteral\tLongitud\n");
 
     //sortLiteralCadena(&node);
-
     while (node != NULL){
      fprintf(reporte,"%-20s\t%d\n", node->data.cadenaLiteral, node->data.longitud);
      node = node->next;
