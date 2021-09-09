@@ -11,6 +11,7 @@ typedef struct ConstCaracNode{
 } ConstCaracNode;
 
 void pushConstCarac(ConstCaracNode** head, char constCarac);
+void appendConstantesCaracter(ConstCaracNode** head_ref, char constCarac);
 DataConstCarac newDataConstCarac(char constCarac);
 void printConstantesCaracter(FILE *reporte, ConstCaracNode* node);
 void deleteListaConstantesCaracter(ConstCaracNode** head);

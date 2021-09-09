@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 
-void addOperadores(OperadoresNode** head, char operador){
+void addOperadores(OperadoresNode** head, char* operador){
 
     OperadoresNode* node = searchOperadores(*head, operador);
 
@@ -18,7 +18,7 @@ void addOperadores(OperadoresNode** head, char operador){
 }
 
 
-void pushOperadores(OperadoresNode** head, char operador){
+void pushOperadores(OperadoresNode** head, char* operador){
     /* 1. allocate node */
     OperadoresNode* new_node = (OperadoresNode*) malloc(sizeof(OperadoresNode));
 
@@ -33,17 +33,20 @@ void pushOperadores(OperadoresNode** head, char operador){
 }
 
 
-DataOperadores newDataOperadores(char operador){
-    DataOperadores data = {operador, 1};
+DataOperadores newDataOperadores(char* operador){
+    DataOperadores data;
+
+    data.operador = strdup(operador);
+    data.repeticion = 1;
 
     return data;
 }
 
 
-OperadoresNode* searchOperadores(OperadoresNode* head, char operador){
+OperadoresNode* searchOperadores(OperadoresNode* head, char* operador){
     OperadoresNode* current = head;  // Initialize current
 
-    while (current != NULL && current->data.operador != operador){
+    while (current != NULL && strcmp(current->data.operador, operador) != 0){
         current = current->next;
     }
 
@@ -56,7 +59,7 @@ void printOperadores(FILE *reporte, OperadoresNode* node){
     fprintf(reporte,"------------- Operadores y Caracteres de Puntuacion\tCantidad de Repeticiones -------------\n");
 
     while (node != NULL){
-     fprintf(reporte,"\t\t%c\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t%d\n", node->data.operador, node->data.repeticion);
+     fprintf(reporte,"\t\t%s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t%d\n", node->data.operador, node->data.repeticion);
 
      node = node->next;
   }
