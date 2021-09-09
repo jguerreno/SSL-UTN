@@ -59,6 +59,8 @@ void printListIdentifier(FILE *reporte, IdentifierNode* node){
     fprintf(reporte,"-------------------- IDENTIFICADORES --------------------\n");
     fprintf(reporte,"Identificador\t \t \t Cantidad de Repeticiones\n");
 
+    sortIdentidier(&node);
+
 
     while (node != NULL){
      fprintf(reporte,"%s\t \t \t \t \t \t \t%d\n", node->data.identificador, node->data.repeticion);
@@ -87,39 +89,75 @@ void deleteListIdentifier(IdentifierNode** head){
 
 
 void sortIdentidier(IdentifierNode** head){
-    IdentifierNode *aux, *aux2, *temp;
+    printf("INGRESO ACA\n");
+
+    //IdentifierNode *aux, *aux2, *temp;
+
+    IdentifierNode *aux1;
+    IdentifierNode *aux2 = NULL;
     
-    int mayor = 0;
+    int mayor = 0, swapped,i;
+
+    /* CHECKING FOR EMPTY LIST*/
+    if((*head) == NULL) return;
     
-    aux = (*head);
-    
-    aux2 = aux;
-    
-    while (aux->next != NULL)
+
+    /*
+        aux2 = (*head);
+    while (aux2 != NULL)
     {
-        while (aux2 != NULL)
-        {
-            if (aux2->data.repeticion >= mayor)
-                mayor = aux2->data.repeticion;
+        if (aux2->data.repeticion >= mayor){
+            mayor = aux2->data.repeticion;
         }
-        
-        aux2 = aux;
-        
-        while (aux2->next != NULL)
-        {
-            if ((aux2->next)->data.repeticion == mayor)
-            {
-                temp = (aux2->next)->next;
-                (aux2->next)->next= aux;
-                aux->next = temp;
-            }
-            aux2 = aux2->next;
-            
-        }
-        aux = aux->next;
+        aux2 = aux2->next;
     }
+    
+    printf("NUMERO MAXIMO DE REPETICIONES ENCONTRADO %d",mayor);
+    */
+
+    aux1 = (*head);
+    aux2 = NULL;
+
+    do{
+        swapped = 0;
+        aux1 = (*head);
+
+        while(aux1->next != aux2){
+            if(strcmp(aux1->data.identificador,aux1->next->data.identificador)>0){
+                mayor = aux1->data.repeticion;
+                swapIdentifiers(aux1,aux1->next);
+                swapped = 1;
+            }
+            aux1 = aux1->next;
+        }
+        aux2 = aux1;
+    }while(swapped);
+
+}
+
+void swapIdentifiers(IdentifierNode *a, IdentifierNode *b)
+{
+    int rep = a->data.repeticion;
+    char id[MAX_TAM_IDENTIFIER];
+    strcpy(id,a->data.identificador);
+    a->data = b->data;
+    b->data.repeticion = rep;
+    strcpy(b->data.identificador,id);
 }
 
 
+    /*do{
+        swapped = 0;
+        aux1 = (*head);
 
+        while(aux1->next != aux2){
+            if(aux1->data.repeticion >= mayor){
+                mayor = aux1->data.repeticion;
+                swapIdentifiers(aux1,aux1->next);
+                swapped = 1;
+            }
+            aux1 = aux1->next;
+        }
+        aux2 = aux1;
+    }while(swapped);*/
 

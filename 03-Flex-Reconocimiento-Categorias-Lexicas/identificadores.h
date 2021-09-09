@@ -22,3 +22,4 @@ IdentifierNode* searchIdentifier(IdentifierNode* head, char identificador[]);
 void sortIdentidier(IdentifierNode** head);
 void printListIdentifier(FILE *reporte, IdentifierNode* node);
 void deleteListIdentifier(IdentifierNode** head);
+void swapIdentifiers(IdentifierNode *a, IdentifierNode *b);
