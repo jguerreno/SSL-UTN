@@ -89,32 +89,14 @@ void deleteListIdentifier(IdentifierNode** head){
 
 
 void sortIdentidier(IdentifierNode** head){
-    printf("INGRESO ACA\n");
-
-    //IdentifierNode *aux, *aux2, *temp;
-
     IdentifierNode *aux1;
     IdentifierNode *aux2 = NULL;
     
-    int mayor = 0, swapped,i;
+    int swapped;
 
     /* CHECKING FOR EMPTY LIST*/
     if((*head) == NULL) return;
     
-
-    /*
-        aux2 = (*head);
-    while (aux2 != NULL)
-    {
-        if (aux2->data.repeticion >= mayor){
-            mayor = aux2->data.repeticion;
-        }
-        aux2 = aux2->next;
-    }
-    
-    printf("NUMERO MAXIMO DE REPETICIONES ENCONTRADO %d",mayor);
-    */
-
     aux1 = (*head);
     aux2 = NULL;
 
@@ -124,7 +106,6 @@ void sortIdentidier(IdentifierNode** head){
 
         while(aux1->next != aux2){
             if(strcmp(aux1->data.identificador,aux1->next->data.identificador)>0){
-                mayor = aux1->data.repeticion;
                 swapIdentifiers(aux1,aux1->next);
                 swapped = 1;
             }
@@ -146,7 +127,20 @@ void swapIdentifiers(IdentifierNode *a, IdentifierNode *b)
 }
 
 
-    /*do{
+/*
+    
+    aux2 = (*head);
+    while (aux2 != NULL)
+    {
+        if (aux2->data.repeticion >= mayor){
+            mayor = aux2->data.repeticion;
+        }
+        aux2 = aux2->next;
+    }
+    
+    printf("NUMERO MAXIMO DE REPETICIONES ENCONTRADO %d",mayor);
+
+    do{
         swapped = 0;
         aux1 = (*head);
 
@@ -159,5 +153,6 @@ void swapIdentifiers(IdentifierNode *a, IdentifierNode *b)
             aux1 = aux1->next;
         }
         aux2 = aux1;
-    }while(swapped);*/
+    }while(swapped);
+*/
 
