@@ -1,4 +1,3 @@
-/* Calculadora de notacion polaca inversa */
 
 %{
 #include <math.h>
@@ -16,8 +15,6 @@ int yywrap(){return(1);}
     char* cadena;
 }
 
-
-","|"?"|":"|"("|")"|"["|"]"|"="|"{"|"}"|";"|"*"|"&"|"+"|"-"|"~"|"!" { return yytext[0]; }
 
 // Palabras Reservadas
 %token <cadena> IF
@@ -70,7 +67,6 @@ line:     '\n'
         | exp '\n'  { printf ("\t %d\n", $1); }
 ;
 
-%%
 
 /****************************** INSTRUCCIONES ************************************/
 
@@ -141,7 +137,7 @@ instruccion_destino_salto : IDENTIFIER ':' instruccion ';' { printf("instruccion
 instruccion_retorno : RETURN ';' { printf("instruccion_retorno -> RETURN ';'\n"); }
                     | RETURN expresion ';' { printf("instruccion_retorno -> RETURN expresion ';'\n"); };
 
-
+%%
 
 int main ()
 {
