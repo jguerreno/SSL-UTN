@@ -69,19 +69,53 @@ input:    /* vacio */
 ;
 
 line:     '\n'
-        | exp '\n'  { printf ("\t %d\n", $1); }
+        | instruccion '\n'  { printf ("\t %d\n", $1); }
+        | declaracion '\n'  { printf ("\t %d\n", $1); }
 ;
+
+
+/****************************** DECLARACIONES ************************************/
+declaracion : tipo lista_nombres ';' { printf("Declaracion -> declaracion_tipo lista_nombres\n"); }
+
+tipo        : VOID { printf("tipo_basico -> void\n"); }
+            | CHAR { printf("tipo_basico -> char\n"); }
+            | INT { printf("tipo_basico -> int\n"); }
+            | FLOAT { printf("tipo_basico -> float\n"); }
+            | DOUBLE { printf("tipo_basico -> double\n"); };
+
+lista_nombres : nombre { printf("lista_nombres -> nombre\n"); }
+              | nombre ',' lista_nombres { printf("lista_nombres -> lista_nombres ',' nombre\n"); };
+
+nombre : dato { printf("nombre -> dato\n"); }
+       | dato '=' elementos { printf("nombre -> dato '=' elementos\n"); };
+
+dato :  asterisco_list  IDENTIFIER  '[' expresion ']' { printf("Dato -> asterisco_list  IDENTIFIER  '[' expresion ']'\n"); }
+	  | asterisco_list IDENTIFIER '[' ']' { printf("Dato -> asterisco_list IDENTIFIER '[' ']'\n"); }
+      | asterisco_list IDENTIFIER { printf("Dato -> asterisco_list IDENTIFIER \n"); };
+      | IDENTIFIER { printf("Dato -> 'IDENTIFIER'\n"); }
+	  | IDENTIFIER '['']' { printf("Dato -> 'IDENTIFIER' '['']'\n"); }
+	  | IDENTIFIER '[' expresion ']' { printf("Dato -> 'IDENTIFIER' '[' expresion ']'\n"); }
+
+
+elementos : expresion { printf("elementos -> expresion\n"); }
+          | '{' elementosLista '}' { printf("elementos -> '{' elementosLista elementosLista '}'\n"); } ;
+
+
+elementosLista : elementos { printf("elementosLista -> elementos ,\n"); }
+               | elementos ',' elementosLista { printf("elementoslista -> elementos ',' elementosLista  ,\n"); } ;
+
 
 
 /****************************** INSTRUCCIONES ************************************/
 
-instruccion : bloque_instrucciones { printf("instruccion -> bloque_instrucciones\n"); }
-            | instruccion_expresion { printf("instruccion -> instruccion_expresion\n"); }
-            | instruccion_bifurcacion { printf("instruccion -> instruccion_bifurcacion\n"); }
-            | instruccion_bucle { printf("instruccion -> instruccion_bucle\n"); }
-            | instruccion_salto { printf("instruccion -> instruccion_salto\n"); }
+instruccion : bloque_instrucciones      { printf("instruccion -> bloque_instrucciones\n"); }
+            | instruccion_expresion     { printf("instruccion -> instruccion_expresion\n"); }
+            | instruccion_bifurcacion   { printf("instruccion -> instruccion_bifurcacion\n"); }
+            | instruccion_bucle         { printf("instruccion -> instruccion_bucle\n"); }
+            | instruccion_salto         { printf("instruccion -> instruccion_salto\n"); }
             | instruccion_destino_salto { printf("instruccion -> instruccion_destino_salto\n"); }
-            | instruccion_retorno { printf("instruccion -> instruccion_retorno\n"); };
+            | instruccion_retorno       { printf("instruccion -> instruccion_retorno\n"); }
+;
 
 bloque_instrucciones : '{' '}' { printf("bloque_instrucciones -> '{' '}'\n"); }
                      | '{' declaracion_list '}' { printf("bloque_instrucciones -> '{' declaracion_list '}'\n"); }
@@ -148,7 +182,7 @@ int main ()
 {
     yyin = fopen("entrada.txt", "r");
     yyout = fopen("salida.txt", "w");	
-    
+
     #ifdef BISON_DEBUG
         yydebug = 1;
     #endif
