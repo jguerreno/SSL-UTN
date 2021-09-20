@@ -1,9 +1,13 @@
 option noyywrap
+%option yylineno
 
 
 %{
 #include <stdlib.h>
 #include "parser.tab.h"
+
+extern FILE * yyin;
+extern FILE * yyout;
 %}
 
 
@@ -78,9 +82,4 @@ SECUENCIA_ESCAPE_SIMPLE (a|b|f|n|r|t|v|\'|\"|\?|\\)
 %%
 
 
-int main(void){    
-    yyin = fopen("entrada.txt", "r");
-    yyout = fopen("salida.txt", "w");	
-
-    return 0;
-}
+int yywrap(void){ return 1;}

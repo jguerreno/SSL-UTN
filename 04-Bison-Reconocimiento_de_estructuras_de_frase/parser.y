@@ -4,9 +4,14 @@
 #include <stdio.h>
 #include <ctype.h>
 
+#define YYDEBUG 1
+
 int yylex();
 int yyerror (char *s){printf ("%s\n", s);}
 int yywrap(){return(1);}
+
+extern FILE *yyin;
+extern int yylineno;
 %}
 
 %union {
@@ -141,10 +146,11 @@ instruccion_retorno : RETURN ';' { printf("instruccion_retorno -> RETURN ';'\n")
 
 int main ()
 {
-
+    yyin = fopen("entrada.txt", "r");
+    yyout = fopen("salida.txt", "w");	
+    
     #ifdef BISON_DEBUG
         yydebug = 1;
     #endif
-
-  yyparse ();
+    yyparse ();
 }
