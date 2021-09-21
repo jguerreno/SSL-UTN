@@ -8,7 +8,7 @@
 
 int yylex();
 int yyerror (char *s){printf ("%s\n", s);}
-int yywrap(){return(1);}
+int yywrap(){ return(1); }
 
 extern FILE *yyin;
 extern int yylineno;
@@ -33,6 +33,7 @@ extern int yylineno;
 %token <cadena> CONTINUE
 %token <cadena> BREAK
 %token <cadena> RETURN
+%token <cadena> GOTO
 
 // Tipo de Dato
 %token <cadena> TIPO_DATO
@@ -63,120 +64,81 @@ extern int yylineno;
 
 
 %%
-
 input:    /* vacio */
         | input line
 ;
 
 line:     '\n'
-        | instruccion '\n'  { printf ("\t %d\n", $1); }
-        | declaracion '\n'  { printf ("\t %d\n", $1); }
+        | sentencia '\n'  { printf ("\t Sentencia\n"); }
 ;
 
 
-/****************************** DECLARACIONES ************************************/
-declaracion : tipo lista_nombres ';' { printf("Declaracion -> declaracion_tipo lista_nombres\n"); }
-
-tipo        : VOID { printf("tipo_basico -> void\n"); }
-            | CHAR { printf("tipo_basico -> char\n"); }
-            | INT { printf("tipo_basico -> int\n"); }
-            | FLOAT { printf("tipo_basico -> float\n"); }
-            | DOUBLE { printf("tipo_basico -> double\n"); };
-
-lista_nombres : nombre { printf("lista_nombres -> nombre\n"); }
-              | nombre ',' lista_nombres { printf("lista_nombres -> lista_nombres ',' nombre\n"); };
-
-nombre : dato { printf("nombre -> dato\n"); }
-       | dato '=' elementos { printf("nombre -> dato '=' elementos\n"); };
-
-dato :  asterisco_list  IDENTIFIER  '[' expresion ']' { printf("Dato -> asterisco_list  IDENTIFIER  '[' expresion ']'\n"); }
-	  | asterisco_list IDENTIFIER '[' ']' { printf("Dato -> asterisco_list IDENTIFIER '[' ']'\n"); }
-      | asterisco_list IDENTIFIER { printf("Dato -> asterisco_list IDENTIFIER \n"); };
-      | IDENTIFIER { printf("Dato -> 'IDENTIFIER'\n"); }
-	  | IDENTIFIER '['']' { printf("Dato -> 'IDENTIFIER' '['']'\n"); }
-	  | IDENTIFIER '[' expresion ']' { printf("Dato -> 'IDENTIFIER' '[' expresion ']'\n"); }
-
-
-elementos : expresion { printf("elementos -> expresion\n"); }
-          | '{' elementosLista '}' { printf("elementos -> '{' elementosLista elementosLista '}'\n"); } ;
-
-
-elementosLista : elementos { printf("elementosLista -> elementos ,\n"); }
-               | elementos ',' elementosLista { printf("elementoslista -> elementos ',' elementosLista  ,\n"); } ;
-
-
-
-/****************************** INSTRUCCIONES ************************************/
-
-instruccion : bloque_instrucciones      { printf("instruccion -> bloque_instrucciones\n"); }
-            | instruccion_expresion     { printf("instruccion -> instruccion_expresion\n"); }
-            | instruccion_bifurcacion   { printf("instruccion -> instruccion_bifurcacion\n"); }
-            | instruccion_bucle         { printf("instruccion -> instruccion_bucle\n"); }
-            | instruccion_salto         { printf("instruccion -> instruccion_salto\n"); }
-            | instruccion_destino_salto { printf("instruccion -> instruccion_destino_salto\n"); }
-            | instruccion_retorno       { printf("instruccion -> instruccion_retorno\n"); }
+/****************************** sentencias ************************************/
+sentencia : bloque_sentencias         { printf("sentencia -> bloque_sentencias\n"); }
+            | sentencia_expresion     { printf("sentencia -> sentencia_expresion\n"); }
+            | sentencia_bifurcacion   { printf("sentencia -> sentencia_bifurcacion\n"); }
+            | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n"); }
+            | sentencia_salto         { printf("sentencia -> sentencia_salto\n"); }
+            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n"); }
 ;
 
-bloque_instrucciones : '{' '}' { printf("bloque_instrucciones -> '{' '}'\n"); }
-                     | '{' declaracion_list '}' { printf("bloque_instrucciones -> '{' declaracion_list '}'\n"); }
-                     | '{' instruccion_list '}' { printf("bloque_instrucciones -> '{' instruccion_list '}'\n"); }
-                     | '{' declaracion_list instruccion_list '}' { printf("bloque_instrucciones -> '{' declaracion_list instruccion_list '}'\n"); };
+bloque_sentencias : '{' '}'                                     { printf("bloque_sentencias -> '{' '}'\n"); }
+                     | '{' declaracion_list '}'                 { printf("bloque_sentencias -> '{' declaracion_list '}'\n"); }
+                     | '{' sentencia_list '}'                   { printf("bloque_sentencias -> '{' sentencia_list '}'\n"); }
+                     | '{' declaracion_list sentencia_list '}'  { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
+;
 
-declaracion_list : declaracion { printf("declaracion_list -> declaracion\n"); }
-                 | declaracion declaracion_list { printf("declaracion_list -> declaracion_list declaracion\n"); };
+declaracion_list : declaracion                  { printf("declaracion_list -> declaracion\n"); }
+                 | declaracion declaracion_list { printf("declaracion_list -> declaracion_list declaracion\n"); }
+;
 
+sentencia_list : sentencia                  { printf("sentencia_list -> sentencia\n"); }
+                 | sentencia sentencia_list { printf("sentencia_list -> sentencia_list sentencia\n"); }
+;
 
-instruccion_list : instruccion { printf("instruccion_list -> instruccion\n"); }
-                 | instruccion instruccion_list { printf("instruccion_list -> instruccion_list instruccion\n"); };
+sentencia_expresion : expresion ';'     { printf("sentencia_expresion -> expresion ';'\n"); }
+                      | asignacion ';'  { printf("sentencia_expresion -> asignacion ';'\n"); }
+;
 
-instruccion_expresion : expresion ';' { printf("instruccion_expresion -> expresion ';'\n"); }
-                      | asignacion ';' { printf("instruccion_expresion -> asignacion ';'\n"); }
+asignacion : expresion_indexada operador_asignacion expresion { printf("asignacion -> expresion_indexada operador_asignacion expresion\n"); } 
+;
 
+operador_asignacion : '='                   { printf("operador_asignacion -> '='\n"); }
+                    | OPERADOR_ASIGNACION   { printf("operador_asignacion -> IGUAL Y ALGO\n"); }
+;
 
+sentencia_bifurcacion : IF '(' expresion ')' sentencia                         { printf("sentencia_bifurcacion -> IF '(' expresion ')' sentencia\n"); }
+                        | IF '(' expresion ')' sentencia ELSE sentencia        { printf("sentencia_bifurcacion -> IF '(' expresion ')' sentencia ELSE sentencia\n"); }
+                        | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'  { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
+;
 
-asignacion : expresion_indexada operador_asignacion expresion { printf("asignacion -> expresion_indexada operador_asignacion expresion\n"); } ;
+sentencia_caso_list : sentencia_caso                       { printf("sentencia_caso_list -> sentencia_caso\n"); }
+                      | sentencia_caso sentencia_caso_list { printf("sentencia_caso_list -> sentencia_caso_list sentencia_caso\n"); }
+;
 
+sentencia_caso : CASE expresion ':' sentencia   { printf("sentencia_caso -> CASE expresion ':' sentencia\n"); }
+                 | DEFAULT ':' sentencia        { printf("sentencia_caso -> DEFAULT ':' sentencia\n"); }
+;
 
-operador_asignacion : '=' { printf("operador_asignacion -> '='\n"); }
-                    | TEQUAL { printf("operador_asignacion -> TEQUAL\n"); }
-					| PEQUAL { printf("operador_asignacion -> PEQUAL\n"); }
-                    | DIVEQUAL { printf("operador_asignacion -> DIVEQUAL\n"); }
-                    | PLUSEQUAL { printf("operador_asignacion -> PLUSEQUAL\n"); }
-                    | MINUSEQUAL { printf("operador_asignacion -> MINUSEQUAL\n"); }
-                    | BYTELASSIGN { printf("operador_asignacion -> BYTELASSIGN\n"); }
-                    | BYTERASSIGN { printf("operador_asignacion -> BYTERASSIGN\n"); }
-                    | ANDEQUAL { printf("operador_asignacion -> ANDEQUAL\n"); }
-                    | POWEQUAL { printf("operador_asignacion -> POWEQUAL\n"); }
-                    | OREQUAL { printf("operador_asignacion -> OREQUAL\n"); };
+sentencia_bucle : WHILE '(' expresion ')' sentencia                                       { printf("sentencia_bucle -> WHILE '(' expresion ')' sentencia\n"); }
+                  | DO sentencia WHILE '(' expresion ')' ';'                              { printf("sentencia_bucle -> DO sentencia WHILE '(' expresion ')' ;\n"); }
+                  | FOR '(' lista_asignaciones ';' expresion ';' expresion ')' sentencia  { printf("sentencia_bucle -> FOR '(' lista_asignaciones ';' expresion ';' expresion ')' sentencia\n"); }
+;
 
-instruccion_bifurcacion : IF '(' expresion ')' instruccion { printf("instruccion_bifurcacion -> IF '(' expresion ')' instruccion\n"); }
-                        | IF '(' expresion ')' instruccion ELSE instruccion { printf("instruccion_bifurcacion -> IF '(' expresion ')' instruccion ELSE instruccion\n"); }
-                        | SWITCH '(' expresion ')' '{' instruccion_caso_list'}' { printf("instruccion_bifurcacion -> SWITCH '(' expresion ')' '{' instruccion_caso_list'}'\n"); };
+lista_asignaciones : asignacion                        { printf("lista_asignaciones -> asignacion\n"); }
+                   | asignacion ',' lista_asignaciones { printf("lista_asignaciones -> lista_asignaciones ',' asignacion\n"); } 
+;
 
-instruccion_caso_list : instruccion_caso { printf("instruccion_caso_list -> instruccion_caso\n"); }
-                      | instruccion_caso instruccion_caso_list { printf("instruccion_caso_list -> instruccion_caso_list instruccion_caso\n"); } ;
+sentencia_salto : GOTO IDENTIFICADOR ';'    { printf("sentencia_salto -> GOTO IDENTIFICADOR ';'\n"); }
+                  | CONTINUE ';'            { printf("sentencia_salto -> CONTINUE ';'\n"); }
+                  | BREAK ';'               { printf("sentencia_salto -> BREAK ';'\n"); }
+;
 
-instruccion_caso : CASE expresion ':' instruccion { printf("instruccion_caso -> CASE expresion ':' instruccion\n"); }
-                 | DEFAULT ':' instruccion { printf("instruccion_caso -> DEFAULT ':' instruccion\n"); };
-
-instruccion_bucle : WHILE '(' expresion ')' instruccion { printf("instruccion_bucle -> WHILE '(' expresion ')' instruccion\n"); }
-                  | DO instruccion WHILE '(' expresion ')' ';' { printf("instruccion_bucle -> DO instruccion WHILE '(' expresion ')' ;\n"); }
-                  | FOR '(' ';' expresion ';' expresion ')' instruccion { printf("instruccion_bucle -> FOR '(' ';' expresion ';' expresion ')' instruccion\n"); }
-                  | FOR '(' lista_asignaciones ';' expresion ';' expresion ')' instruccion { printf("instruccion_bucle -> FOR '(' lista_asignaciones ';' expresion ';' expresion ')' instruccion\n"); };
-
-lista_asignaciones : asignacion { printf("lista_asignaciones -> asignacion\n"); }
-                   | asignacion ',' lista_asignaciones { printf("lista_asignaciones -> lista_asignaciones ',' asignacion\n"); } ;
-
-instruccion_salto : GOTO IDENTIFIER ';' { printf("instruccion_salto -> GOTO IDENTIFIER ';'\n"); }
-                  | CONTINUE ';' { printf("instruccion_salto -> CONTINUE ';'\n"); }
-                  | BREAK ';' { printf("instruccion_salto -> BREAK ';'\n"); };
-
-instruccion_destino_salto : IDENTIFIER ':' instruccion ';' { printf("instruccion_destino_salto -> IDENTIFIER ':' instruccion ';'\n"); };
-
-instruccion_retorno : RETURN ';' { printf("instruccion_retorno -> RETURN ';'\n"); }
-                    | RETURN expresion ';' { printf("instruccion_retorno -> RETURN expresion ';'\n"); };
-
+sentencia_retorno : RETURN ';'              { printf("sentencia_retorno -> RETURN ';'\n"); }
+                    | RETURN expresion ';'  { printf("sentencia_retorno -> RETURN expresion ';'\n"); }
+;
 %%
+
 
 int main ()
 {
@@ -186,5 +148,6 @@ int main ()
     #ifdef BISON_DEBUG
         yydebug = 1;
     #endif
+
     yyparse ();
 }
