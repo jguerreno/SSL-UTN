@@ -10,8 +10,11 @@ int yylex();
 int yyerror (char *s){printf ("%s\n", s);}
 int yywrap(){ return(1); }
 
-extern FILE *yyin;
 extern int yylineno;
+
+yyin = fopen("entrada.txt", "r");
+yyout = fopen("salida.txt", "w");	
+
 %}
 
 %union {
@@ -142,9 +145,6 @@ sentencia_retorno : RETURN ';'              { printf("sentencia_retorno -> RETUR
 
 int main ()
 {
-    yyin = fopen("entrada.txt", "r");
-    yyout = fopen("salida.txt", "w");	
-
     #ifdef BISON_DEBUG
         yydebug = 1;
     #endif
