@@ -2,20 +2,24 @@
 %{
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 
 #define YYDEBUG 1
 
-int yylex();
-int yyerror (char *s){printf ("%s\n", s);}
-int yywrap(){ return(1); }
+int yylex(void);
 
+int yyerror (const char *s){
+    printf("-------- ERRROR ---------\n");
+    printf ("%s\n", s);
+    return -1;
+}
+
+extern FILE *yyin;
 extern int yylineno;
-
-yyin = fopen("entrada.txt", "r");
-yyout = fopen("salida.txt", "w");	
-
 %}
+
 
 %union {
     int entero;
@@ -145,9 +149,12 @@ sentencia_retorno: RETURN ';'              { printf("sentencia_retorno -> RETURN
 
 int main ()
 {
+    yyin = fopen("entrada.txt", "r");
+
     #ifdef BISON_DEBUG
         yydebug = 1;
     #endif
-
     yyparse ();
+
+    fclose(yyin);
 }

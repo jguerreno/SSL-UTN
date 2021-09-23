@@ -1,13 +1,15 @@
-%option noyywrap
+option noyywrap
 %option yylineno
 
-
 %{
-#include <stdlib.h>
+#include<math.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
 #include "parser.tab.h"
-
+ 
 extern FILE * yyin;
-extern FILE * yyout;
 %}
 
 
