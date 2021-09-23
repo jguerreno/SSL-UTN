@@ -56,7 +56,6 @@ SECUENCIA_ESCAPE_SIMPLE (a|b|f|n|r|t|v|\'|\"|\?|\\)
 "continue"  { return CONTINUE;  }
 "break"     { return BREAK;     }
 "return"    { return RETURN;    }
-"goto"      { return GOTO;    }
 
 {TIPO_DATO} { yylval.cadena = strdup(yytext); return TIPO_DATO; }
                         
