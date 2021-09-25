@@ -107,6 +107,11 @@ sentencia_expresion: expresion ';'     { printf("sentencia_expresion -> expresio
 asignacion: expresion_indexada operador_asignacion expresion { printf("asignacion -> expresion_indexada operador_asignacion expresion\n"); } 
 ;
 
+expresion_indexada: IDENTIFICADOR { printf("expresion_indexada -> IDENTIFICADOR\n"); }
+                    |
+                    expresion_indexada '[' expresion ']' { printf("expresion_indexada -> expresion_indexada '[' expresion ']'\n"); }
+;
+
 operador_asignacion: '='                   { printf("operador_asignacion -> '='\n"); }
                     | OPERADOR_ASIGNACION   { printf("operador_asignacion -> IGUAL Y ALGO\n"); }
 ;
