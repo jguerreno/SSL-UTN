@@ -69,6 +69,23 @@ extern int yylineno;
 %token <real>   CONSTANTE_REAL
 
 
+// Type
+%right '=' OPERADOR_ASIGNACION
+%right '?' ':'
+%left OPERADOR_O_LOGICO
+%left OPERADOR_Y_LOGICO
+%left '|'
+%left '^'
+%left '&'
+%left OPERADOR_RELACIONAL '<' '>'
+%left OPERADOR_CORRIMIENTO
+%left '-' '+'
+%left '*' '/' '%'
+%right OPERADOR_INCREMENTO OPERADOR_SIZEOF
+%left ')'
+%right '('
+
+
 %%
 input:    /* vacio */
         | input line
@@ -96,6 +113,47 @@ declaracion_list: declaracion                  { printf("declaracion_list -> dec
                 | declaracion declaracion_list { printf("declaracion_list -> declaracion_list declaracion\n"); }
 ;
 
+/****************************** DECLARACIONES ************************************/
+
+declaracion: declaracion_variables 
+             | 
+             declaracion_funciones
+;
+
+declaracion_funciones: IDENTIFICADOR '(' listaParametros ')' 
+;
+
+declaracion_variables: identVariable 
+                      | 
+                      identVariable ',' declaracion_variables
+;
+
+listaParametros: TIPO_DATO IDENTIFICADOR 
+                 | 
+                 TIPO_DATO IDENTIFICADOR ',' listaParametros 
+                 |
+                 /** VACIO***/
+;
+
+identVariable: IDENTIFICADOR 
+               | 
+               IDENTIFICADOR '=' constante 
+               | 
+               error
+;
+
+constante: CONSTANTE_DECIMAL 
+           |
+           CONSTANTE_OCTAL
+           |
+           CONSTANTE_HEXADECIMAL
+           |
+           CONSTANTE_CARACTER
+           |
+           error
+;
+
+
 sentencia_list: sentencia                  { printf("sentencia_list -> sentencia\n"); }
                 | sentencia sentencia_list { printf("sentencia_list -> sentencia_list sentencia\n"); }
 ;
@@ -104,12 +162,54 @@ sentencia_expresion: expresion ';'     { printf("sentencia_expresion -> expresio
                     | asignacion ';'  { printf("sentencia_expresion -> asignacion ';'\n"); }
 ;
 
-asignacion: expresion_indexada operador_asignacion expresion { printf("asignacion -> expresion_indexada operador_asignacion expresion\n"); } 
+/****************************** EXPRESIONES ************************************/
+
+expresion: expresion_logica                                 { printf("Expresion  -> expresion_logica\n"); }
+         | expresion_logica '?' expresion ':' expresion     { printf("Expresion  -> expresion_logica '?' expresion ':' expresion \n"); }
+         | expresion '-' expresion                          { printf("Expresion_logica -> expresion '-' expresion\n"); }
+         | expresion '+' expresion                          { printf("Expresion_logica -> expresion '+' expresion\n"); }
+         | expresion '*' expresion                          { printf("Expresion_logica -> expresion '*' expresion\n"); }
+         | expresion OPERADOR_MULTIPLICATIVO expresion      { printf("Expresion_logica -> expresion '/' expresion\n"); }
+;
+
+expresion_logica: expresion_prefija                     { printf("Expresion_logica -> expresion_prefija \n"); }
+          | expresion OPERADOR_ASIGNACION expresion     { printf("Expresion_logica -> expresion 'OPERADOR DE ASIGNACION' expresion \n"); }
+          | expresion OPERADOR_O_LOGICO expresion       { printf("Expresion_logica -> expresion OR expresion \n"); }
+          | expresion OPERADOR_Y_LOGICO expresion       { printf("Expresion_logica -> expresion AND expresion \n"); }
+          | expresion OPERADOR_O_INCLUSIVO expresion    { printf("Expresion_logica -> expresion '|' expresion  \n"); }
+          | expresion OPERADOR_O_EXCLUSIVO expresion    { printf("Expresion_logica -> expresion 'OPERADOR O EXCLUSIVO' expresion\n"); }
+          | expresion '&' expresion                     { printf("Expresion_logica -> expresion '&' expresion\n"); }
+          | expresion OPERADOR_IGUALDAD expresion       { printf("Expresion_logica -> expresion 'OPERADOR IGUALDAD' expresion\n"); }
+          | expresion OPERADOR_CORRIMIENTO expresion    { printf("Expresion_logica -> expresion 'OPERADOR CORRIMIENTO' expresion\n"); }
+          | expresion OPERADOR_RELACIONAL expresion     { printf("Expresion_logica -> expresion 'OPERADOR RELACIONAL' expresion\n"); }
+;
+
+expresion_prefija: expresion_postfija                       { printf("expresion_prefija -> expresion_postfija\n"); }
+                  | OPERADOR_SIZEOF '(' TIPO_DATO ')'       { printf("expresion_prefija -> SIZEOF '(' TIPO_DATO ')'\n"); }
+                  | OPERADOR_INCREMENTO expresion_prefija   { printf("expresion_prefija -> ++ expresion_prefija\n"); }
+                  | operador_unario expresion_prefija       { printf("expresion_prefija -> operador_unario\n"); }
+;
+
+expresion_postfija: expresion_constante                    { printf("expresion_postfija -> expresion_constante\n"); }
+                   | expresion_indexada                     { printf("expresion_postfija -> expresion_indexada\n"); }
+                   | expresion_postfija OPERADOR_INCREMENTO { printf("expresion_postfija -> expresion_postfija ++\n"); }
 ;
 
 expresion_indexada: IDENTIFICADOR { printf("expresion_indexada -> IDENTIFICADOR\n"); }
                     |
                     expresion_indexada '[' expresion ']' { printf("expresion_indexada -> expresion_indexada '[' expresion ']'\n"); }
+;
+
+expresion_constante: CONSTANTE_CADENA        { printf("expresion_constante -> CADENA\n"); }
+                      | CONSTANTE_DECIMAL       { printf("expresion_constante -> DECIMAL\n"); }
+                      | CONSTANTE_OCTAL         { printf("expresion_constante -> OCTAL\n"); }
+                      | CONSTANTE_HEXADECIMAL   { printf("expresion_constante -> HEXADECIMAL\n"); }
+                      | CONSTANTE_CARACTER      { printf("expresion_constante -> CARACTER\n"); }
+                      | CONSTANTE_REAL          { printf("expresion_constante -> REAL\n"); }
+                      | '(' expresion ')'       { printf("expresion_constante -> '(' expresion ')'\n"); }
+;
+
+asignacion: expresion_indexada operador_asignacion expresion { printf("asignacion -> expresion_indexada operador_asignacion expresion\n"); } 
 ;
 
 operador_asignacion: '='                   { printf("operador_asignacion -> '='\n"); }
@@ -148,6 +248,19 @@ sentencia_salto: CONTINUE ';'            { printf("sentencia_salto -> CONTINUE '
 sentencia_retorno: RETURN ';'              { printf("sentencia_retorno -> RETURN ';'\n"); }
                     | RETURN expresion ';'  { printf("sentencia_retorno -> RETURN expresion ';'\n"); }
 ;
+
+/****************************** OPERADORES ************************************/
+
+operador_unario: '&'  { printf("Operador unario  -> '&'\n"); }
+                 | '*' { printf("Operador unario  -> '*'\n"); }
+                 | '+' { printf("Operador unario  -> '+'\n"); }
+                 | '-' { printf("Operador unario  -> '-'\n"); }
+                 | '~' { printf("Operador unario  -> '~'\n"); }
+                 | '!' { printf("Operador unario  -> '!'\n"); }
+;
+
+
+
 %%
 
 
