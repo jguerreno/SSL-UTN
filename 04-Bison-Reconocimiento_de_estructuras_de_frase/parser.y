@@ -98,6 +98,7 @@ input:    /* vacio */
 ;
 
 line:     '\n'
+        | TIPO_DATO declaracion ';'  { printf ("\t Declaracion\n"); }
         | sentencia '\n'  { printf ("\t Sentencia\n"); }
 ;
 
@@ -120,15 +121,14 @@ declaracion_list: declaracion                  { printf("declaracion_list -> dec
 
 /****************************** DECLARACIONES ************************************/
 
-declaracion: declaracion_variables 
-             | 
-             declaracion_funciones
+declaracion: declaracion_variables { printf("declaracion -> declaracion var \n"); }
+            | declaracion_funciones { printf("declaracion -> func \n"); }
 ;
 
-declaracion_funciones: IDENTIFICADOR '(' listaParametros ')' 
+declaracion_funciones: IDENTIFICADOR '(' listaParametros ')'
 ;
 
-declaracion_variables: identVariable 
+declaracion_variables: identVariable  { printf("declaracion -> idem var \n"); }
                       | 
                       identVariable ',' declaracion_variables
 ;
@@ -140,24 +140,9 @@ listaParametros: TIPO_DATO IDENTIFICADOR
                  /** VACIO***/
 ;
 
-identVariable: TIPO_DATO IDENTIFICADOR 
-               | 
-               TIPO_DATO IDENTIFICADOR '=' constante 
-               | 
-               error
+identVariable: IDENTIFICADOR    {printf("identificador");}
+               | IDENTIFICADOR '=' expresion_constante {printf("identificador =");}
 ;
-
-constante: CONSTANTE_DECIMAL 
-           |
-           CONSTANTE_OCTAL
-           |
-           CONSTANTE_HEXADECIMAL
-           |
-           CONSTANTE_CARACTER
-           |
-           error
-;
-
 
 sentencia_list: sentencia                  { printf("sentencia_list -> sentencia\n"); }
                 | sentencia sentencia_list { printf("sentencia_list -> sentencia_list sentencia\n"); }
