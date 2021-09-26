@@ -39,6 +39,11 @@ PARTE_EXPONENTE         (e|E)("+"|"-")?{DIGITO_DECIMAL}*
 SECUENCIA_ESCAPE_SIMPLE (a|b|f|n|r|t|v|\'|\"|\?|\\)
 
 
+/************************************* IDENTIFICADORES *************************/ 
+
+IDENTIFICADOR            [a-zA-Z_][a-zA-Z0-9_]* 
+
+
 %%
 "\n" { return '\n'; }
 " "|"\t"
@@ -71,7 +76,7 @@ SECUENCIA_ESCAPE_SIMPLE (a|b|f|n|r|t|v|\'|\"|\?|\\)
 {OPERADOR_INCREMENTO}           { return OPERADOR_INCREMENTO;           }                  
 {OPERADOR_SIZEOF}               { return OPERADOR_SIZEOF;               }           
 
-[a-zA-Z_][a-zA-Z0-9_]*  { yylval.cadena = strdup(yytext); return IDENTIFICADOR;  }
+{IDENTIFICADOR}                                                                                             { yylval.cadena = strdup(yytext); return IDENTIFICADOR;  }
 
 \"(([^\"]|\\\")*[^\\])?\"                                                                                   { yylval.cadena =   strdup(yytext);             return CONSTANTE_CADENA;        }
 {DIGITO_DECIMAL_SIN_CERO}{DIGITO_DECIMAL}*{SUFIJO_ENTERO}?                                                  { yylval.entero =   atoi(yytext);               return CONSTANTE_DECIMAL;       }

@@ -8,6 +8,12 @@
 
 #define YYDEBUG 1
 
+/** VARIABLES GLOBALES **/
+int flag_error=0;
+int contador=0;
+char* tipo;
+/** VARIABLES GLOBALES **/
+
 int yylex(void);
 
 int yyerror (const char *s){
@@ -95,7 +101,6 @@ line:     '\n'
         | sentencia '\n'  { printf ("\t Sentencia\n"); }
 ;
 
-
 /****************************** sentencias ************************************/
 sentencia: bloque_sentencias         { printf("sentencia -> bloque_sentencias\n"); }
             | sentencia_expresion     { printf("sentencia -> sentencia_expresion\n"); }
@@ -135,9 +140,9 @@ listaParametros: TIPO_DATO IDENTIFICADOR
                  /** VACIO***/
 ;
 
-identVariable: IDENTIFICADOR 
+identVariable: TIPO_DATO IDENTIFICADOR 
                | 
-               IDENTIFICADOR '=' constante 
+               TIPO_DATO IDENTIFICADOR '=' constante 
                | 
                error
 ;
