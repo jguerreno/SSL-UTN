@@ -45,7 +45,7 @@ IDENTIFICADOR            [a-zA-Z_][a-zA-Z0-9_]*
 "\n" { return '\n'; }
 " "|"\t"
  
-","|"?"|":"|"("|")"|"["|"]"|"="|"{"|"}"|";"|"*"|"&"|"+"|"-"|"~"|"!" { return yytext[0]; }
+","|"?"|":"|"("|")"|"["|"]"|"="|"{"|"}"|";"|"*"|"&"|"+"|"-"|"~"|"!"|"." { return yytext[0]; }
 
 "if"        { return IF;        }
 "else"      { return ELSE;      }
@@ -72,6 +72,7 @@ IDENTIFICADOR            [a-zA-Z_][a-zA-Z0-9_]*
 {OPERADOR_MULTIPLICATIVO}       { return OPERADOR_MULTIPLICATIVO;       }   
 {OPERADOR_INCREMENTO}           { return OPERADOR_INCREMENTO;           }                  
 {OPERADOR_SIZEOF}               { return OPERADOR_SIZEOF;               }           
+"->"                            { return FLECHA;               }
 
 {IDENTIFICADOR}                                                                                             { yylval.cadena = strdup(yytext); return IDENTIFICADOR;  }
 
