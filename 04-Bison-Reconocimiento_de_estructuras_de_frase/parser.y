@@ -197,6 +197,8 @@ expresion_postfija: expresion_constante                    { printf("expresion_p
 
 expresion_indexada: IDENTIFICADOR { printf("expresion_indexada -> IDENTIFICADOR\n"); }
                 | expresion_indexada '[' expresion ']' { printf("expresion_indexada -> expresion_indexada '[' expresion ']'\n"); }
+                | expresion_indexada '.' IDENTIFICADOR { printf("expresion_indexada -> expresion_indexada '.' IDENTIFIER\n"); }
+                | expresion_indexada FLECHA IDENTIFICADOR { printf("expresion_indexada -> expresion_indexada ARROW IDENTIFIER\n"); };
 ;
 
 expresion_constante: CONSTANTE_CADENA           { printf("expresion_constante -> CADENA\n"); }
@@ -223,8 +225,8 @@ else_opcional: /* vacio */                       { printf("VACIO\n"); }
             | '\n' ELSE bloque_sentencias        { printf("sentencia_bifurcacion -> ELSE sentencia\n"); }
 ;
 
-sentencia_caso_list: sentencia_caso                       { printf("sentencia_caso_list -> sentencia_caso\n"); }
-                      | sentencia_caso sentencia_caso_list { printf("sentencia_caso_list -> sentencia_caso_list sentencia_caso\n"); }
+sentencia_caso_list: /* vacio */                       { printf("sentencia_caso_list -> sentencia_caso\n"); }
+                | sentencia_caso sentencia_caso_list { printf("sentencia_caso_list -> sentencia_caso_list sentencia_caso\n"); }
 ;
 
 sentencia_caso: CASE expresion ':' sentencia   { printf("sentencia_caso -> CASE expresion ':' sentencia\n"); }
