@@ -38,9 +38,6 @@ CONSTANTE_FRACCION      (({DIGITO_DECIMAL}*)?"."{DIGITO_DECIMAL}*|{DIGITO_DECIMA
 PARTE_EXPONENTE         (e|E)("+"|"-")?{DIGITO_DECIMAL}*
 SECUENCIA_ESCAPE_SIMPLE (a|b|f|n|r|t|v|\'|\"|\?|\\)
 
-
-/************************************* IDENTIFICADORES *************************/ 
-
 IDENTIFICADOR            [a-zA-Z_][a-zA-Z0-9_]* 
 
 
@@ -84,6 +81,9 @@ IDENTIFICADOR            [a-zA-Z_][a-zA-Z0-9_]*
 0[xX]{DIGITO_HEXADECIMAL}+{SUFIJO_ENTERO}?                                                                  { yylval.entero =   atoi(yytext);               return CONSTANTE_HEXADECIMAL;   }
 \'([^\\\']|\\{SECUENCIA_ESCAPE_SIMPLE}|\\{DIGITO_OCTAL}{1,3}|\\x{DIGITO_HEXADECIMAL}{1,2})\'                { yylval.entero =   atoi(yytext);               return CONSTANTE_CARACTER;      }
 ({CONSTANTE_FRACCION}{PARTE_EXPONENTE}?{SUFIJO_REAL}?|{CONSTANTE_FRACCION}{PARTE_EXPONENTE}{SUFIJO_REAL}?)  { yylval.real =     strtol(yytext, NULL, 0);    return CONSTANTE_REAL;          }
+
+\/\/.*
+\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/ 
 
 . 
 %%
