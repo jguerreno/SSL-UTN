@@ -62,6 +62,7 @@ extern int yylineno;
 %token <cadena> OPERADOR_MULTIPLICATIVO
 %token <cadena> OPERADOR_INCREMENTO
 %token <cadena> OPERADOR_SIZEOF
+%token <cadena> FLECHA
 
 // Identificador
 %token <cadena> IDENTIFICADOR
@@ -110,10 +111,11 @@ sentencia: bloque_sentencias         { printf("sentencia -> bloque_sentencias\n"
             | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n"); }
             | sentencia_salto         { printf("sentencia -> sentencia_salto\n"); }
             | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n"); }
+            | '\n'
 ;
 
-bloque_sentencias: '{' '}' '\n'                                                 { printf("bloque_sentencias -> '{' '}'\n"); }
-                | '{' '\n' declaracion_list sentencia_list '\n' '}' '\n'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
+bloque_sentencias: '{' '}'                                                 { printf("bloque_sentencias -> '{' '}'\n"); }
+                | '{' '\n' declaracion_list sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
 ;
 
 declaracion_list: /* VACIO */                               { printf("declaracion_list -> declaracion\n"); }
@@ -150,8 +152,8 @@ sentencia_list: /* VACIO */                  { printf("sentencia_list -> sentenc
                 | sentencia_list sentencia { printf("sentencia_list -> sentencia_list sentencia\n"); }
 ;
 
-sentencia_expresion: expresion ';' '\n'     { printf("sentencia_expresion -> expresion ';'\n"); }
-                    | asignacion ';' '\n'   { printf("sentencia_expresion -> asignacion ';'\n"); }
+sentencia_expresion: expresion ';'     { printf("sentencia_expresion -> expresion ';'\n"); }
+                    | asignacion ';'   { printf("sentencia_expresion -> asignacion ';'\n"); }
 ;
 
 
@@ -168,27 +170,18 @@ operacion_matematica: '-'
 ;
 
 expresion_logica: expresion_prefija                     { printf("Expresion_logica -> expresion_prefija \n"); }
-          | expresion OPERADOR_ASIGNACION expresion     { printf("Expresion_logica -> expresion 'OPERADOR DE ASIGNACION' expresion \n"); }
-          | expresion OPERADOR_O_LOGICO expresion       { printf("Expresion_logica -> expresion OR expresion \n"); }
-          | expresion OPERADOR_Y_LOGICO expresion       { printf("Expresion_logica -> expresion AND expresion \n"); }
-          | expresion OPERADOR_O_INCLUSIVO expresion    { printf("Expresion_logica -> expresion '|' expresion  \n"); }
-          | expresion OPERADOR_O_EXCLUSIVO expresion    { printf("Expresion_logica -> expresion 'OPERADOR O EXCLUSIVO' expresion\n"); }
-          | expresion '&' expresion                     { printf("Expresion_logica -> expresion '&' expresion\n"); }
-          | expresion OPERADOR_IGUALDAD expresion       { printf("Expresion_logica -> expresion 'OPERADOR IGUALDAD' expresion\n"); }
-          | expresion OPERADOR_CORRIMIENTO expresion    { printf("Expresion_logica -> expresion 'OPERADOR CORRIMIENTO' expresion\n"); }
-          | expresion OPERADOR_RELACIONAL expresion     { printf("Expresion_logica -> expresion 'OPERADOR RELACIONAL' expresion\n"); }
+          | expresion operacion_logica expresion     { printf("Expresion_logica -> expresion 'OPERADOR DE ASIGNACION' expresion \n"); }
 ;
 
-expresion_logica: OPERADOR_ASIGNACION     { printf("Expresion_logica -> expresion 'OPERADOR DE ASIGNACION' expresion \n"); }
-          | OPERADOR_O_LOGICO       { printf("Expresion_logica -> expresion OR expresion \n"); }
-          | OPERADOR_Y_LOGICO        { printf("Expresion_logica -> expresion AND expresion \n"); }
-          | OPERADOR_O_INCLUSIVO     { printf("Expresion_logica -> expresion '|' expresion  \n"); }
-          | OPERADOR_O_EXCLUSIVO     { printf("Expresion_logica -> expresion 'OPERADOR O EXCLUSIVO' expresion\n"); }
-          | '&'                      { printf("Expresion_logica -> expresion '&' expresion\n"); }
-          | OPERADOR_IGUALDAD        { printf("Expresion_logica -> expresion 'OPERADOR IGUALDAD' expresion\n"); }
-          | OPERADOR_CORRIMIENTO    { printf("Expresion_logica -> expresion 'OPERADOR CORRIMIENTO' expresion\n"); }
-          | OPERADOR_RELACIONAL     { printf("Expresion_logica -> expresion 'OPERADOR RELACIONAL' expresion\n"); }
-
+operacion_logica: OPERADOR_ASIGNACION     { printf("Expresion_logica -> expresion 'OPERADOR DE ASIGNACION' expresion \n"); }
+        | OPERADOR_O_LOGICO       { printf("Expresion_logica -> expresion OR expresion \n"); }
+        | OPERADOR_Y_LOGICO        { printf("Expresion_logica -> expresion AND expresion \n"); }
+        | OPERADOR_O_INCLUSIVO     { printf("Expresion_logica -> expresion '|' expresion  \n"); }
+        | OPERADOR_O_EXCLUSIVO     { printf("Expresion_logica -> expresion 'OPERADOR O EXCLUSIVO' expresion\n"); }
+        | '&'                      { printf("Expresion_logica -> expresion '&' expresion\n"); }
+        | OPERADOR_IGUALDAD        { printf("Expresion_logica -> expresion 'OPERADOR IGUALDAD' expresion\n"); }
+        | OPERADOR_CORRIMIENTO    { printf("Expresion_logica -> expresion 'OPERADOR CORRIMIENTO' expresion\n"); }
+        | OPERADOR_RELACIONAL     { printf("Expresion_logica -> expresion 'OPERADOR RELACIONAL' expresion\n"); }
 ;
 
 expresion_prefija: expresion_postfija                       { printf("expresion_prefija -> expresion_postfija\n"); }
@@ -203,7 +196,7 @@ expresion_postfija: expresion_constante                    { printf("expresion_p
 ;
 
 expresion_indexada: IDENTIFICADOR { printf("expresion_indexada -> IDENTIFICADOR\n"); }
-                    | expresion_indexada '[' expresion ']' { printf("expresion_indexada -> expresion_indexada '[' expresion ']'\n"); }
+                | expresion_indexada '[' expresion ']' { printf("expresion_indexada -> expresion_indexada '[' expresion ']'\n"); }
 ;
 
 expresion_constante: CONSTANTE_CADENA           { printf("expresion_constante -> CADENA\n"); }
@@ -223,7 +216,7 @@ operador_asignacion: '='                   { printf("operador_asignacion -> '='\
 ;
 
 sentencia_bifurcacion:  IF '(' expresion ')' bloque_sentencias else_opcional        { printf("sentencia_bifurcacion -> IF '(' expresion ')' sentencia\n"); }
-                        | SWITCH '(' expresion ')' '{' sentencia_caso_list'}' '\n'  { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
+                        | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'  { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
 ;
 
 else_opcional: /* vacio */                       { printf("VACIO\n"); }
