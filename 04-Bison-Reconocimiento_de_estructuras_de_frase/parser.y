@@ -97,7 +97,7 @@ input:    /* vacio */
         | input line
 ;
 
-line:     '\n'                      { printf ("\t Salto de linea\n"); }
+line:   '\n'                        { printf ("\t Salto de linea\n"); }
         | TIPO_DATO declaracion
         | sentencia                 { printf ("\t Sentencia\n"); }
 ;
@@ -113,12 +113,13 @@ sentencia: bloque_sentencias         { printf("sentencia -> bloque_sentencias\n"
 ;
 
 bloque_sentencias: '{' '}' '\n'                                                 { printf("bloque_sentencias -> '{' '}'\n"); }
-                     | '{' '\n' declaracion_list sentencia_list '\n' '}' '\n'   { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
+                | '{' '\n' declaracion_list sentencia_list '\n' '}' '\n'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
 ;
 
 declaracion_list: /* VACIO */                               { printf("declaracion_list -> declaracion\n"); }
                 | TIPO_DATO declaracion declaracion_list    { printf("declaracion_list -> declaracion_list declaracion\n"); }
 ;
+
 
 /****************************** DECLARACIONES ************************************/
 declaracion: declaracion_funcion          { printf("declaracion -> declaracion\n"); }
@@ -153,14 +154,17 @@ sentencia_expresion: expresion ';' '\n'     { printf("sentencia_expresion -> exp
                     | asignacion ';' '\n'   { printf("sentencia_expresion -> asignacion ';'\n"); }
 ;
 
-/****************************** EXPRESIONES ************************************/
 
+/****************************** EXPRESIONES ************************************/
 expresion: expresion_logica                                 { printf("Expresion  -> expresion_logica\n"); }
-         | expresion_logica '?' expresion ':' expresion     { printf("Expresion  -> expresion_logica '?' expresion ':' expresion \n"); }
-         | expresion '-' expresion                          { printf("Expresion_logica -> expresion '-' expresion\n"); }
-         | expresion '+' expresion                          { printf("Expresion_logica -> expresion '+' expresion\n"); }
-         | expresion '*' expresion                          { printf("Expresion_logica -> expresion '*' expresion\n"); }
-         | expresion OPERADOR_MULTIPLICATIVO expresion      { printf("Expresion_logica -> expresion '/' expresion\n"); }
+        | expresion_logica '?' expresion ':' expresion     { printf("Expresion  -> expresion_logica '?' expresion ':' expresion \n"); }
+        | expresion operacion_matematica expresion                          { printf("Expresion_logica -> expresion '-' expresion\n"); }
+;
+
+operacion_matematica: '-'
+                    | '+'
+                    | '*'
+                    | OPERADOR_MULTIPLICATIVO
 ;
 
 expresion_logica: expresion_prefija                     { printf("Expresion_logica -> expresion_prefija \n"); }
@@ -173,6 +177,18 @@ expresion_logica: expresion_prefija                     { printf("Expresion_logi
           | expresion OPERADOR_IGUALDAD expresion       { printf("Expresion_logica -> expresion 'OPERADOR IGUALDAD' expresion\n"); }
           | expresion OPERADOR_CORRIMIENTO expresion    { printf("Expresion_logica -> expresion 'OPERADOR CORRIMIENTO' expresion\n"); }
           | expresion OPERADOR_RELACIONAL expresion     { printf("Expresion_logica -> expresion 'OPERADOR RELACIONAL' expresion\n"); }
+;
+
+expresion_logica: OPERADOR_ASIGNACION     { printf("Expresion_logica -> expresion 'OPERADOR DE ASIGNACION' expresion \n"); }
+          | OPERADOR_O_LOGICO       { printf("Expresion_logica -> expresion OR expresion \n"); }
+          | OPERADOR_Y_LOGICO        { printf("Expresion_logica -> expresion AND expresion \n"); }
+          | OPERADOR_O_INCLUSIVO     { printf("Expresion_logica -> expresion '|' expresion  \n"); }
+          | OPERADOR_O_EXCLUSIVO     { printf("Expresion_logica -> expresion 'OPERADOR O EXCLUSIVO' expresion\n"); }
+          | '&'                      { printf("Expresion_logica -> expresion '&' expresion\n"); }
+          | OPERADOR_IGUALDAD        { printf("Expresion_logica -> expresion 'OPERADOR IGUALDAD' expresion\n"); }
+          | OPERADOR_CORRIMIENTO    { printf("Expresion_logica -> expresion 'OPERADOR CORRIMIENTO' expresion\n"); }
+          | OPERADOR_RELACIONAL     { printf("Expresion_logica -> expresion 'OPERADOR RELACIONAL' expresion\n"); }
+
 ;
 
 expresion_prefija: expresion_postfija                       { printf("expresion_prefija -> expresion_postfija\n"); }
