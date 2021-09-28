@@ -217,12 +217,9 @@ operador_asignacion: '='                   { printf("operador_asignacion -> '='\
                     | OPERADOR_ASIGNACION   { printf("operador_asignacion -> IGUAL Y ALGO\n"); }
 ;
 
-sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias else_opcional        { printf("sentencia_bifurcacion -> IF '(' expresion ')' sentencia\n"); }
-                | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'  { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
-;
-
-else_opcional: /* vacio */                       { printf("VACIO\n"); }
-            | '\n' ELSE bloque_sentencias        { printf("sentencia_bifurcacion -> ELSE sentencia\n"); }
+sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias                   { printf("instruccion_bifurcacion -> IF '(' expresion ')' instruccion\n"); }
+                | IF '(' expresion ')' bloque_sentencias ELSE bloque_sentencias { printf("instruccion_bifurcacion -> IF '(' expresion ')' instruccion ELSE instruccion\n"); }
+                | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'           { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
 ;
 
 sentencia_caso_list: /* vacio */                       { printf("sentencia_caso_list -> sentencia_caso\n"); }
