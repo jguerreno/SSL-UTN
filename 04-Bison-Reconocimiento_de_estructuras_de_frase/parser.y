@@ -217,8 +217,8 @@ operador_asignacion: '='                   { printf("operador_asignacion -> '='\
                     | OPERADOR_ASIGNACION   { printf("operador_asignacion -> IGUAL Y ALGO\n"); }
 ;
 
-sentencia_bifurcacion:  IF '(' expresion ')' bloque_sentencias else_opcional        { printf("sentencia_bifurcacion -> IF '(' expresion ')' sentencia\n"); }
-                        | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'  { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
+sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias else_opcional        { printf("sentencia_bifurcacion -> IF '(' expresion ')' sentencia\n"); }
+                | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'  { printf("sentencia_bifurcacion -> SWITCH '(' expresion ')' '{' sentencia_caso_list'}'\n"); }
 ;
 
 else_opcional: /* vacio */                       { printf("VACIO\n"); }
@@ -234,7 +234,7 @@ sentencia_caso: CASE expresion ':' sentencia   { printf("sentencia_caso -> CASE 
 ;
 
 sentencia_bucle: WHILE '(' expresion ')' bloque_sentencias                                        { printf("sentencia_bucle -> WHILE '(' expresion ')' sentencia\n"); }
-                  | DO bloque_sentencias WHILE '(' expresion ')' ';' '\n'                             { printf("sentencia_bucle -> DO sentencia WHILE '(' expresion ')' ;\n"); }
+                  | DO bloque_sentencias WHILE '(' expresion ')' ';'                             { printf("sentencia_bucle -> DO sentencia WHILE '(' expresion ')' ;\n"); }
                   | FOR '(' lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias  { printf("sentencia_bucle -> FOR '(' lista_asignaciones ';' expresion ';' expresion ')' sentencia\n"); }
 ;
 
