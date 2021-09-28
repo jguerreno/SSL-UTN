@@ -161,6 +161,7 @@ sentencia_expresion: expresion ';'     { printf("sentencia_expresion -> expresio
 expresion: expresion_logica                                 { printf("Expresion  -> expresion_logica\n"); }
         | expresion_logica '?' expresion ':' expresion     { printf("Expresion  -> expresion_logica '?' expresion ':' expresion \n"); }
         | expresion operacion_matematica expresion                          { printf("Expresion_logica -> expresion '-' expresion\n"); }
+        | llamada_funcion
 ;
 
 operacion_matematica: '-'
@@ -248,11 +249,23 @@ sentencia_retorno: RETURN ';'              { printf("sentencia_retorno -> RETURN
 ;
 
 operador_unario: '&'  { printf("Operador unario  -> '&'\n"); }
-                 | '*' { printf("Operador unario  -> '*'\n"); }
-                 | '+' { printf("Operador unario  -> '+'\n"); }
-                 | '-' { printf("Operador unario  -> '-'\n"); }
-                 | '~' { printf("Operador unario  -> '~'\n"); }
-                 | '!' { printf("Operador unario  -> '!'\n"); }
+                | '*' { printf("Operador unario  -> '*'\n"); }
+                | '+' { printf("Operador unario  -> '+'\n"); }
+                | '-' { printf("Operador unario  -> '-'\n"); }
+                | '~' { printf("Operador unario  -> '~'\n"); }
+                | '!' { printf("Operador unario  -> '!'\n"); }
+;
+
+llamada_funcion: IDENTIFICADOR '(' parametros ')'  { printf("llamada_funcion -> call\n"); }
+;
+
+parametros: /* VACIO */                            { printf("Parametros -> no hay\n"); }
+        | parametro
+        | parametro  ',' parametros   { printf("Parametros -> parametros\n"); }
+;
+
+parametro: expresion_indexada
+        | expresion_constante
 ;
 %%
 
