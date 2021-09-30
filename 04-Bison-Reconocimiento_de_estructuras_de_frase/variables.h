@@ -12,7 +12,7 @@ typedef struct VariableNode{
     struct VariableNode* next;
 } VariableNode;
 
-void addVariabe(VariableNode** head, char identificador[],char tipoDato[]);
+void addVariable(VariableNode** head, char identificador[],char tipoDato[]);
 void pushVariable(VariableNode** head, char identificador[],char tipoDato[]);
 DataVariable newDataVariable(char identificador[],char tipoDato[]);
 VariableNode* searchVariable(VariableNode* head, char identificador[]);

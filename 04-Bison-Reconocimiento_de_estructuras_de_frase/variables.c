@@ -17,7 +17,7 @@
 #include <stdbool.h>
 
 
-void addVariabe(VariableNode** head, char identificador[],char tipoDato[]){
+void addVariable(VariableNode** head, char identificador[],char tipoDato[]){
 
     VariableNode* node = searchIdentifier(*head, identificador);
 
