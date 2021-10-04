@@ -3,8 +3,8 @@
 #define MAX_TAM_IDENTIFIER 100
 
 typedef struct DataVariable{
-    char identificador[MAX_TAM_IDENTIFIER];
-    char tipoDato[MAX_TAM_IDENTIFIER];
+    char* identificador;
+    char* tipoDato;
 } DataVariable;
 
 typedef struct VariableNode{
@@ -12,8 +12,8 @@ typedef struct VariableNode{
     struct VariableNode* next;
 } VariableNode;
 
-void addVariable(VariableNode** head, char identificador[],char tipoDato[]);
-void pushVariable(VariableNode** head, char identificador[],char tipoDato[]);
-DataVariable newDataVariable(char identificador[],char tipoDato[]);
-VariableNode* searchVariable(VariableNode* head, char identificador[]);
+void addVariable(VariableNode** head, char* identificador,char* tipoDato );
+void pushVariable(VariableNode** head, char* identificador ,char* tipoDato );
+DataVariable newDataVariable(char* identificador ,char* tipoDato);
+VariableNode* searchVariable(VariableNode* head, char* identificador);
 void printListIdentifier(FILE *reporte, VariableNode* node);

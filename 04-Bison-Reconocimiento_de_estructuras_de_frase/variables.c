@@ -17,7 +17,7 @@
 #include <stdbool.h>
 
 
-void addVariable(VariableNode** head, char identificador[],char tipoDato[]){
+void addVariable(VariableNode** head, char* identificador,char* tipoDato){
 
     VariableNode* node = searchIdentifier(*head, identificador);
 
@@ -27,7 +27,7 @@ void addVariable(VariableNode** head, char identificador[],char tipoDato[]){
 }
 
 
-void pushVariable(VariableNode** head, char identificador[],char tipoDato[]){
+void pushVariable(VariableNode** head, char* identificador,char* tipoDato ){
     /* 1. allocate node */
     VariableNode* new_node = (VariableNode*) malloc(sizeof(VariableNode));
 
@@ -42,17 +42,17 @@ void pushVariable(VariableNode** head, char identificador[],char tipoDato[]){
 }
 
 
-DataVariable newDataVariable(char identificador[],char tipoDato[]){
+DataVariable newDataVariable(char* identificador,char* tipoDato){
     DataVariable data;
 
-    strcpy(data.identificador, identificador);
-    strcpy(data.tipoDato,tipoDato);
+    data.identificador = strdup(identificador);
+    data.tipoDato = strdup(tipoDato);
 
     return data;
 }
 
 
-VariableNode* searchVariable(VariableNode* head, char identificador[]){
+VariableNode* searchVariable(VariableNode* head, char* identificador){
     VariableNode* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.identificador, identificador)!=0){
