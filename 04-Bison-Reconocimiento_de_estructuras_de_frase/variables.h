@@ -16,4 +16,4 @@ void addVariable(VariableNode** head, char* identificador,char* tipoDato );
 void pushVariable(VariableNode** head, char* identificador ,char* tipoDato );
 DataVariable newDataVariable(char* identificador ,char* tipoDato);
 VariableNode* searchVariable(VariableNode* head, char* identificador);
-void printListIdentifier(FILE *reporte, VariableNode* node);
+void printListVariable(FILE *reporte, VariableNode* node);

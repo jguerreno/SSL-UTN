@@ -19,7 +19,7 @@
 
 void addVariable(VariableNode** head, char* identificador,char* tipoDato){
 
-    VariableNode* node = searchIdentifier(*head, identificador);
+    VariableNode* node = searchVariable(*head, identificador);
 
     if(node == NULL){
         pushVariable(head, identificador,tipoDato);
