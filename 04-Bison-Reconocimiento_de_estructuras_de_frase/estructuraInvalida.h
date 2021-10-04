@@ -15,3 +15,19 @@ void pushEstructuraInvalida(EstructuraInvalidaNode** head, char* estructura);
 DataEstructuraInvalida newDataEstructuraInvalida(char* estructura);
 EstructuraInvalidaNode* searchEstructuraInvalida(EstructuraInvalidaNode* head, char* estructura);
 void printListEstructuraInvalida(FILE *reporte, EstructuraInvalidaNode* node);
+
+/****************************************************************************/
+typedef struct DataErrorLexico{
+    char* error;
+} DataErrorLexico;
+
+typedef struct EstructuraErrorLexico{
+    DataErrorLexico data;
+    struct EstructuraErrorLexico* next;
+} EstructuraErrorLexico;
+
+void addErrorLexico(EstructuraErrorLexico** head, char* error);
+void pushEstructuraErrorLexico(EstructuraErrorLexico** head, char* error);
+DataErrorLexico newDataEstructuraErrorLexico(char* error);
+EstructuraErrorLexico* searchEstructuraErrorLexico(EstructuraErrorLexico* head, char* error);
+void printListEstructuraErrorLexico(FILE *reporte, EstructuraErrorLexico* node);
