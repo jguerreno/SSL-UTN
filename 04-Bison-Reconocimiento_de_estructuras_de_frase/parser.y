@@ -8,6 +8,7 @@
 
 #include"funciones.h"
 #include"variables.h"
+#include"estructuraInvalida.h"
 
 
 #define YYDEBUG 1
@@ -34,6 +35,8 @@ int flagDeclaracionFuncion = 0;
 
 VariableNode* listaVariables = NULL;
 char* tipoDeDato = NULL;
+
+EstructuraErrorLexico* listaErroresLexicos = NULL;
 %}
 
 
@@ -297,6 +300,7 @@ int main ()
 
     printListFuncion(reporte, listaFunciones);
     printListVariable(reporte, listaVariables);
+    printListErrorLexico(reporte, listaErroresLexicos);
 
     fclose(reporte);
 }

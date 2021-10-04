@@ -8,8 +8,12 @@ option noyywrap
 #include<string.h>
 #include<ctype.h>
 #include "parser.tab.h"
+
+#include"estructuraInvalida.h"
  
+
 extern FILE * yyin;
+extern EstructuraErrorLexico* listaErroresLexicos;
 %}
 
 
@@ -86,7 +90,7 @@ IDENTIFICADOR            [a-zA-Z_][a-zA-Z0-9_]*
 \/\/.*
 \/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/ 
 
-. 
+. {addErrorLexico(&listaErroresLexicos, yytext);}
 %%
 
 
