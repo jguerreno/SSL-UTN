@@ -7,6 +7,7 @@
 #include <ctype.h>
 
 #include"funciones.h"
+#include"variables.h"
 
 
 #define YYDEBUG 1
@@ -30,6 +31,9 @@ extern int yylineno;
 
 FuncionNode* listaFunciones = NULL;
 int flagDeclaracionFuncion = 0;
+
+VariableNode* listaVariables = NULL;
+char* tipoDeDato = NULL;
 %}
 
 
@@ -105,7 +109,7 @@ input:    /* vacio */
 ;
 
 line:   '\n'                        { printf ("\t Salto de linea\n"); }
-        | TIPO_DATO declaracion
+        | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1);}
         | sentencia                 { printf ("\t Sentencia\n"); }
 ;
 
@@ -125,7 +129,7 @@ bloque_sentencias: '{' '}'                                                 { pri
 ;
 
 declaracion_list: /* VACIO */                               { printf("declaracion_list -> declaracion\n"); }
-                | TIPO_DATO declaracion declaracion_list    { printf("declaracion_list -> declaracion_list declaracion\n"); }
+                | TIPO_DATO declaracion declaracion_list    { printf("declaracion_list -> declaracion_list declaracion\n"); tipoDeDato = strdup($<cadena>1);}
 ;
 
 
@@ -150,8 +154,8 @@ listaParametros: /* VACIO */
                 | TIPO_DATO IDENTIFICADOR
 ;
 
-identVariable: IDENTIFICADOR    {printf("identificador");}
-               | IDENTIFICADOR '=' expresion_constante {printf("identificador =");}
+identVariable: IDENTIFICADOR                            {printf("identificador"); addVariable(&listaVariables, $<cadena>1, tipoDeDato );}
+               | IDENTIFICADOR '=' expresion_constante  {printf("identificador ="); addVariable(&listaVariables, $<cadena>1, tipoDeDato );}
 ;
 
 sentencia_list: /* VACIO */                  { printf("sentencia_list -> sentencia\n"); }
@@ -292,6 +296,7 @@ int main ()
     FILE* reporte = fopen("reporte.txt","w+b");
 
     printListFuncion(reporte, listaFunciones);
+    printListVariable(reporte, listaVariables);
 
     fclose(reporte);
 }
