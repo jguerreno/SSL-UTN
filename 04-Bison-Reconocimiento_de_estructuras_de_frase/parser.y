@@ -6,6 +6,9 @@
 #include <string.h>
 #include <ctype.h>
 
+#include"funciones.h"
+
+
 #define YYDEBUG 1
 
 /** VARIABLES GLOBALES **/
@@ -24,6 +27,9 @@ int yyerror (const char *s){
 
 extern FILE *yyin;
 extern int yylineno;
+
+FuncionNode* listaFunciones = NULL;
+int flagDeclaracionFuncion = 0;
 %}
 
 
@@ -128,11 +134,11 @@ declaracion: declaracion_funcion          { printf("declaracion -> declaracion\n
             | declaracion_variables ';'
 ;
 
-declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec { printf("declaracion_funciones -> declaracion funciones\n"); }
+declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec { printf("declaracion_funciones -> declaracion funciones\n"); if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1);flagDeclaracionFuncion=0;}}
 ;
 
 def_dec: bloque_sentencias      { printf("funciones 1\n"); }
-        | ';'                   { printf("funciones 2\n"); }
+        | ';'                   { printf("funciones 2\n"); flagDeclaracionFuncion=1;}
 ;
 
 declaracion_variables: identVariable  { printf("declaracion -> idem var \n"); }
@@ -280,4 +286,12 @@ int main ()
     yyparse ();
 
     fclose(yyin);
+
+
+    // Reporte
+    FILE* reporte = fopen("reporte.txt","w+b");
+
+    printListFuncion(reporte, listaFunciones);
+
+    fclose(reporte);
 }
