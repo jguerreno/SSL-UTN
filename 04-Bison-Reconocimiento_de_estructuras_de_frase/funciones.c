@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 
-void addFuncion(FuncionNode** head, char funcion[]){
+void addFuncion(FuncionNode** head, char* funcion){
 
     FuncionNode* node = searchFuncion(*head, funcion);
 
@@ -15,7 +15,7 @@ void addFuncion(FuncionNode** head, char funcion[]){
 }
 
 
-void pushFuncion(FuncionNode** head, char funcion[]){
+void pushFuncion(FuncionNode** head, char* funcion){
     /* 1. allocate node */
     FuncionNode* new_node = (FuncionNode*) malloc(sizeof(FuncionNode));
 
@@ -30,16 +30,16 @@ void pushFuncion(FuncionNode** head, char funcion[]){
 }
 
 
-DataFuncion newDataFuncion(char funcion[]){
+DataFuncion newDataFuncion(char* funcion){
     DataFuncion data;
 
-    strcpy(data.funcion,funcion);
+    data.funcion = strdup(funcion);
 
     return data;
 }
 
 
-FuncionNode* searchFuncion(FuncionNode* head, char funcion[]){
+FuncionNode* searchFuncion(FuncionNode* head, char* funcion){
     FuncionNode* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.funcion, funcion)!=0){
@@ -50,7 +50,7 @@ FuncionNode* searchFuncion(FuncionNode* head, char funcion[]){
 }
 
 
-void printListVariable(FILE *reporte, FuncionNode* node){
+void printListFuncion(FILE *reporte, FuncionNode* node){
 
     fprintf(reporte,"-------------------- FUNCIONES --------------------\n");
     fprintf(reporte,"Identificador\t \t \t \n");
