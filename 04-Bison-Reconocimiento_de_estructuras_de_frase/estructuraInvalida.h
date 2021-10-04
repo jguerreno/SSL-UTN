@@ -27,7 +27,7 @@ typedef struct EstructuraErrorLexico{
 } EstructuraErrorLexico;
 
 void addErrorLexico(EstructuraErrorLexico** head, char* error);
-void pushEstructuraErrorLexico(EstructuraErrorLexico** head, char* error);
-DataErrorLexico newDataEstructuraErrorLexico(char* error);
-EstructuraErrorLexico* searchEstructuraErrorLexico(EstructuraErrorLexico* head, char* error);
-void printListEstructuraErrorLexico(FILE *reporte, EstructuraErrorLexico* node);
+void pushErrorLexico(EstructuraErrorLexico** head, char* error);
+DataErrorLexico newDataErrorLexico(char* error);
+EstructuraErrorLexico* searchErrorLexico(EstructuraErrorLexico* head, char* error);
+void printListErrorLexico(FILE *reporte, EstructuraErrorLexico* node);

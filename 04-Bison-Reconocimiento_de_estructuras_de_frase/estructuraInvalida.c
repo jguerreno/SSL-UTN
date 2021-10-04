@@ -66,19 +66,19 @@ void printListEstructuraInvalida(FILE *reporte, EstructuraInvalidaNode* node){
 /****************************************************************************/
 void addErrorLexico(EstructuraErrorLexico** head, char* error){
 
-    EstructuraErrorLexico* node = searchEstructuraErrorLexico(*head, error);
+    EstructuraErrorLexico* node = searchErrorLexico(*head, error);
 
     if(node == NULL){
-        pushEstructuraErrorLexico(head, error);
+        pushErrorLexico(head, error);
     }
 }
 
-void pushEstructuraErrorLexico(EstructuraErrorLexico** head, char* error){
+void pushErrorLexico(EstructuraErrorLexico** head, char* error){
     /* 1. allocate node */
     EstructuraErrorLexico* new_node = (EstructuraErrorLexico*) malloc(sizeof(EstructuraErrorLexico));
 
     /* 2. put in the data  */
-    new_node->data  = newDataEstructuraErrorLexico(error);
+    new_node->data  = newDataErrorLexico(error);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -87,15 +87,15 @@ void pushEstructuraErrorLexico(EstructuraErrorLexico** head, char* error){
     (*head)    = new_node;
 }
 
-DataErrorLexico newDataEstructuraErrorLexico(char* error){
-    DataEstructuraErrorLexico data;
+DataErrorLexico newDataErrorLexico(char* error){
+    DataErrorLexico data;
 
     data.error= strdup(error);
 
     return data;
 }
 
-EstructuraErrorLexico* searchEstructuraErrorLexico(EstructuraErrorLexico* head, char* error){
+EstructuraErrorLexico* searchErrorLexico(EstructuraErrorLexico* head, char* error){
     EstructuraErrorLexico* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.error, error)!=0){
@@ -105,7 +105,7 @@ EstructuraErrorLexico* searchEstructuraErrorLexico(EstructuraErrorLexico* head, 
    return current;
 }
 
-void printListEstructuraErrorLexico(FILE *reporte, EstructuraErrorLexico* node){
+void printListErrorLexico(FILE *reporte, EstructuraErrorLexico* node){
     
     fprintf(reporte,"-------------------- ESTRUCTURAS INVALIDAS --------------------\n");
     fprintf(reporte,"Estructura\t \t \t \n");
@@ -115,4 +115,5 @@ void printListEstructuraErrorLexico(FILE *reporte, EstructuraErrorLexico* node){
      fprintf(reporte,"%s\t \t \t \t \t \t \t\n", node->data.error);
 
      node = node->next;
+    }
 }
