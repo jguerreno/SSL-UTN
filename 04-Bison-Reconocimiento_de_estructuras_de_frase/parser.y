@@ -9,6 +9,7 @@
 #include"funciones.h"
 #include"variables.h"
 #include"estructuraInvalida.h"
+#include"sentencias.h"
 
 
 #define YYDEBUG 1
@@ -37,6 +38,8 @@ VariableNode* listaVariables = NULL;
 char* tipoDeDato = NULL;
 
 EstructuraErrorLexico* listaErroresLexicos = NULL;
+
+SentenciaNode* listaSentencias = NULL;
 %}
 
 
@@ -118,12 +121,12 @@ line:   '\n'                        { printf ("\t Salto de linea\n"); }
 
 
 /****************************** SENTENCIAS ************************************/
-sentencia: bloque_sentencias         { printf("sentencia -> bloque_sentencias\n"); }
-            | sentencia_expresion     { printf("sentencia -> sentencia_expresion\n"); }
-            | sentencia_bifurcacion   { printf("sentencia -> sentencia_bifurcacion\n"); }
-            | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n"); }
-            | sentencia_salto         { printf("sentencia -> sentencia_salto\n"); }
-            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n"); }
+sentencia: bloque_sentencias          { printf("sentencia -> bloque_sentencias\n");      addSentencia(&listaSentencias, "Sentencia Compuesta");}
+            | sentencia_expresion     { printf("sentencia -> sentencia_expresion\n");    addSentencia(&listaSentencias, "Sentencia Expresion");}
+            | sentencia_bifurcacion   { printf("sentencia -> sentencia_bifurcacion\n");  addSentencia(&listaSentencias, "Sentencia Seleccion");}
+            | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n");        addSentencia(&listaSentencias, "Sentencia Iteracion");}
+            | sentencia_salto         { printf("sentencia -> sentencia_salto\n");        addSentencia(&listaSentencias, "Sentencia Salto");}
+            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n");      addSentencia(&listaSentencias, "Sentencia de Retorno");}
             | '\n'
 ;
 
@@ -301,6 +304,7 @@ int main ()
     printListFuncion(reporte, listaFunciones);
     printListVariable(reporte, listaVariables);
     printListErrorLexico(reporte, listaErroresLexicos);
+    printListSentencia(reporte, listaSentencias);
 
     fclose(reporte);
 }
