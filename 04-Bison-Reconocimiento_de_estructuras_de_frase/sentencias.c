@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 
-void addSentencia(SentenciaNode** head, char sentencia[],char tipo[]){
+void addSentencia(SentenciaNode** head, char* sentencia,char* tipo){
 
     SentenciaNode* node = searchIdentifier(*head, sentencia);
 
@@ -15,7 +15,7 @@ void addSentencia(SentenciaNode** head, char sentencia[],char tipo[]){
 }
 
 
-void pushSentencia(VariableNode** head, char identificador[],char tipoDato[]){
+void pushSentencia(VariableNode** head, char* identificador,char* tipoDato){
     /* 1. allocate node */
     VariableNode* new_node = (VariableNode*) malloc(sizeof(VariableNode));
 
@@ -30,17 +30,17 @@ void pushSentencia(VariableNode** head, char identificador[],char tipoDato[]){
 }
 
 
-DataSentencias newDataVariable(char sentencia[],char tipo[]){
+DataSentencias newDataVariable(char* sentencia,char* tipo){
     DataSentencias data;
 
-    strcpy(data.sentencia, sentencia);
-    strcpy(data.tipoDato,tipo);
+    data.sentencia= strdup(sentencia);
+    data.tipoDato= strdup(tipo);
 
     return data;
 }
 
 
-SentenciaNode* searchSentencia(SentenciaNode* head, char sentencia[]){
+SentenciaNode* searchSentencia(SentenciaNode* head, char* sentencia){
     SentenciaNode* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.sentencia, sentencia)!=0){

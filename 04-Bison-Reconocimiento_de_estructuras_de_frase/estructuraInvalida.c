@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 
-void addEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[]){
+void addEstructuraInvalida(EstructuraInvalidaNode** head, char* estructura){
 
     EstructuraInvalidaNode* node = searchEstructuraInvalida(*head, estructura);
 
@@ -15,7 +15,7 @@ void addEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[]){
 }
 
 
-void pushEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[]){
+void pushEstructuraInvalida(EstructuraInvalidaNode** head, char* estructura){
     /* 1. allocate node */
     EstructuraInvalidaNode* new_node = (EstructuraInvalidaNode*) malloc(sizeof(EstructuraInvalidaNode));
 
@@ -30,16 +30,16 @@ void pushEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[]){
 }
 
 
-DataEstructuraInvalida newDataEstructuraInvalida(char estructura[]){
+DataEstructuraInvalida newDataEstructuraInvalida(char* estructura){
     DataEstructuraInvalida data;
 
-    strcpy(data.estructura, estructura);
+    data.estructura= strdup(estructura);
 
     return data;
 }
 
 
-EstructuraInvalidaNode* searchEstructuraInvalida(EstructuraInvalidaNode* head, char estructura[]){
+EstructuraInvalidaNode* searchEstructuraInvalida(EstructuraInvalidaNode* head, char* estructura){
     EstructuraInvalidaNode* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.estructura, estructura)!=0){
