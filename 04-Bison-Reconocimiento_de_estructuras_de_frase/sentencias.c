@@ -5,22 +5,22 @@
 #include <stdbool.h>
 
 
-void addSentencia(SentenciaNode** head, char* sentencia,char* tipo){
+void addSentencia(SentenciaNode** head, char* tipoSentencia){
 
-    SentenciaNode* node = searchIdentifier(*head, sentencia);
+    SentenciaNode* node = searchSentencia(*head, tipoSentencia);
 
     if(node == NULL){
-        pushSentencia(head, sentencia,tipo);
+        pushSentencia(head, tipoSentencia);
     }
 }
 
 
-void pushSentencia(VariableNode** head, char* identificador,char* tipoDato){
+void pushSentencia(SentenciaNode** head, char* tipoSentencia){
     /* 1. allocate node */
-    VariableNode* new_node = (VariableNode*) malloc(sizeof(VariableNode));
+    SentenciaNode* new_node = (SentenciaNode*) malloc(sizeof(SentenciaNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataVariable(identificador,tipoDato);
+    new_node->data  = newDataSentencia(tipoSentencia);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -30,20 +30,19 @@ void pushSentencia(VariableNode** head, char* identificador,char* tipoDato){
 }
 
 
-DataSentencias newDataVariable(char* sentencia,char* tipo){
+DataSentencias newDataSentencia(char* tipoSentencia){
     DataSentencias data;
 
-    data.sentencia= strdup(sentencia);
-    data.tipoDato= strdup(tipo);
+    data.tipoSentencia = strdup(tipoSentencia);
 
     return data;
 }
 
 
-SentenciaNode* searchSentencia(SentenciaNode* head, char* sentencia){
+SentenciaNode* searchSentencia(SentenciaNode* head, char* tipoSentencia){
     SentenciaNode* current = head;  // Initialize current
 
-    while (current != NULL && strcmp(current->data.sentencia, sentencia)!=0){
+    while (current != NULL && strcmp(current->data.tipoSentencia, tipoSentencia)!=0){
         current = current->next;
     }
 
@@ -54,11 +53,11 @@ SentenciaNode* searchSentencia(SentenciaNode* head, char* sentencia){
 void printListSentencia(FILE *reporte, SentenciaNode* node){
 
     fprintf(reporte,"-------------------- SENTENCIAS --------------------\n");
-    fprintf(reporte,"Sentencia \t \t \t Tipo de sentencia\n");
+    fprintf(reporte,"Tipo de Sentencia\n");
 
 
     while (node != NULL){
-     fprintf(reporte,"%s\t \t \t \t \t \t \t%s\n", node->data.sentencia, node->data.tipo);
+     fprintf(reporte,"%s\n", node->data.tipoSentencia);
 
      node = node->next;
   }

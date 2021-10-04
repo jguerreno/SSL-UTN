@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 typedef struct DataSentencias{
-    char* sentencia;
-    char* tipo;
+    char* tipoSentencia;
 } DataSentencias;
 
 typedef struct SentenciaNode{
@@ -10,8 +9,10 @@ typedef struct SentenciaNode{
     struct SentenciaNode* next;
 } SentenciaNode;
 
-void addSentencia(SentenciaNode** head, char* sentencia ,char* tipo);
-void pushSentencia(SentenciaNode** head, char* sentencia,char* tipo);
-DataSentencias newDataSentencia(char* sentencia,char* tipo);
-SentenciaNode* searchSentencia(SentenciaNode* head, char* sentencia);
+
+
+void addSentencia(SentenciaNode** head, char* tipoSentencia);
+void pushSentencia(SentenciaNode** head, char* tipoSentencia);
+DataSentencias newDataSentencia(char* tipoSentencia);
+SentenciaNode* searchSentencia(SentenciaNode* head, char* tipoSentencia);
 void printListSentencia(FILE *reporte, SentenciaNode* node);
