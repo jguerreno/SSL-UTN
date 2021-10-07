@@ -134,8 +134,8 @@ bloque_sentencias: '{' '}'                                                 { pri
                 | '{' '\n' declaracion_list sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
 ;
 
-declaracion_list: /* VACIO */                               { printf("declaracion_list -> declaracion\n"); }
-                | TIPO_DATO declaracion declaracion_list    { printf("declaracion_list -> declaracion_list declaracion\n"); tipoDeDato = strdup($<cadena>1);}
+declaracion_list: /* VACIO */                                           { printf("declaracion_list -> declaracion\n"); }
+                | TIPO_DATO declaracion '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n"); tipoDeDato = strdup($<cadena>1);}
 ;
 
 
