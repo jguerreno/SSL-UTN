@@ -5,5 +5,5 @@ set -e
 
 bison -d parser.y
 flex scanner.l
-gcc -o p parser.tab.c lex.yy.c
+gcc -o p funciones.c estructuraInvalida.c sentencias.c variables.c parser.tab.c lex.yy.c
 ./p
