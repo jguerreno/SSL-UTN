@@ -1,14 +1,3 @@
-/**
- * Lista de librerias a realizar/trabajar
- * 
- * 1. Listado de variables declaradas con tipo de dato
- * 
- * 2. Listado de funciones declaradas
- * 
- * 3. Listado de tipos de sentencias encontradas
- * 
- * 4. Listado de  secuencias y/o estructuras invalidas
- * */
 
 #include "variables.h"
 #include <stdio.h>
