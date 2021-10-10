@@ -5,6 +5,7 @@
 typedef struct DataVariable{
     char* identificador;
     char* tipoDato;
+    int linea;
 } DataVariable;
 
 typedef struct VariableNode{
@@ -12,8 +13,8 @@ typedef struct VariableNode{
     struct VariableNode* next;
 } VariableNode;
 
-void addVariable(VariableNode** head, char* identificador,char* tipoDato );
-void pushVariable(VariableNode** head, char* identificador ,char* tipoDato );
-DataVariable newDataVariable(char* identificador ,char* tipoDato);
+void addVariable(VariableNode** head, char* identificador,char* tipoDato,int linea);
+void pushVariable(VariableNode** head, char* identificador ,char* tipoDato, int linea);
+DataVariable newDataVariable(char* identificador ,char* tipoDato,int linea);
 VariableNode* searchVariable(VariableNode* head, char* identificador);
 void printListVariable(FILE *reporte, VariableNode* node);

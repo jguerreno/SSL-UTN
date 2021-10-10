@@ -6,22 +6,22 @@
 #include <stdbool.h>
 
 
-void addVariable(VariableNode** head, char* identificador,char* tipoDato){
+void addVariable(VariableNode** head, char* identificador,char* tipoDato,int linea){
 
     VariableNode* node = searchVariable(*head, identificador);
 
     if(node == NULL){
-        pushVariable(head, identificador,tipoDato);
+        pushVariable(head, identificador,tipoDato,linea);
     }
 }
 
 
-void pushVariable(VariableNode** head, char* identificador,char* tipoDato ){
+void pushVariable(VariableNode** head, char* identificador,char* tipoDato,int linea){
     /* 1. allocate node */
     VariableNode* new_node = (VariableNode*) malloc(sizeof(VariableNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataVariable(identificador,tipoDato);
+    new_node->data  = newDataVariable(identificador,tipoDato,linea);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -31,11 +31,12 @@ void pushVariable(VariableNode** head, char* identificador,char* tipoDato ){
 }
 
 
-DataVariable newDataVariable(char* identificador,char* tipoDato){
+DataVariable newDataVariable(char* identificador,char* tipoDato,int line){
     DataVariable data;
 
     data.identificador = strdup(identificador);
     data.tipoDato = strdup(tipoDato);
+    data.linea = line;
 
     return data;
 }
@@ -59,7 +60,7 @@ void printListVariable(FILE *reporte, VariableNode* node){
 
 
     while (node != NULL){
-     fprintf(reporte,"%s\t \t \t \t \t \t \t%s\n", node->data.identificador, node->data.tipoDato);
+     fprintf(reporte,"%s\t \t \t \t \t \t \t%s \t \t \t %d\n", node->data.identificador, node->data.tipoDato,node->data.linea);
 
      node = node->next;
   }
