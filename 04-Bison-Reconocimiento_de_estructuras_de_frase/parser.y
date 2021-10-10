@@ -119,7 +119,7 @@ input:    /* vacio */
 line:   '\n'                        { printf ("\t Salto de linea\n"); }
         | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1);}
         | sentencia                 { printf ("\t Sentencia\n"); }
-        | error                     { printf("ERROR! %d\n",yylineno); error = strdup($<cadena>1); addEstructuraInvalida(&listEstructurasInvalidas,error,yylineno);}
+        | error                     { printf("ERROR! %d\n",yylineno); error = strdup($<cadena>1); addEstructuraInvalida(&listEstructurasInvalidas,"ERRROR",yylineno);}
 ;
 
 
