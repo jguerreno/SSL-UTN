@@ -5,22 +5,22 @@
 #include <stdbool.h>
 
 
-void addFuncion(FuncionNode** head, char* funcion){
+void addFuncion(FuncionNode** head, char* funcion,int linea){
 
     FuncionNode* node = searchFuncion(*head, funcion);
 
     if(node == NULL){
-        pushFuncion(head,funcion);
+        pushFuncion(head,funcion,linea);
     }
 }
 
 
-void pushFuncion(FuncionNode** head, char* funcion){
+void pushFuncion(FuncionNode** head, char* funcion,int linea){
     /* 1. allocate node */
     FuncionNode* new_node = (FuncionNode*) malloc(sizeof(FuncionNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataFuncion(funcion);
+    new_node->data  = newDataFuncion(funcion,linea);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -30,10 +30,11 @@ void pushFuncion(FuncionNode** head, char* funcion){
 }
 
 
-DataFuncion newDataFuncion(char* funcion){
+DataFuncion newDataFuncion(char* funcion,int line){
     DataFuncion data;
 
     data.funcion = strdup(funcion);
+    data.linea = line;
 
     return data;
 }
@@ -57,7 +58,7 @@ void printListFuncion(FILE *reporte, FuncionNode* node){
 
 
     while (node != NULL){
-     fprintf(reporte,"%s\t \t \t \t \t \t \t\n", node->data.funcion);
+     fprintf(reporte,"%s\t \t \t \t \t \t \t %d\n", node->data.funcion,node->data.linea);
 
      node = node->next;
   }
