@@ -91,6 +91,8 @@ SentenciaNode* listaSentencias = NULL;
 %token <entero> CONSTANTE_CARACTER
 %token <real>   CONSTANTE_REAL
 
+//ERROR
+%token <cadena> error
 
 // Type
 %right '=' OPERADOR_ASIGNACION
@@ -117,6 +119,7 @@ input:    /* vacio */
 line:   '\n'                        { printf ("\t Salto de linea\n"); }
         | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1);}
         | sentencia                 { printf ("\t Sentencia\n"); }
+        | error                     { printf("ERROR! %d\n",yylineno); error = strdup($<cadena>1); addEstructuraInvalida(&listEstructurasInvalidas,error,yylineno);}
 ;
 
 
