@@ -5,22 +5,22 @@
 #include <stdbool.h>
 
 
-void addSentencia(SentenciaNode** head, char* tipoSentencia){
+void addSentencia(SentenciaNode** head, char* tipoSentencia,int linea){
 
     SentenciaNode* node = searchSentencia(*head, tipoSentencia);
 
     if(node == NULL){
-        pushSentencia(head, tipoSentencia);
+        pushSentencia(head, tipoSentencia,int linea);
     }
 }
 
 
-void pushSentencia(SentenciaNode** head, char* tipoSentencia){
+void pushSentencia(SentenciaNode** head, char* tipoSentencia,int linea){
     /* 1. allocate node */
     SentenciaNode* new_node = (SentenciaNode*) malloc(sizeof(SentenciaNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataSentencia(tipoSentencia);
+    new_node->data  = newDataSentencia(tipoSentencia,linea);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -30,10 +30,11 @@ void pushSentencia(SentenciaNode** head, char* tipoSentencia){
 }
 
 
-DataSentencias newDataSentencia(char* tipoSentencia){
+DataSentencias newDataSentencia(char* tipoSentencia,int line){
     DataSentencias data;
 
     data.tipoSentencia = strdup(tipoSentencia);
+    data.linea = line;
 
     return data;
 }
@@ -57,7 +58,7 @@ void printListSentencia(FILE *reporte, SentenciaNode* node){
 
 
     while (node != NULL){
-     fprintf(reporte,"%s\n", node->data.tipoSentencia);
+     fprintf(reporte,"%s \t \t \t \t \t %d\n", node->data.tipoSentencia,node->data.linea);
 
      node = node->next;
   }

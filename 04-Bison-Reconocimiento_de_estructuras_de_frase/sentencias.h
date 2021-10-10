@@ -2,6 +2,7 @@
 
 typedef struct DataSentencias{
     char* tipoSentencia;
+    int linea;
 } DataSentencias;
 
 typedef struct SentenciaNode{
@@ -11,8 +12,8 @@ typedef struct SentenciaNode{
 
 
 
-void addSentencia(SentenciaNode** head, char* tipoSentencia);
-void pushSentencia(SentenciaNode** head, char* tipoSentencia);
-DataSentencias newDataSentencia(char* tipoSentencia);
+void addSentencia(SentenciaNode** head, char* tipoSentencia,int linea);
+void pushSentencia(SentenciaNode** head, char* tipoSentencia,int linea);
+DataSentencias newDataSentencia(char* tipoSentencia,int linea);
 SentenciaNode* searchSentencia(SentenciaNode* head, char* tipoSentencia);
 void printListSentencia(FILE *reporte, SentenciaNode* node);
