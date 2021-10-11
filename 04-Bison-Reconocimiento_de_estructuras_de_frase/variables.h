@@ -13,8 +13,27 @@ typedef struct VariableNode{
     struct VariableNode* next;
 } VariableNode;
 
-void addVariable(VariableNode** head, char* identificador,char* tipoDato,int linea);
+/*******************************************************************************************/
+typedef struct DataNombreVariable{
+    char* identificador;
+} DataNombreVariable;
+
+typedef struct NombreVariableNode{
+    DataNombreVariable data;
+    struct NombreVariableNode* next;
+} NombreVariableNode;
+
+
+
+//void addVariable(VariableNode** head, char* identificador,char* tipoDato,int linea);
+void addVariable(VariableNode** head, NombreVariableNode** listaNombreVariables, char* tipoDato, int linea);
 void pushVariable(VariableNode** head, char* identificador ,char* tipoDato, int linea);
 DataVariable newDataVariable(char* identificador ,char* tipoDato,int linea);
 VariableNode* searchVariable(VariableNode* head, char* identificador);
 void printListVariable(FILE *reporte, VariableNode* node);
+
+/*******************************************************************************************/
+
+void pushNombreVariable(NombreVariableNode** head_ref, char* nombreVariable);
+DataNombreVariable newDataNombreVariable(char* nombreVariable);
+void deleteListNombreVariable(NombreVariableNode** head_ref);
