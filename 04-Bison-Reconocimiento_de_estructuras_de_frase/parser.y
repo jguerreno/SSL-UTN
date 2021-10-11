@@ -39,6 +39,12 @@ char* tipoDeDato = NULL;
 
 EstructuraErrorLexico* listaErroresLexicos = NULL;
 
+//
+EstructuraInvalidaNode* listEstructurasInvalidas = NULL;
+
+// 
+NombreVariableNode* listaNombreDeVariables = NULL;
+
 SentenciaNode* listaSentencias = NULL;
 %}
 
@@ -124,12 +130,12 @@ line:   '\n'                        { printf ("\t Salto de linea\n"); }
 
 
 /****************************** SENTENCIAS ************************************/
-sentencia: bloque_sentencias          { printf("sentencia -> bloque_sentencias\n");      addSentencia(&listaSentencias, "Sentencia Compuesta");}
-            | sentencia_expresion     { printf("sentencia -> sentencia_expresion\n");    addSentencia(&listaSentencias, "Sentencia Expresion");}
-            | sentencia_bifurcacion   { printf("sentencia -> sentencia_bifurcacion\n");  addSentencia(&listaSentencias, "Sentencia Seleccion");}
-            | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n");        addSentencia(&listaSentencias, "Sentencia Iteracion");}
-            | sentencia_salto         { printf("sentencia -> sentencia_salto\n");        addSentencia(&listaSentencias, "Sentencia Salto");}
-            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n");      addSentencia(&listaSentencias, "Sentencia de Retorno");}
+sentencia: bloque_sentencias          { printf("sentencia -> bloque_sentencias\n");      addSentencia(&listaSentencias, "Sentencia Compuesta", yylineno);}
+            | sentencia_expresion     { printf("sentencia -> sentencia_expresion\n");    addSentencia(&listaSentencias, "Sentencia Expresion", yylineno);}
+            | sentencia_bifurcacion   { printf("sentencia -> sentencia_bifurcacion\n");  addSentencia(&listaSentencias, "Sentencia Seleccion", yylineno);}
+            | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n");        addSentencia(&listaSentencias, "Sentencia Iteracion", yylineno);}
+            | sentencia_salto         { printf("sentencia -> sentencia_salto\n");        addSentencia(&listaSentencias, "Sentencia Salto", yylineno);}
+            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n");      addSentencia(&listaSentencias, "Sentencia de Retorno", yylineno);}
             | '\n'
 ;
 
@@ -138,7 +144,7 @@ bloque_sentencias: '{' '}'                                                 { pri
 ;
 
 declaracion_list: /* VACIO */                                           { printf("declaracion_list -> declaracion\n"); }
-                | TIPO_DATO declaracion '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n"); tipoDeDato = strdup($<cadena>1);}
+                | TIPO_DATO declaracion '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n"); addVariable(&listaVariables, &listaNombreDeVariables, $<cadena>1, yylineno);}
 ;
 
 
@@ -147,7 +153,7 @@ declaracion: declaracion_funcion          { printf("declaracion -> declaracion\n
             | declaracion_variables ';'
 ;
 
-declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec { printf("declaracion_funciones -> declaracion funciones\n"); if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1);flagDeclaracionFuncion=0;}}
+declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec { printf("declaracion_funciones -> declaracion funciones\n"); if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1, yylineno);flagDeclaracionFuncion=0;}}
 ;
 
 def_dec: bloque_sentencias      { printf("funciones 1\n"); }
@@ -163,8 +169,8 @@ listaParametros: /* VACIO */
                 | TIPO_DATO IDENTIFICADOR
 ;
 
-identVariable: IDENTIFICADOR                            {printf("identificador"); addVariable(&listaVariables, $<cadena>1, tipoDeDato );}
-               | IDENTIFICADOR '=' expresion_constante  {printf("identificador ="); addVariable(&listaVariables, $<cadena>1, tipoDeDato );}
+identVariable: IDENTIFICADOR                            {printf("identificador"); pushNombreVariable(&listaNombreDeVariables, $<cadena>1);}
+               | IDENTIFICADOR '=' expresion_constante  {printf("identificador ="); pushNombreVariable(&listaNombreDeVariables, $<cadena>1);}
 ;
 
 sentencia_list: /* VACIO */                  { printf("sentencia_list -> sentencia\n"); }
