@@ -10,7 +10,7 @@ void addSentencia(SentenciaNode** head, char* tipoSentencia,int linea){
     SentenciaNode* node = searchSentencia(*head, tipoSentencia);
 
     if(node == NULL){
-        pushSentencia(head, tipoSentencia,int linea);
+        pushSentencia(head, tipoSentencia,linea);
     }
 }
 
