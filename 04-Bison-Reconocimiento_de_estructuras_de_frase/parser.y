@@ -123,9 +123,9 @@ input:    /* vacio */
 ;
 
 line:   '\n'                        { printf ("\t Salto de linea\n"); }
-        | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1);}
+        | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1); addVariable(&listaVariables, &listaNombreDeVariables, $<cadena>1, yylineno);}
         | sentencia                 { printf ("\t Sentencia\n"); }
-        | error                     { printf("ERROR! %d\n",yylineno); error = strdup($<cadena>1); addEstructuraInvalida(&listEstructurasInvalidas,"ERRROR",yylineno);}
+        | error                     //{ printf("ERROR! %d\n",yylineno); error = strdup($<cadena>1); addEstructuraInvalida(&listEstructurasInvalidas,"ERRROR",yylineno);}
 ;
 
 
@@ -140,11 +140,11 @@ sentencia: bloque_sentencias          { printf("sentencia -> bloque_sentencias\n
 ;
 
 bloque_sentencias: '{' '}'                                                 { printf("bloque_sentencias -> '{' '}'\n"); }
-                | '{' '\n' declaracion_list sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
+                | '{' '\n' declaracion_list {addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, yylineno);} sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
 ;
 
 declaracion_list: /* VACIO */                                           { printf("declaracion_list -> declaracion\n"); }
-                | TIPO_DATO declaracion '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n"); addVariable(&listaVariables, &listaNombreDeVariables, $<cadena>1, yylineno);}
+                | TIPO_DATO declaracion {tipoDeDato = strdup($<cadena>1); addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, yylineno);} '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n");  tipoDeDato = strdup($<cadena>1);}
 ;
 
 
