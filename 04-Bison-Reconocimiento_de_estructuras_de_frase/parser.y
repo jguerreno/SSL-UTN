@@ -21,21 +21,22 @@ char* tipo;
 /** VARIABLES GLOBALES **/
 
 int yylex(void);
+extern int yylineno;
 
 int yyerror (const char *s){
     printf("-------- ERRROR ---------\n");
-    printf ("%s\n", s);
+    printf ("%s %d\n", s,yylineno);
     return -1;
 }
 
 extern FILE *yyin;
-extern int yylineno;
 
 FuncionNode* listaFunciones = NULL;
 int flagDeclaracionFuncion = 0;
 
 VariableNode* listaVariables = NULL;
 char* tipoDeDato = NULL;
+char *errorN = NULL;
 
 EstructuraErrorLexico* listaErroresLexicos = NULL;
 
@@ -122,12 +123,12 @@ int numeroDeLinea = 0;
 %%
 input:    /* vacio */
         | input line
+        | error line                    { printf("line: error line\nERROR sintactico en la linea numero:%d\n",yylineno-1);}
 ;
 
 line:   '\n'                        { printf ("\t Salto de linea\n"); numeroDeLinea = yylineno;}
         | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1); addVariable(&listaVariables, &listaNombreDeVariables, $<cadena>1, yylineno); numeroDeLinea = yylineno;}
         | sentencia                 { printf ("\t Sentencia\n");}
-        //| error                     //{ printf("ERROR! %d\n",yylineno); error = strdup($<cadena>1); addEstructuraInvalida(&listEstructurasInvalidas,"ERRROR",yylineno);}
 ;
 
 
@@ -314,7 +315,7 @@ int main ()
 
     printListFuncion(reporte, listaFunciones);
     printListVariable(reporte, listaVariables);
-    printListErrorLexico(reporte, listaErroresLexicos);
+    //printListErrorLexico(reporte, listaErroresLexicos);
     printListSentencia(reporte, listaSentencias);
 
     fclose(reporte);
