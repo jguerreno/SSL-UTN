@@ -315,7 +315,7 @@ int main ()
 
     printListFuncion(reporte, listaFunciones);
     printListVariable(reporte, listaVariables);
-    //printListErrorLexico(reporte, listaErroresLexicos);
+    printListErrorLexico(reporte, listaErroresLexicos);
     printListSentencia(reporte, listaSentencias);
 
     fclose(reporte);
