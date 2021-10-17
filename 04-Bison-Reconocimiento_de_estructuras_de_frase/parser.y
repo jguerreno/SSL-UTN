@@ -138,7 +138,7 @@ sentencia: bloque_sentencias          { printf("sentencia -> bloque_sentencias\n
             | sentencia_bifurcacion   { printf("sentencia -> sentencia_bifurcacion\n");  addSentencia(&listaSentencias, "Sentencia Seleccion", numeroDeLinea); numeroDeLinea = yylineno;}
             | sentencia_bucle         { printf("sentencia -> sentencia_bucle\n");        addSentencia(&listaSentencias, "Sentencia Iteracion", numeroDeLinea); numeroDeLinea = yylineno;}
             | sentencia_salto         { printf("sentencia -> sentencia_salto\n");        addSentencia(&listaSentencias, "Sentencia Salto", numeroDeLinea); numeroDeLinea = yylineno;}
-            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n");      addSentencia(&listaSentencias, "Sentencia de Retorno", numeroDeLinea); numeroDeLinea = yylineno;}
+            | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n");      addSentencia(&listaSentencias, "Sentencia de Retorno", numeroDeLinea); numeroDeLinea = yylineno+1;}
             | '\n'
 ;
 
