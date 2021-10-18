@@ -2,7 +2,6 @@
 
 
 typedef struct DataEstructuraInvalida{
-    char *estructura;
     int linea;
 } DataEstructuraInvalida;
 
@@ -11,10 +10,9 @@ typedef struct EstructuraInvalidaNode{
     struct EstructuraInvalidaNode* next;
 } EstructuraInvalidaNode;
 
-void addEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[],int linea);
-void pushEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[],int linea);
-DataEstructuraInvalida newDataEstructuraInvalida(char estructura[],int linea);
-EstructuraInvalidaNode* searchEstructuraInvalida(EstructuraInvalidaNode* head, char estructura[]);
+
+void pushEstructuraInvalida(EstructuraInvalidaNode** head,int linea);
+DataEstructuraInvalida newDataEstructuraInvalida(int linea);
 void printListEstructuraInvalida(FILE *reporte, EstructuraInvalidaNode* node);
 
 /****************************************************************************/

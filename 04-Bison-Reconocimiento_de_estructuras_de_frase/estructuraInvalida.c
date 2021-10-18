@@ -5,22 +5,12 @@
 #include <stdbool.h>
 
 
-void addEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[],int linea){
-
-    EstructuraInvalidaNode* node = searchEstructuraInvalida(*head, estructura);
-
-    if(node == NULL){
-        pushEstructuraInvalida(head, estructura,linea);
-    }
-}
-
-
-void pushEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[],int linea){
+void pushEstructuraInvalida(EstructuraInvalidaNode** head, int linea){
     /* 1. allocate node */
     EstructuraInvalidaNode* new_node = (EstructuraInvalidaNode*) malloc(sizeof(EstructuraInvalidaNode));
 
     /* 2. put in the data  */
-    new_node->data  = newDataEstructuraInvalida(estructura,linea);
+    new_node->data  = newDataEstructuraInvalida(linea);
 
     /* 3. Make next of new node as head */
     new_node->next = (*head);
@@ -30,35 +20,18 @@ void pushEstructuraInvalida(EstructuraInvalidaNode** head, char estructura[],int
 }
 
 
-DataEstructuraInvalida newDataEstructuraInvalida(char estructura[],int line){
-    DataEstructuraInvalida data;
-
-    strcpy(data.estructura, estructura);
-    data.linea = line;
-
+DataEstructuraInvalida newDataEstructuraInvalida(int line){
+    DataEstructuraInvalida data = {line};
     return data;
-}
-
-
-EstructuraInvalidaNode* searchEstructuraInvalida(EstructuraInvalidaNode* head, char estructura[]){
-    EstructuraInvalidaNode* current = head;  // Initialize current
-
-    while (current != NULL && strcmp(current->data.estructura, estructura)!=0){
-        current = current->next;
-    }
-
-   return current;
 }
 
 
 void printListEstructuraInvalida(FILE *reporte, EstructuraInvalidaNode* node){
 
     fprintf(reporte,"-------------------- ESTRUCTURAS INVALIDAS --------------------\n");
-    fprintf(reporte,"Estructura\t \t \t \n");
-
 
     while (node != NULL){
-     fprintf(reporte,"%s\t \t \t \t \t \t \t %d\n", node->data.estructura,node->data.linea);
+     fprintf(reporte,"Linea: \t \t \t \t \t \t %d\n", node->data.linea);
 
      node = node->next;
   }
