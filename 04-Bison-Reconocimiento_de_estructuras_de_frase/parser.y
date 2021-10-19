@@ -38,10 +38,11 @@ VariableNode* listaVariables = NULL;
 char* tipoDeDato = NULL;
 char *errorN = NULL;
 
-EstructuraErrorLexico* listaErroresLexicos = NULL;
+//
+EstructuraInvalidaNode* listaErroresSintacticos = NULL;
 
 //
-EstructuraInvalidaNode* listEstructurasInvalidas = NULL;
+EstructuraErrorLexico* listaErroresLexicos = NULL;
 
 // 
 NombreVariableNode* listaNombreDeVariables = NULL;
@@ -123,7 +124,7 @@ int numeroDeLinea = 0;
 %%
 input:    /* vacio */
         | input line
-        | error line                    { printf("line: error line\nERROR sintactico en la linea numero:%d\n",yylineno-1);}
+        | error linea                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
 ;
 
 line:   '\n'                        {numeroDeLinea = yylineno;}
@@ -140,10 +141,14 @@ sentencia: bloque_sentencias          { printf("sentencia -> bloque_sentencias\n
             | sentencia_salto         { printf("sentencia -> sentencia_salto\n");        addSentencia(&listaSentencias, "Sentencia Salto", numeroDeLinea); numeroDeLinea = yylineno;}
             | sentencia_retorno       { printf("sentencia -> sentencia_retorno\n");      addSentencia(&listaSentencias, "Sentencia de Retorno", numeroDeLinea); numeroDeLinea = yylineno+1;}
             | '\n'
+            | error sentencia { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 ;
 
 bloque_sentencias: '{' '}'                                                 { printf("bloque_sentencias -> '{' '}'\n"); }
                 | '{' '\n' declaracion_list {addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, numeroDeLinea);} sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
+                | error {pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1);} declaracion_list {addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, numeroDeLinea);} sentencia_list '\n' '}'
+                | error sentencia_list '\n' '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
+                | error '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 ;
 
 declaracion_list: /* VACIO */                                           { printf("declaracion_list -> declaracion\n"); }
@@ -317,6 +322,7 @@ int main ()
     printListVariable(reporte, listaVariables);
     printListErrorLexico(reporte, listaErroresLexicos);
     printListSentencia(reporte, listaSentencias);
+    printListEstructuraInvalida(reporte, listaErroresSintacticos);
 
     fclose(reporte);
 }
