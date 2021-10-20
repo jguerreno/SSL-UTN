@@ -1,8 +1,7 @@
 
 #include "variables.h"
-#include "funciones.h"
-#include "estructuraInvalida.h"
-#include <stdio.h>
+//#include "funciones.h"
+//#include "estructuraInvalida.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -13,8 +12,8 @@ void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, Est
     NombreVariableNode* listaAuxNombreVariables = *listaNombreVariables;
 
     while(listaAuxNombreVariables != NULL){
-        int existenciaNombreEnVariables = searchVariable(*listaVariables, listaAuxNombreVariables->data.identificador);
-        int existenciaNombreEnFunciones = searchFuncion(listaFunciones, listaAuxNombreVariables->data.identificador);
+        VariableNode* existenciaNombreEnVariables = searchVariable(*listaVariables, listaAuxNombreVariables->data.identificador);
+        FuncionNode*  existenciaNombreEnFunciones = searchFuncion(listaFunciones, listaAuxNombreVariables->data.identificador);
 
         if(existenciaNombreEnVariables==NULL && existenciaNombreEnFunciones==NULL) {
             /* 1. allocate node */
@@ -86,10 +85,13 @@ void printListVariable(FILE *reporte, VariableNode* listaVariables) {
 
 
     while (listaVariables != NULL) {
-        fprintf(reporte,"%s\t \t \t \t \t %s \t \t \t %d\n", listaVariables->data.identificador, listaVariables->data.tipoDato);
+        fprintf(reporte,"%s\t \t \t \t \t \t %s\n", listaVariables->data.identificador, listaVariables->data.tipoDato);
 
         listaVariables = listaVariables->next;
     }
+
+    fprintf(reporte,"\n");
+
 }
 
 
