@@ -31,14 +31,18 @@ void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, Est
             listaAuxNombreVariables = listaAuxNombreVariables->next;
         }
         else {
+            printf("\n\nHOLA\n\n");    //!!!!!!!!!!!!!!!!!!
+
             char* errorSemantico;
             strcpy(errorSemantico,"Multiples declaraciones de ");
             strcat(errorSemantico, listaAuxNombreVariables->data.identificador);
-
+            
+            printf("\n\n%s\n\n", errorSemantico);   //!!!!!!!!!!!!!!!!!!
+            
             pushErrorSemantico(listaErroresSemanticos, errorSemantico);
         }
     }
-    
+
     deleteListNombreVariable(listaNombreVariables);
 }
 

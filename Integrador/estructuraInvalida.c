@@ -29,12 +29,13 @@ void printListEstructuraInvalida(FILE *reporte, EstructuraInvalidaNode* node){
 
     fprintf(reporte,"-------------------- ESTRUCTURAS INVALIDAS --------------------\n");
 
-    while (node != NULL){
-     fprintf(reporte,"Linea: \t \t \t \t \t \t %d\n", node->data.linea);
+    while (node != NULL) {
+        fprintf(reporte,"Linea: \t \t \t \t \t \t %d\n", node->data.linea);
+        
+        node = node->next;
+    }
 
-     node = node->next;
-  }
-
+    fprintf(reporte,"\n");
 }
 
 
@@ -87,12 +88,14 @@ void printListErrorLexico(FILE *reporte, EstructuraErrorLexico* node){
     fprintf(reporte,"-------------------- ESTRUCTURAS INVALIDAS --------------------\n");
     fprintf(reporte,"Estructura\t \t \t \n");
 
-
     while (node != NULL){
      fprintf(reporte,"%s\t \t \t \t \t \t \t\n", node->data.error);
 
      node = node->next;
     }
+
+    fprintf(reporte,"\n");
+
 }
 
 
@@ -122,7 +125,7 @@ DataErrorSemantico newDataErrorSemantico(char* error) {
 
 void printListErrorSemantico(FILE *reporte, EstructuraErrorSemantico* node) {
 
-    fprintf(reporte,"-------------------- Error Semanticos --------------------\n");
+    fprintf(reporte,"-------------------- ERRORES SEMANTICOS --------------------\n");
 
     while (node != NULL){
         fprintf(reporte,"Error: \t \t %s\n", node->data.error);
