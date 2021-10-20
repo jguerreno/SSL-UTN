@@ -6,9 +6,9 @@
 #include <string.h>
 #include <ctype.h>
 
-#include"funciones.h"
+//#include"funciones.h"
 #include"variables.h"
-#include"estructuraInvalida.h"
+//#include"estructuraInvalida.h"
 #include"sentencias.h"
 
 
@@ -41,6 +41,7 @@ NombreVariableNode* listaNombreDeVariables = NULL;
 SentenciaNode* listaSentencias = NULL;
 
 int numeroDeLinea = 0;
+
 
 // Errores Lexicos
 EstructuraErrorLexico* listaErroresLexicos = NULL;
@@ -121,11 +122,11 @@ EstructuraErrorSemantico* listaErroresSemanticos = NULL;
 %%
 input:    /* vacio */
         | input line
-        | error linea                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
+        | error line                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
 ;
 
 line:   '\n'                        {numeroDeLinea = yylineno;}
-        | TIPO_DATO declaracion     {tipoDeDato = strdup($<cadena>1); addVariable(&listaVariables, &listaNombreDeVariables, $<cadena>1, yylineno); numeroDeLinea = yylineno;}
+        | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, $<cadena>1);}
         | sentencia
 ;
 
@@ -142,14 +143,14 @@ sentencia: bloque_sentencias            { addSentencia(&listaSentencias, "Senten
 ;
 
 bloque_sentencias: '{' '}'                                                 { printf("bloque_sentencias -> '{' '}'\n"); }
-                | '{' '\n' declaracion_list {addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, numeroDeLinea);} sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
-                | error {pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1);} declaracion_list {addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, numeroDeLinea);} sentencia_list '\n' '}'
+                | '{' '\n' declaracion_list { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, tipoDeDato); } sentencia_list '\n' '}'        { printf("bloque_sentencias -> '{' declaracion_list sentencia_list '}'\n"); }
+                | error {pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1);} declaracion_list { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos,&listaNombreDeVariables, $<cadena>1); } sentencia_list '\n' '}'
                 | error sentencia_list '\n' '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
                 | error '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 ;
 
 declaracion_list: /* VACIO */                                           { printf("declaracion_list -> declaracion\n"); }
-                | TIPO_DATO declaracion {tipoDeDato = strdup($<cadena>1); addVariable(&listaVariables, &listaNombreDeVariables, tipoDeDato, numeroDeLinea); numeroDeLinea = yylineno;} '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n");  tipoDeDato = strdup($<cadena>1);}
+                | TIPO_DATO declaracion { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos,&listaNombreDeVariables, $<cadena>1); } '\n' declaracion_list           { printf("declaracion_list -> declaracion_list declaracion\n");  tipoDeDato = strdup($<cadena>1);}
 ;
 
 
@@ -318,6 +319,7 @@ int main ()
     printListErrorLexico(reporte, listaErroresLexicos);
     printListSentencia(reporte, listaSentencias);
     printListEstructuraInvalida(reporte, listaErroresSintacticos);
+    printListErrorSemantico(reporte, listaErroresSemanticos);
 
     fclose(reporte);
 }
