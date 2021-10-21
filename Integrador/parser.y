@@ -125,7 +125,7 @@ input:    /* vacio */
         | error line                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
 ;
 
-line:   '\n'                        {numeroDeLinea = yylineno;}
+line:   '\n'                        
         | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, $<cadena>1);}
         | sentencia
 ;
@@ -155,7 +155,7 @@ declaracion_list: /* VACIO */                                           { printf
 
 
 /****************************** DECLARACIONES ************************************/
-declaracion: declaracion_funcion          { printf("declaracion -> declaracion\n"); }
+declaracion: declaracion_funcion
             | declaracion_variables ';'   { numeroDeLinea = yylineno; }
 ;
 
@@ -179,7 +179,7 @@ identVariable: IDENTIFICADOR                            {printf("identificador")
                | IDENTIFICADOR '=' expresion_constante  {printf("identificador ="); pushNombreVariable(&listaNombreDeVariables, $<cadena>1);}
 ;
 
-sentencia_list: /* VACIO */                  { printf("sentencia_list -> sentencia\n"); }
+sentencia_list: /* VACIO */                  
                 | sentencia_list sentencia { printf("sentencia_list -> sentencia_list sentencia\n"); }
 ;
 
@@ -323,3 +323,8 @@ int main ()
 
     fclose(reporte);
 }
+
+// Eliminar printf
+// Sacar numero de linea, del parser.y y corregir las librerias funciones y sentencias
+
+// Funciones terminar parametros
