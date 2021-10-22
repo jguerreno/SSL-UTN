@@ -5,17 +5,18 @@
 #include <stdbool.h>
 
 
-void addSentencia(SentenciaNode** head, char* tipoSentencia){
+void addSentencia(SentenciaNode** head, char* tipoSentencia) {
 
     SentenciaNode* node = searchSentencia(*head, tipoSentencia);
 
     if(node == NULL){
         pushSentencia(head, tipoSentencia);
     }
+
 }
 
 
-void pushSentencia(SentenciaNode** head, char* tipoSentencia){
+void pushSentencia(SentenciaNode** head, char* tipoSentencia) {
     /* 1. allocate node */
     SentenciaNode* new_node = (SentenciaNode*) malloc(sizeof(SentenciaNode));
 
@@ -30,7 +31,7 @@ void pushSentencia(SentenciaNode** head, char* tipoSentencia){
 }
 
 
-DataSentencias newDataSentencia(char* tipoSentencia){
+DataSentencias newDataSentencia(char* tipoSentencia) {
     DataSentencias data;
 
     data.tipoSentencia = strdup(tipoSentencia);
@@ -39,7 +40,7 @@ DataSentencias newDataSentencia(char* tipoSentencia){
 }
 
 
-SentenciaNode* searchSentencia(SentenciaNode* head, char* tipoSentencia){
+SentenciaNode* searchSentencia(SentenciaNode* head, char* tipoSentencia) {
     SentenciaNode* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.tipoSentencia, tipoSentencia)!=0){
@@ -50,16 +51,18 @@ SentenciaNode* searchSentencia(SentenciaNode* head, char* tipoSentencia){
 }
 
 
-void printListSentencia(FILE *reporte, SentenciaNode* node){
+void printListSentencia(FILE *reporte, SentenciaNode* node) {
 
     fprintf(reporte,"-------------------- SENTENCIAS --------------------\n");
     fprintf(reporte,"Tipo de Sentencia\n");
 
 
-    while (node != NULL){
-     fprintf(reporte,"%s \t \t \t \t \t \n", node->data.tipoSentencia);
+    while (node != NULL) {
+        fprintf(reporte,"%s \t \t \t \t \t \n", node->data.tipoSentencia);
 
-     node = node->next;
-  }
+        node = node->next;
+    }
+
+    fprintf(reporte,"\n");
 
 }
