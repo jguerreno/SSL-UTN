@@ -64,7 +64,7 @@ void printListFuncion(FILE *reporte, FuncionNode* node){
 
 
     while(node != NULL) {
-        fprintf(reporte,"%s\t \t \t \t %d\n", node->data.funcion, node->data.tipoDeRetorno);
+        fprintf(reporte,"%s\t \t \t \t %s\n", node->data.funcion, node->data.tipoDeRetorno);
         printListParametro(reporte, node->data.listaParametros);
 
         node = node->next;

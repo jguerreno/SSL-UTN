@@ -8,7 +8,8 @@
 #include <ctype.h>
 
 
-#include"variables.h"
+#include "lib.h"
+//#include"variables.h"
 #include"sentencias.h"
 
 
@@ -44,16 +45,14 @@ EstructuraErrorSemantico* listaErroresSemanticos = NULL;
 VariableNode* listaVariables = NULL;
 // Aulxiliar
 NombreVariableNode* listaNombreDeVariables = NULL;
-//char* tipoDeDato = NULL;
-int flagDeclaracionVariables = 0;
+int flagVariable = 0;
 
 // TS Funciones
 FuncionNode* listaFunciones = NULL;
 // Auxiliares
 ParametroNode* listaParametros = NULL;
-//char* tipoDeRetorno = NULL;
 char* identificadorFuncion = NULL;
-int flagDeclaracionFuncion = 0;
+int flagFuncion = 0;
 
 // Auxiliar para funciones y variables
 char* tipo = NULL;
@@ -137,7 +136,7 @@ input:    /* vacio */
 ;
 
 line:   '\n'                        
-        | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, $<cadena>1);} // Funcion con los flags con todos los parametros
+        | TIPO_DATO declaracion     { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable);}
         | sentencia
 ;
 
@@ -150,31 +149,27 @@ sentencia: bloque_sentencias            { addSentencia(&listaSentencias, "Senten
          | sentencia_salto              { addSentencia(&listaSentencias, "Sentencia Salto")}
          | sentencia_retorno            { addSentencia(&listaSentencias, "Sentencia de Retorno")}
          | '\n'
-         | error sentencia              { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 ;
 
 bloque_sentencias: '{' '}'                                                
-                | '{' '\n' declaracion_list { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, tipo); } sentencia_list '\n' '}'     
-                | error {pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1);} declaracion_list { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, $<cadena>1); } sentencia_list '\n' '}'
-                | error sentencia_list '\n' '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
-                | error '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
+                | '{' '\n' declaracion_list { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, tipo, identificadorFuncion, &flagFuncion, &flagVariable); } sentencia_list '\n' '}'     
 ;
 
 declaracion_list: /* VACIO */                                          
-                | TIPO_DATO declaracion { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, $<cadena>1); } '\n' declaracion_list           { tipo = strdup($<cadena>1); }
+                | TIPO_DATO declaracion { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable); } '\n' declaracion_list           { tipo = strdup($<cadena>1); }
 ;
 
 
 /****************************** DECLARACIONES ************************************/
 declaracion: declaracion_funcion
-            | declaracion_variables ';'   
+            | declaracion_variables ';'   {flagVariable = 1}
 ;
 
-declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec {if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1, tipo, &listaParametros);flagDeclaracionFuncion=0;}}
+declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec  { identificadorFuncion = strdup($<cadena>1); }
 ;
 
 def_dec: bloque_sentencias      
-        | ';'                   { flagDeclaracionFuncion=1;}
+        | ';'                   { flagFuncion = 1;}
 ;
 
 declaracion_variables: identVariable
@@ -182,8 +177,8 @@ declaracion_variables: identVariable
 ;
 
 listaParametros: /* VACIO */ 
-                | TIPO_DATO IDENTIFICADOR ',' listaParametros   //{ pushParametro(&listaParametros, $<char>1, $<char>2);}
-                | TIPO_DATO IDENTIFICADOR                       //{ pushParametro(&listaParametros, $<char>1, $<char>2);}
+                | TIPO_DATO IDENTIFICADOR ',' listaParametros           { pushParametro(&listaParametros, $<cadena>1, $<cadena>2);}
+                | TIPO_DATO IDENTIFICADOR                               { pushParametro(&listaParametros, $<cadena>1, $<cadena>2);}
 ;
 
 identVariable: IDENTIFICADOR                            { pushNombreVariable(&listaNombreDeVariables, $<cadena>1); }
@@ -339,8 +334,8 @@ int main ()
 
 // Mirar
 // Sentencias           X
-// Variables            
-// Funciones            
+// Variables            X
+// Funciones            X
 
 // Errores
 // Lexicos              X
