@@ -1,14 +1,14 @@
 
 %{
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-//#include"funciones.h"
+
 #include"variables.h"
-//#include"estructuraInvalida.h"
 #include"sentencias.h"
 
 
@@ -25,27 +25,36 @@ int yyerror (const char *s){
     return -1;
 }
 
-FuncionNode* listaFunciones = NULL;
-int flagDeclaracionFuncion = 0;
-
-VariableNode* listaVariables = NULL;
-char* tipoDeDato = NULL;
-char *errorN = NULL;
 
 //
 EstructuraInvalidaNode* listaErroresSintacticos = NULL;
 
 // 
-NombreVariableNode* listaNombreDeVariables = NULL;
-
 SentenciaNode* listaSentencias = NULL;
+
+
 
 // Errores Lexicos
 EstructuraErrorLexico* listaErroresLexicos = NULL;
 
 // Errores Semanticos
 EstructuraErrorSemantico* listaErroresSemanticos = NULL;
+
+// TS Variables
+VariableNode* listaVariables = NULL;
+// Aulxiliar
+NombreVariableNode* listaNombreDeVariables = NULL;
+char* tipoDeDato = NULL;
+
+// TS Funciones
+FuncionNode* listaFunciones = NULL;
+// Auxiliares
+ParametroNode* listaParametros = NULL;
+char* tipoDeRetorno = NULL;
+int flagDeclaracionFuncion = 0;
+
 %}
+
 
 
 %union {
@@ -123,7 +132,7 @@ input:    /* vacio */
 ;
 
 line:   '\n'                        
-        | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, $<cadena>1);}
+        | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, $<cadena>1);} // Funcion con los flags con todos los parametros
         | sentencia
 ;
 
@@ -156,11 +165,11 @@ declaracion: declaracion_funcion
             | declaracion_variables ';'   
 ;
 
-declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec {if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1);flagDeclaracionFuncion=0;}}
+declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec {if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1, tipoDeRetorno, &listaParametros);flagDeclaracionFuncion=0;}}
 ;
 
-def_dec: bloque_sentencias      { printf("funciones 1\n"); }
-        | ';'                   { printf("funciones 2\n"); flagDeclaracionFuncion=1;}
+def_dec: bloque_sentencias      
+        | ';'                   { flagDeclaracionFuncion=1;}
 ;
 
 declaracion_variables: identVariable
@@ -168,12 +177,12 @@ declaracion_variables: identVariable
 ;
 
 listaParametros: /* VACIO */ 
-                | TIPO_DATO IDENTIFICADOR ',' listaParametros   {contador++; addParametro(&listaParametros, $<char>1, $<char>2)}
-                | TIPO_DATO IDENTIFICADOR                       {contador++; addParametro(&listaParametros, $<char>1, $<char>2)}
+                | TIPO_DATO IDENTIFICADOR ',' listaParametros   //{ pushParametro(&listaParametros, $<char>1, $<char>2);}
+                | TIPO_DATO IDENTIFICADOR                       //{ pushParametro(&listaParametros, $<char>1, $<char>2);}
 ;
 
-identVariable: IDENTIFICADOR                            {printf("identificador"); pushNombreVariable(&listaNombreDeVariables, $<cadena>1);}
-               | IDENTIFICADOR '=' expresion_constante  {printf("identificador ="); pushNombreVariable(&listaNombreDeVariables, $<cadena>1);}
+identVariable: IDENTIFICADOR                            { pushNombreVariable(&listaNombreDeVariables, $<cadena>1); }
+               | IDENTIFICADOR '=' expresion_constante  { pushNombreVariable(&listaNombreDeVariables, $<cadena>1); }
 ;
 
 sentencia_list: /* VACIO */                  
@@ -313,15 +322,25 @@ int main ()
 
     printListFuncion(reporte, listaFunciones);
     printListVariable(reporte, listaVariables);
-    printListErrorLexico(reporte, listaErroresLexicos);
     printListSentencia(reporte, listaSentencias);
+    // Errores
+    printListErrorLexico(reporte, listaErroresLexicos);
     printListEstructuraInvalida(reporte, listaErroresSintacticos);
     printListErrorSemantico(reporte, listaErroresSemanticos);
 
     fclose(reporte);
 }
 
-// Eliminar printf --> LISTO
-// Sacar numero de linea, del parser.y y corregir las librerias funciones y sentencias
 
-// Funciones terminar parametros
+// Mirar
+// Sentencias           X
+// variables            X
+// funciones            
+
+// Errores
+// Lexicos              X
+// Sintacticos          
+// Semanticos           
+//      Variables       
+//      Funciones       
+//      OB              

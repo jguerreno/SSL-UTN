@@ -5,17 +5,22 @@
 #include <stdbool.h>
 
 
-void addFuncion(FuncionNode** head, char* funcion, char* tipoDeRetorno, DataParametro* parametros){
+void addFuncion(FuncionNode** head, char* funcion, char* tipoDeRetorno, ParametroNode** parametros) {
 
-    FuncionNode* node = searchFuncion(*head, funcion, tipoDeRetorno, parametros);
+    FuncionNode* node = searchFuncion(*head, funcion); // Solo vamos a contemplar el nombre, no la sobrecarga
 
     if(node == NULL){
-        pushFuncion(head,funcion, tipoDeRetorno, parametros);
+        pushFuncion(head, funcion, tipoDeRetorno, *parametros);
     }
+    else {
+        // Agregar error semantico
+    }
+
+    *parametros = NULL;
 }
 
 
-void pushFuncion(FuncionNode** head, char* funcion, char* tipoDeRetorno, DataParametro* parametros){
+void pushFuncion(FuncionNode** head, char* funcion, char* tipoDeRetorno, ParametroNode* parametros) {
     /* 1. allocate node */
     FuncionNode* new_node = (FuncionNode*) malloc(sizeof(FuncionNode));
 
@@ -30,18 +35,18 @@ void pushFuncion(FuncionNode** head, char* funcion, char* tipoDeRetorno, DataPar
 }
 
 
-DataFuncion newDataFuncion(char* funcion, char* tipoDeRetorno, DataParametro* parametros){
+DataFuncion newDataFuncion(char* funcion, char* tipoDeRetorno, ParametroNode* parametros){
     DataFuncion data;
 
     data.funcion = strdup(funcion);
     data.tipoDeRetorno = strdup(tipoDeRetorno);
-    data.listaParametro = parametros;
+    data.listaParametros = parametros;
 
     return data;
 }
 
 
-FuncionNode* searchFuncion(FuncionNode* head, char* funcion, char* tipoDeRetorno, DataParametro* parametros){
+FuncionNode* searchFuncion(FuncionNode* head, char* funcion) {
     FuncionNode* current = head;  // Initialize current
 
     while (current != NULL && strcmp(current->data.funcion, funcion)!=0){
@@ -55,11 +60,12 @@ FuncionNode* searchFuncion(FuncionNode* head, char* funcion, char* tipoDeRetorno
 void printListFuncion(FILE *reporte, FuncionNode* node){
 
     fprintf(reporte,"-------------------- FUNCIONES --------------------\n");
-    fprintf(reporte,"Identificador\t \t \t \n");
+    fprintf(reporte,"Identificador\t \t \t Tipo de Retorno\n");
 
 
     while(node != NULL) {
-        fprintf(reporte,"%s\t \t \t \t \t \t \t \n", node->data.funcion);
+        fprintf(reporte,"%s\t \t \t \t %d\n", node->data.funcion, node->data.tipoDeRetorno);
+        printListParametro(reporte, node->data.listaParametros);
 
         node = node->next;
     }
@@ -70,15 +76,8 @@ void printListFuncion(FILE *reporte, FuncionNode* node){
 
 //-------------------------------------------------------------------------------//
 
-void addParametro(ParametroNode** head, char* tipoDeDato, char* nombre){
-    FuncionNode* node = searchParametro(*head, tipoDeDato, nombre);
 
-    if(node == NULL){
-        pushParametro(head,tipoDeDato,nombre);
-    }
-}
-
-void pushParametro(ParametroNode** head, char* tipoDeDato, char* nombre){
+void pushParametro(ParametroNode** head, char* tipoDeDato, char* nombre) {
     /* 1. allocate node */
     ParametroNode* new_node = (ParametroNode*) malloc(sizeof(ParametroNode));
 
@@ -110,17 +109,30 @@ ParametroNode* searchParametro(ParametroNode* head, char* tipoDeDato, char* nomb
 
    return current;
 }
-void printListParametro(FILE *reporte, ParametroNode* node){
-    //No encontre si lo pide o no esto
-    fprintf(reporte,"-------------------- PARAMETROS --------------------\n");
-    fprintf(reporte,"Identificador\t \t \t \n");
 
+int sizeListParametro(ParametroNode* node) {
+
+    int cant = 0;
 
     while(node != NULL) {
-        fprintf(reporte,"%s\t \t \t \t \t \t \t \n", node->data.tipoDeDato);
+        cant++;
+        node = node->next;
+    }
+
+    return cant;
+
+}
+
+void printListParametro(FILE *reporte, ParametroNode* node) {
+
+    fprintf(reporte,"PARAMETROS: ");
+
+    while(node != NULL) {
+        fprintf(reporte,"%s\t %s,  ", node->data.tipoDeDato, node->data.nombre);
 
         node = node->next;
     }
 
     fprintf(reporte,"\n");
+
 }

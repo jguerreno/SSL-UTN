@@ -3,7 +3,6 @@
 #include "estructuraInvalida.h"
 
 
-
 typedef struct DataVariable{
     char* identificador;
     char* tipoDato;
