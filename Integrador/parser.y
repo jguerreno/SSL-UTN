@@ -44,14 +44,19 @@ EstructuraErrorSemantico* listaErroresSemanticos = NULL;
 VariableNode* listaVariables = NULL;
 // Aulxiliar
 NombreVariableNode* listaNombreDeVariables = NULL;
-char* tipoDeDato = NULL;
+//char* tipoDeDato = NULL;
+int flagDeclaracionVariables = 0;
 
 // TS Funciones
 FuncionNode* listaFunciones = NULL;
 // Auxiliares
 ParametroNode* listaParametros = NULL;
-char* tipoDeRetorno = NULL;
+//char* tipoDeRetorno = NULL;
+char* identificadorFuncion = NULL;
 int flagDeclaracionFuncion = 0;
+
+// Auxiliar para funciones y variables
+char* tipo = NULL;
 
 %}
 
@@ -132,7 +137,7 @@ input:    /* vacio */
 ;
 
 line:   '\n'                        
-        | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, $<cadena>1);} // Funcion con los flags con todos los parametros
+        | TIPO_DATO declaracion     { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, $<cadena>1);} // Funcion con los flags con todos los parametros
         | sentencia
 ;
 
@@ -149,14 +154,14 @@ sentencia: bloque_sentencias            { addSentencia(&listaSentencias, "Senten
 ;
 
 bloque_sentencias: '{' '}'                                                
-                | '{' '\n' declaracion_list { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos, &listaNombreDeVariables, tipoDeDato); } sentencia_list '\n' '}'     
-                | error {pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1);} declaracion_list { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos,&listaNombreDeVariables, $<cadena>1); } sentencia_list '\n' '}'
+                | '{' '\n' declaracion_list { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, tipo); } sentencia_list '\n' '}'     
+                | error {pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1);} declaracion_list { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, $<cadena>1); } sentencia_list '\n' '}'
                 | error sentencia_list '\n' '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
                 | error '}'        { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 ;
 
 declaracion_list: /* VACIO */                                          
-                | TIPO_DATO declaracion { addVariable(&listaVariables, listaFunciones, &listaErroresSemanticos,&listaNombreDeVariables, $<cadena>1); } '\n' declaracion_list           {tipoDeDato = strdup($<cadena>1);}
+                | TIPO_DATO declaracion { addVariable(&listaVariables, listaFunciones, &listaNombreDeVariables, $<cadena>1); } '\n' declaracion_list           { tipo = strdup($<cadena>1); }
 ;
 
 
@@ -165,7 +170,7 @@ declaracion: declaracion_funcion
             | declaracion_variables ';'   
 ;
 
-declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec {if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1, tipoDeRetorno, &listaParametros);flagDeclaracionFuncion=0;}}
+declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec {if(flagDeclaracionFuncion == 1){addFuncion(&listaFunciones, $<cadena>1, tipo, &listaParametros);flagDeclaracionFuncion=0;}}
 ;
 
 def_dec: bloque_sentencias      
@@ -334,8 +339,8 @@ int main ()
 
 // Mirar
 // Sentencias           X
-// variables            X
-// funciones            
+// Variables            
+// Funciones            
 
 // Errores
 // Lexicos              X
