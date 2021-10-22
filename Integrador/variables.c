@@ -1,14 +1,11 @@
 
 #include "variables.h"
-//#include "funciones.h"
-//#include "estructuraInvalida.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 
-void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, EstructuraErrorSemantico** listaErroresSemanticos, 
-                NombreVariableNode** listaNombreVariables, char* tipoDato) {
+void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, NombreVariableNode** listaNombreVariables, char* tipoDato) {
     NombreVariableNode* listaAuxNombreVariables = *listaNombreVariables;
 
     while(listaAuxNombreVariables != NULL){
@@ -39,7 +36,7 @@ void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, Est
             
             printf("\n\n%s\n\n", errorSemantico);   //!!!!!!!!!!!!!!!!!!
             
-            pushErrorSemantico(listaErroresSemanticos, errorSemantico);
+            pushErrorSemantico(&listaErroresSemanticos, errorSemantico);
         }
     }
 

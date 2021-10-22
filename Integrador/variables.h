@@ -2,6 +2,7 @@
 #include "funciones.h"
 #include "estructuraInvalida.h"
 
+extern EstructuraErrorSemantico* listaErroresSemanticos;
 
 typedef struct DataVariable{
     char* identificador;
@@ -26,7 +27,7 @@ typedef struct NombreVariableNode{
 
 
 
-void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, EstructuraErrorSemantico** listaErroresSemanticos, NombreVariableNode** listaNombreVariables, char* tipoDato);
+void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, NombreVariableNode** listaNombreVariables, char* tipoDato);
 void pushVariable(VariableNode** listaVariables, char* identificador ,char* tipoDato);
 DataVariable newDataVariable(char* identificador ,char* tipoDato);
 VariableNode* searchVariable(VariableNode* listaVariables, char* identificador);
