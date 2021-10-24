@@ -142,12 +142,12 @@ line:   '\n'
 
 
 /****************************** SENTENCIAS ************************************/
-sentencia: bloque_sentencias            { addSentencia(&listaSentencias, "Sentencia Compuesta")}
-         | sentencia_expresion          { addSentencia(&listaSentencias, "Sentencia Expresion")}
-         | sentencia_bifurcacion        { addSentencia(&listaSentencias, "Sentencia Seleccion")}
-         | sentencia_bucle              { addSentencia(&listaSentencias, "Sentencia Iteracion")}
-         | sentencia_salto              { addSentencia(&listaSentencias, "Sentencia Salto")}
-         | sentencia_retorno            { addSentencia(&listaSentencias, "Sentencia de Retorno")}
+sentencia: bloque_sentencias            { addSentencia(&listaSentencias, "Sentencia Compuesta");}
+         | sentencia_expresion          { addSentencia(&listaSentencias, "Sentencia Expresion");}
+         | sentencia_bifurcacion        { addSentencia(&listaSentencias, "Sentencia Seleccion");}
+         | sentencia_bucle              { addSentencia(&listaSentencias, "Sentencia Iteracion");}
+         | sentencia_salto              { addSentencia(&listaSentencias, "Sentencia Salto");}
+         | sentencia_retorno            { addSentencia(&listaSentencias, "Sentencia de Retorno");}
          | '\n'
 ;
 
@@ -162,7 +162,7 @@ declaracion_list: /* VACIO */
 
 /****************************** DECLARACIONES ************************************/
 declaracion: declaracion_funcion
-            | declaracion_variables ';'   {flagVariable = 1}
+            | declaracion_variables ';'   {flagVariable = 1;}
 ;
 
 declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec  { identificadorFuncion = strdup($<cadena>1); }

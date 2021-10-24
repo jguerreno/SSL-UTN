@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "funciones.h"
-#include "estructuraInvalida.h"
+//#include "estructuraInvalida.h"
 
 extern EstructuraErrorSemantico* listaErroresSemanticos;
 

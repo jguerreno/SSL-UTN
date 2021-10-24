@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include "estructuraInvalida.h"
 
+extern EstructuraErrorSemantico* listaErroresSemanticos;
 
 typedef struct DataParametro {
     char* tipoDeDato;

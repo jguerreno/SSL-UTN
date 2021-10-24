@@ -12,7 +12,7 @@ void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, Nom
         VariableNode* existenciaNombreEnVariables = searchVariable(*listaVariables, listaAuxNombreVariables->data.identificador);
         FuncionNode*  existenciaNombreEnFunciones = searchFuncion(listaFunciones, listaAuxNombreVariables->data.identificador);
 
-        if(existenciaNombreEnVariables==NULL && existenciaNombreEnFunciones==NULL) {
+        if(existenciaNombreEnVariables==NULL && existenciaNombreEnFunciones==NULL){
             /* 1. allocate node */
             VariableNode* new_node = (VariableNode*) malloc(sizeof(VariableNode));
 
@@ -25,19 +25,14 @@ void addVariable(VariableNode** listaVariables, FuncionNode* listaFunciones, Nom
             /* 4. move the head to point to the new node */
             (*listaVariables) = new_node;
 
-            listaAuxNombreVariables = listaAuxNombreVariables->next;
         }
-        else {
-            printf("\n\nHOLA\n\n");    //!!!!!!!!!!!!!!!!!!
-
-            char* errorSemantico;
-            strcpy(errorSemantico,"Multiples declaraciones de ");
+        else{
+            char errorSemantico[100] = "Multiples declaraciones de ";
             strcat(errorSemantico, listaAuxNombreVariables->data.identificador);
-            
-            printf("\n\n%s\n\n", errorSemantico);   //!!!!!!!!!!!!!!!!!!
-            
             pushErrorSemantico(&listaErroresSemanticos, errorSemantico);
         }
+
+        listaAuxNombreVariables = listaAuxNombreVariables->next;
     }
 
     deleteListNombreVariable(listaNombreVariables);

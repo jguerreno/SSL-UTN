@@ -13,7 +13,9 @@ void addFuncion(FuncionNode** head, char* funcion, char* tipoDeRetorno, Parametr
         pushFuncion(head, funcion, tipoDeRetorno, *parametros);
     }
     else {
-        // Agregar error semantico
+        char errorSemantico[100] = "Multiples declaraciones de ";
+        strcat(errorSemantico, funcion);
+        pushErrorSemantico(&listaErroresSemanticos, errorSemantico);
     }
 
     *parametros = NULL;
