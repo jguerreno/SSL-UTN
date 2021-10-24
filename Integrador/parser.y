@@ -57,6 +57,9 @@ int flagFuncion = 0;
 // Auxiliar para funciones y variables
 char* tipo = NULL;
 
+// Llamada a Funciones
+ParametroNode* parametrosLlamadaFuncion = NULL;
+
 %}
 
 
@@ -196,9 +199,9 @@ sentencia_expresion: expresion ';'
 
 /****************************** EXPRESIONES ************************************/
 expresion: expresion_logica                                
-        | expresion_logica '?' expresion ':' expresion    
-        | expresion operacion_matematica expresion
-        | llamada_funcion
+         | expresion_logica '?' expresion ':' expresion    
+         | expresion operacion_matematica expresion
+         | llamada_funcion
 ;
 
 operacion_matematica: '-'
@@ -208,7 +211,7 @@ operacion_matematica: '-'
 ;
 
 expresion_logica: expresion_prefija                   
-          | expresion operacion_logica expresion
+                | expresion operacion_logica expresion
 ;
 
 operacion_logica: OPERADOR_ASIGNACION
@@ -223,9 +226,9 @@ operacion_logica: OPERADOR_ASIGNACION
 ;
 
 expresion_prefija: expresion_postfija                      
-                  | OPERADOR_SIZEOF '(' TIPO_DATO ')'      
-                  | OPERADOR_INCREMENTO expresion_prefija   
-                  | operador_unario expresion_prefija       
+                 | OPERADOR_SIZEOF '(' TIPO_DATO ')'      
+                 | OPERADOR_INCREMENTO expresion_prefija   
+                 | operador_unario expresion_prefija       
 ;
 
 expresion_postfija: expresion_constante
@@ -293,17 +296,14 @@ operador_unario: '&'
                 | '!' 
 ;
 
-llamada_funcion: IDENTIFICADOR '(' parametros ')'  
+llamada_funcion: IDENTIFICADOR '(' parametros ')'       { chequearLlamadaFuncion($<cadena>1, &parametrosLlamadaFuncion);}
 ;
 
 parametros: /* VACIO */                          
-        | parametro
-        | parametro  ',' parametros
+          | IDENTIFICADOR                                     { addParametroLlamadaFuncion(&parametrosLlamadaFuncion, $<cadena>1);}
+          | IDENTIFICADOR  ',' parametros                     { addParametroLlamadaFuncion(&parametrosLlamadaFuncion, $<cadena>1);}
 ;
 
-parametro: expresion_indexada
-        | expresion_constante
-;
 %%
 
 
