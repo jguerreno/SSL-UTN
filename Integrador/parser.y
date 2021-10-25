@@ -1,4 +1,3 @@
-
 %{
 
 #include <math.h>
@@ -7,14 +6,10 @@
 #include <string.h>
 #include <ctype.h>
 
-
 #include "lib.h"
 //#include"variables.h"
-#include"sentencias.h"
-
 
 #define YYDEBUG 1
-
 
 int yylex(void);
 extern int yylineno;
@@ -26,14 +21,8 @@ int yyerror (const char *s){
     return -1;
 }
 
-
 //
 EstructuraInvalidaNode* listaErroresSintacticos = NULL;
-
-// 
-SentenciaNode* listaSentencias = NULL;
-
-
 
 // Errores Lexicos
 EstructuraErrorLexico* listaErroresLexicos = NULL;
@@ -62,14 +51,11 @@ ParametroNode* parametrosLlamadaFuncion = NULL;
 
 %}
 
-
-
 %union {
     int entero;
     float real;
     char* cadena;
 }
-
 
 // Palabras Reservadas
 %token <cadena> IF
@@ -131,7 +117,6 @@ ParametroNode* parametrosLlamadaFuncion = NULL;
 %left ')'
 %right '('
 
-
 %%
 input: /* vacio */
      | input line
@@ -141,38 +126,41 @@ input: /* vacio */
 line: '\n'                        
     | TIPO_DATO declaracion     { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable);}
     | sentencia
+    | error line                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
+
 ;
 
-
 /****************************** SENTENCIAS ************************************/
-sentencia: bloque_sentencias            { addSentencia(&listaSentencias, "Sentencia Compuesta");}
-         | sentencia_expresion          { addSentencia(&listaSentencias, "Sentencia Expresion");}
-         | sentencia_bifurcacion        { addSentencia(&listaSentencias, "Sentencia Seleccion");}
-         | sentencia_bucle              { addSentencia(&listaSentencias, "Sentencia Iteracion");}
-         | sentencia_salto              { addSentencia(&listaSentencias, "Sentencia Salto");}
-         | sentencia_retorno            { addSentencia(&listaSentencias, "Sentencia de Retorno");}
+sentencia: bloque_sentencias           
+         | sentencia_expresion          
+         | sentencia_bifurcacion       
+         | sentencia_bucle              
+         | sentencia_salto             
+         | sentencia_retorno           
          | '\n'
+         | error sentencia { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
+
 ;
 
 bloque_sentencias: '{' '}'                                                
-                | '{' '\n' declaracion_list { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, tipo, identificadorFuncion, &flagFuncion, &flagVariable); } sentencia_list '\n' '}'     
+                 | '{' '\n' declaracion_list { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, tipo, identificadorFuncion, &flagFuncion, &flagVariable); } sentencia_list '\n' '}'     
 ;
 
 declaracion_list: /* VACIO */                                          
                 | TIPO_DATO declaracion { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable); } '\n' declaracion_list           { tipo = strdup($<cadena>1); }
+                | error declaracion_list { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 ;
-
 
 /****************************** DECLARACIONES ************************************/
 declaracion: declaracion_funcion
-            | declaracion_variables ';'   {flagVariable = 1;}
+           | declaracion_variables ';'   {flagVariable = 1;}
 ;
 
 declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec  { identificadorFuncion = strdup($<cadena>1); }
 ;
 
 def_dec: bloque_sentencias      
-        | ';'                   { flagFuncion = 1;}
+       | ';'                   { flagFuncion = 1;}
 ;
 
 declaracion_variables: identVariable
@@ -180,22 +168,23 @@ declaracion_variables: identVariable
 ;
 
 listaParametros: /* VACIO */ 
-                | TIPO_DATO IDENTIFICADOR ',' listaParametros           { pushParametro(&listaParametros, $<cadena>1, $<cadena>2);}
-                | TIPO_DATO IDENTIFICADOR                               { pushParametro(&listaParametros, $<cadena>1, $<cadena>2);}
+               | TIPO_DATO IDENTIFICADOR ',' listaParametros           { pushParametro(&listaParametros, $<cadena>1, $<cadena>2);}
+               | TIPO_DATO IDENTIFICADOR                               { pushParametro(&listaParametros, $<cadena>1, $<cadena>2);}
 ;
 
 identVariable: IDENTIFICADOR                            { pushNombreVariable(&listaNombreDeVariables, $<cadena>1); }
-               | IDENTIFICADOR '=' expresion_constante  { pushNombreVariable(&listaNombreDeVariables, $<cadena>1); }
+             | IDENTIFICADOR '=' expresion_constante  { pushNombreVariable(&listaNombreDeVariables, $<cadena>1); }
 ;
 
 sentencia_list: /* VACIO */                  
-                | sentencia_list sentencia 
+              | sentencia_list sentencia 
+              | error sentencia_list          { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
+            
 ;
 
 sentencia_expresion: expresion ';'     
-                    | asignacion ';'  
+                   | asignacion ';'  
 ;
-
 
 /****************************** EXPRESIONES ************************************/
 expresion: expresion_logica                                
@@ -232,8 +221,8 @@ expresion_prefija: expresion_postfija
 ;
 
 expresion_postfija: expresion_constante
-                   | expresion_indexada                     
-                   | expresion_postfija OPERADOR_INCREMENTO
+                  | expresion_indexada                     
+                  | expresion_postfija OPERADOR_INCREMENTO
 ;
 
 expresion_indexada: IDENTIFICADOR
@@ -259,12 +248,12 @@ operador_asignacion: '='
 ;
 
 sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias                  
-                | IF '(' expresion ')' bloque_sentencias ELSE bloque_sentencias 
-                | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'          
+                     | IF '(' expresion ')' bloque_sentencias ELSE bloque_sentencias 
+                     | SWITCH '(' expresion ')' '{' sentencia_caso_list'}'          
 ;
 
 sentencia_caso_list: /* vacio */                       
-                | sentencia_caso sentencia_caso_list 
+                   | sentencia_caso sentencia_caso_list 
 ;
 
 sentencia_caso: CASE expresion ':' sentencia   
@@ -272,12 +261,12 @@ sentencia_caso: CASE expresion ':' sentencia
 ;
 
 sentencia_bucle: WHILE '(' expresion ')' bloque_sentencias                                        
-                | DO bloque_sentencias WHILE '(' expresion ')' ';'                             
-                | FOR '(' lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias  
+               | DO bloque_sentencias WHILE '(' expresion ')' ';'                             
+               | FOR '(' lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias  
 ;
 
 lista_asignaciones: asignacion                        
-                   | asignacion ',' lista_asignaciones
+                  | asignacion ',' lista_asignaciones
 ;
 
 sentencia_salto: CONTINUE ';'                   
@@ -289,11 +278,11 @@ sentencia_retorno: RETURN ';'
 ;
 
 operador_unario: '&'  
-                | '*' 
-                | '+' 
-                | '-' 
-                | '~' 
-                | '!' 
+               | '*' 
+               | '+' 
+               | '-' 
+               | '~' 
+               | '!' 
 ;
 
 llamada_funcion: IDENTIFICADOR '(' parametros ')'       { chequearLlamadaFuncion($<cadena>1, &parametrosLlamadaFuncion);}
@@ -306,7 +295,6 @@ parametros: /* VACIO */
 
 %%
 
-
 int main ()
 {
     yyin = fopen("entrada.txt", "r");
@@ -316,13 +304,12 @@ int main ()
     yyparse ();
     fclose(yyin);
 
-
     // Reporte
     FILE* reporte = fopen("reporte.txt","w+b");
 
     printListFuncion(reporte, listaFunciones);
     printListVariable(reporte, listaVariables);
-    printListSentencia(reporte, listaSentencias);
+
     // Errores
     printListErrorLexico(reporte, listaErroresLexicos);
     printListEstructuraInvalida(reporte, listaErroresSintacticos);
@@ -330,7 +317,6 @@ int main ()
 
     fclose(reporte);
 }
-
 
 // Mirar
 // Sentencias           X
