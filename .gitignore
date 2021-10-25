@@ -2,7 +2,6 @@
 .DS_Store
 .vscode
 
-*.exe
 
 entrada.txt
 salida.txt

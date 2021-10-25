@@ -1,0 +1,35 @@
+-------------------- FUNCIONES --------------------
+Identificador	 	 	 Tipo de Retorno
+push	 	 	 	 void
+PARAMETROS: int	 a,  int	 c,  
+
+-------------------- VARIABLES --------------------
+Identificador	 	 	 Tipo de dato
+caracter3	 	 	 	 	 	 char
+caracter4	 	 	 	 	 	 char
+entero2	 	 	 	 	 	 int
+b	 	 	 	 	 	 char
+a	 	 	 	 	 	 int
+caracter1	 	 	 	 	 	 char
+caracter2	 	 	 	 	 	 char
+entero1	 	 	 	 	 	 int
+
+-------------------- SENTENCIAS --------------------
+Tipo de Sentencia
+Sentencia Iteracion 	 	 	 	 	 
+Sentencia Seleccion 	 	 	 	 	 
+Sentencia de Retorno 	 	 	 	 	 
+Sentencia Expresion 	 	 	 	 	 
+
+-------------------- ESTRUCTURAS INVALIDAS --------------------
+Estructura	 	 	 
+#	 	 	 	 	 	 	
+
+-------------------- ESTRUCTURAS INVALIDAS --------------------
+
+-------------------- ERRORES SEMANTICOS --------------------
+Error: 	 	 Cantidad incorrecta de parametros en llamada a push
+Error: 	 	 Variable no declarada v
+Error: 	 	 Multiples declaraciones de b
+Error: 	 	 Multiples declaraciones de a
+

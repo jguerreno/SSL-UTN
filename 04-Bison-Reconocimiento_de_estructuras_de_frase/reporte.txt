@@ -1,0 +1,31 @@
+-------------------- FUNCIONES --------------------
+Identificador	 	 	 
+saludar	 	 	 	 	 	 	 4
+-------------------- VARIABLES --------------------
+Identificador	 	 	 Tipo de dato
+a	 	 	 	 	 	 	int 	 	 	 16
+b	 	 	 	 	 	 	char 	 	 	 16
+a	 	 	 	 	 	 	int 	 	 	 15
+caracter3	 	 	 	 	 	 	char 	 	 	 14
+caracter4	 	 	 	 	 	 	char 	 	 	 14
+a	 	 	 	 	 	 	int 	 	 	 13
+entero2	 	 	 	 	 	 	int 	 	 	 13
+caracter1	 	 	 	 	 	 	char 	 	 	 2
+caracter2	 	 	 	 	 	 	char 	 	 	 2
+entero1	 	 	 	 	 	 	int 	 	 	 1
+-------------------- ESTRUCTURAS INVALIDAS --------------------
+Estructura	 	 	 
+#	 	 	 	 	 	 	
+-------------------- SENTENCIAS --------------------
+Tipo de Sentencia
+Sentencia Iteracion 	 	 	 	 	 37
+Sentencia Seleccion 	 	 	 	 	 34
+Sentencia de Retorno 	 	 	 	 	 33
+Sentencia Expresion 	 	 	 	 	 22
+-------------------- ESTRUCTURAS INVALIDAS --------------------
+Linea: 	 	 	 	 	 	 28
+Linea: 	 	 	 	 	 	 28
+Linea: 	 	 	 	 	 	 17
+Linea: 	 	 	 	 	 	 10
+Linea: 	 	 	 	 	 	 8
+Linea: 	 	 	 	 	 	 6
