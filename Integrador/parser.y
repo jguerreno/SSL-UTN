@@ -133,14 +133,14 @@ ParametroNode* parametrosLlamadaFuncion = NULL;
 
 
 %%
-input:    /* vacio */
-        | input line
-        | error line                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
+input: /* vacio */
+     | input line
+     | error line                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
 ;
 
-line:   '\n'                        
-        | TIPO_DATO declaracion     { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable);}
-        | sentencia
+line: '\n'                        
+    | TIPO_DATO declaracion     { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable);}
+    | sentencia
 ;
 
 
@@ -344,3 +344,9 @@ int main ()
 //      Variables       
 //      Funciones       
 //      OB              
+
+// 1. Makefile
+// 2. Emprolijar el codigo
+// 3. Errores sintacticos
+// 4. OPCIONAL error sintactico imprimir linea
+// 5. Fijarse si falta algo o si hay algo de mas
