@@ -80,7 +80,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 62 "../src/analizador.y"
+#line 51 "../src/analizador.y"
 
     int entero;
     float real;

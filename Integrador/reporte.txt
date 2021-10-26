@@ -14,18 +14,12 @@ caracter1	 	 	 	 	 	 char
 caracter2	 	 	 	 	 	 char
 entero1	 	 	 	 	 	 int
 
--------------------- SENTENCIAS --------------------
-Tipo de Sentencia
-Sentencia Iteracion 	 	 	 	 	 
-Sentencia Seleccion 	 	 	 	 	 
-Sentencia de Retorno 	 	 	 	 	 
-Sentencia Expresion 	 	 	 	 	 
-
 -------------------- ESTRUCTURAS INVALIDAS --------------------
 Estructura	 	 	 
 #	 	 	 	 	 	 	
 
 -------------------- ESTRUCTURAS INVALIDAS --------------------
+Linea: 	 	 	 	 	 	 8
 Linea: 	 	 	 	 	 	 8
 Linea: 	 	 	 	 	 	 6
 
