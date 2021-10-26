@@ -7,7 +7,7 @@ option noyywrap
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
-#include "parser.tab.h"
+#include"analizador.tab.h"
 
 #include"estructuraInvalida.h"
  

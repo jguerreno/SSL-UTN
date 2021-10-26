@@ -1,0 +1,2759 @@
+Terminals unused in grammar
+
+   '|'
+   '^'
+   '<'
+   '>'
+   '/'
+   '%'
+
+
+Estado 26 conflictos: 28 reducción(ones)/reducción(ones)
+Estado 35 conflictos: 1 desplazamiento(s)/reducción(ones)
+Estado 38 conflictos: 1 desplazamiento(s)/reducción(ones)
+Estado 115 conflictos: 13 desplazamiento(s)/reducción(ones)
+Estado 116 conflictos: 13 desplazamiento(s)/reducción(ones)
+Estado 151 conflictos: 4 desplazamiento(s)/reducción(ones)
+
+
+Gramática
+
+    0 $accept: input $end
+
+    1 input: /* vacío */
+    2      | input line
+    3      | error line
+
+    4 line: '\n'
+    5     | TIPO_DATO declaracion
+    6     | sentencia
+
+    7 sentencia: bloque_sentencias
+    8          | sentencia_expresion
+    9          | sentencia_bifurcacion
+   10          | sentencia_bucle
+   11          | sentencia_salto
+   12          | sentencia_retorno
+   13          | '\n'
+
+   14 bloque_sentencias: '{' '}'
+
+   15 $@1: /* vacío */
+
+   16 bloque_sentencias: '{' '\n' declaracion_list $@1 sentencia_list '\n' '}'
+
+   17 declaracion_list: /* vacío */
+
+   18 $@2: /* vacío */
+
+   19 declaracion_list: TIPO_DATO declaracion $@2 '\n' declaracion_list
+
+   20 declaracion: declaracion_funcion
+   21            | declaracion_variables ';'
+
+   22 declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec
+
+   23 def_dec: bloque_sentencias
+   24        | ';'
+
+   25 declaracion_variables: identVariable
+   26                      | identVariable ',' declaracion_variables
+
+   27 listaParametros: /* vacío */
+   28                | TIPO_DATO IDENTIFICADOR ',' listaParametros
+   29                | TIPO_DATO IDENTIFICADOR
+
+   30 identVariable: IDENTIFICADOR
+   31              | IDENTIFICADOR '=' expresion_constante
+
+   32 sentencia_list: /* vacío */
+   33               | sentencia_list sentencia
+
+   34 sentencia_expresion: expresion ';'
+   35                    | asignacion ';'
+
+   36 expresion: expresion_logica
+   37          | expresion_logica '?' expresion ':' expresion
+   38          | expresion operacion_matematica expresion
+   39          | llamada_funcion
+
+   40 operacion_matematica: '-'
+   41                     | '+'
+   42                     | '*'
+   43                     | OPERADOR_MULTIPLICATIVO
+
+   44 expresion_logica: expresion_prefija
+   45                 | expresion operacion_logica expresion
+
+   46 operacion_logica: OPERADOR_ASIGNACION
+   47                 | OPERADOR_O_LOGICO
+   48                 | OPERADOR_Y_LOGICO
+   49                 | OPERADOR_O_INCLUSIVO
+   50                 | OPERADOR_O_EXCLUSIVO
+   51                 | '&'
+   52                 | OPERADOR_IGUALDAD
+   53                 | OPERADOR_CORRIMIENTO
+   54                 | OPERADOR_RELACIONAL
+
+   55 expresion_prefija: expresion_postfija
+   56                  | OPERADOR_SIZEOF '(' TIPO_DATO ')'
+   57                  | OPERADOR_INCREMENTO expresion_prefija
+   58                  | operador_unario expresion_prefija
+
+   59 expresion_postfija: expresion_constante
+   60                   | expresion_indexada
+   61                   | expresion_postfija OPERADOR_INCREMENTO
+
+   62 expresion_indexada: IDENTIFICADOR
+   63                   | expresion_indexada '[' expresion ']'
+   64                   | expresion_indexada '.' IDENTIFICADOR
+   65                   | expresion_indexada FLECHA IDENTIFICADOR
+
+   66 expresion_constante: CONSTANTE_CADENA
+   67                    | CONSTANTE_DECIMAL
+   68                    | CONSTANTE_OCTAL
+   69                    | CONSTANTE_HEXADECIMAL
+   70                    | CONSTANTE_CARACTER
+   71                    | CONSTANTE_REAL
+   72                    | '(' expresion ')'
+
+   73 asignacion: expresion_indexada operador_asignacion expresion
+
+   74 operador_asignacion: '='
+   75                    | OPERADOR_ASIGNACION
+
+   76 sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias
+   77                      | IF '(' expresion ')' bloque_sentencias ELSE bloque_sentencias
+   78                      | SWITCH '(' expresion ')' '{' sentencia_caso_list '}'
+
+   79 sentencia_caso_list: /* vacío */
+   80                    | sentencia_caso sentencia_caso_list
+
+   81 sentencia_caso: CASE expresion ':' sentencia
+   82               | DEFAULT ':' sentencia
+
+   83 sentencia_bucle: WHILE '(' expresion ')' bloque_sentencias
+   84                | DO bloque_sentencias WHILE '(' expresion ')' ';'
+   85                | FOR '(' lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias
+
+   86 lista_asignaciones: asignacion
+   87                   | asignacion ',' lista_asignaciones
+
+   88 sentencia_salto: CONTINUE ';'
+   89                | BREAK ';'
+
+   90 sentencia_retorno: RETURN ';'
+   91                  | RETURN expresion ';'
+
+   92 operador_unario: '&'
+   93                | '*'
+   94                | '+'
+   95                | '-'
+   96                | '~'
+   97                | '!'
+
+   98 llamada_funcion: IDENTIFICADOR '(' parametros ')'
+
+   99 parametros: /* vacío */
+  100           | IDENTIFICADOR
+  101           | IDENTIFICADOR ',' parametros
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'\n' (10) 4 13 16 19
+'!' (33) 97
+'%' (37)
+'&' (38) 51 92
+'(' (40) 22 56 72 76 77 78 83 84 85 98
+')' (41) 22 56 72 76 77 78 83 84 85 98
+'*' (42) 42 93
+'+' (43) 41 94
+',' (44) 26 28 87 101
+'-' (45) 40 95
+'.' (46) 64
+'/' (47)
+':' (58) 37 81 82
+';' (59) 21 24 34 35 84 85 88 89 90 91
+'<' (60)
+'=' (61) 31 74
+'>' (62)
+'?' (63) 37
+'[' (91) 63
+']' (93) 63
+'^' (94)
+'{' (123) 14 16 78
+'|' (124)
+'}' (125) 14 16 78
+'~' (126) 96
+error (256) 3
+IF (258) 76 77
+ELSE (259) 77
+SWITCH (260) 78
+WHILE (261) 83 84
+DO (262) 84
+FOR (263) 85
+CASE (264) 81
+DEFAULT (265) 82
+CONTINUE (266) 88
+BREAK (267) 89
+RETURN (268) 90 91
+TIPO_DATO (269) 5 19 28 29 56
+OPERADOR_ASIGNACION (270) 46 75
+OPERADOR_O_LOGICO (271) 47
+OPERADOR_Y_LOGICO (272) 48
+OPERADOR_O_INCLUSIVO (273) 49
+OPERADOR_O_EXCLUSIVO (274) 50
+OPERADOR_IGUALDAD (275) 52
+OPERADOR_RELACIONAL (276) 54
+OPERADOR_CORRIMIENTO (277) 53
+OPERADOR_MULTIPLICATIVO (278) 43
+OPERADOR_INCREMENTO (279) 57 61
+OPERADOR_SIZEOF (280) 56
+FLECHA (281) 65
+IDENTIFICADOR (282) 22 28 29 30 31 62 64 65 98 100 101
+CONSTANTE_CADENA (283) 66
+CONSTANTE_DECIMAL (284) 67
+CONSTANTE_OCTAL (285) 68
+CONSTANTE_HEXADECIMAL (286) 69
+CONSTANTE_CARACTER (287) 70
+CONSTANTE_REAL (288) 71
+
+
+No terminales con las reglas donde aparecen
+
+$accept (59)
+    en la izquierda: 0
+input (60)
+    en la izquierda: 1 2 3, en la derecha: 0 2
+line (61)
+    en la izquierda: 4 5 6, en la derecha: 2 3
+sentencia (62)
+    en la izquierda: 7 8 9 10 11 12 13, en la derecha: 6 33 81 82
+bloque_sentencias (63)
+    en la izquierda: 14 16, en la derecha: 7 23 76 77 83 84 85
+$@1 (64)
+    en la izquierda: 15, en la derecha: 16
+declaracion_list (65)
+    en la izquierda: 17 19, en la derecha: 16 19
+$@2 (66)
+    en la izquierda: 18, en la derecha: 19
+declaracion (67)
+    en la izquierda: 20 21, en la derecha: 5 19
+declaracion_funcion (68)
+    en la izquierda: 22, en la derecha: 20
+def_dec (69)
+    en la izquierda: 23 24, en la derecha: 22
+declaracion_variables (70)
+    en la izquierda: 25 26, en la derecha: 21 26
+listaParametros (71)
+    en la izquierda: 27 28 29, en la derecha: 22 28
+identVariable (72)
+    en la izquierda: 30 31, en la derecha: 25 26
+sentencia_list (73)
+    en la izquierda: 32 33, en la derecha: 16 33
+sentencia_expresion (74)
+    en la izquierda: 34 35, en la derecha: 8
+expresion (75)
+    en la izquierda: 36 37 38 39, en la derecha: 34 37 38 45 63 72
+    73 76 77 78 81 83 84 85 91
+operacion_matematica (76)
+    en la izquierda: 40 41 42 43, en la derecha: 38
+expresion_logica (77)
+    en la izquierda: 44 45, en la derecha: 36 37
+operacion_logica (78)
+    en la izquierda: 46 47 48 49 50 51 52 53 54, en la derecha: 45
+expresion_prefija (79)
+    en la izquierda: 55 56 57 58, en la derecha: 44 57 58
+expresion_postfija (80)
+    en la izquierda: 59 60 61, en la derecha: 55 61
+expresion_indexada (81)
+    en la izquierda: 62 63 64 65, en la derecha: 60 63 64 65 73
+expresion_constante (82)
+    en la izquierda: 66 67 68 69 70 71 72, en la derecha: 31 59
+asignacion (83)
+    en la izquierda: 73, en la derecha: 35 86 87
+operador_asignacion (84)
+    en la izquierda: 74 75, en la derecha: 73
+sentencia_bifurcacion (85)
+    en la izquierda: 76 77 78, en la derecha: 9
+sentencia_caso_list (86)
+    en la izquierda: 79 80, en la derecha: 78 80
+sentencia_caso (87)
+    en la izquierda: 81 82, en la derecha: 80
+sentencia_bucle (88)
+    en la izquierda: 83 84 85, en la derecha: 10
+lista_asignaciones (89)
+    en la izquierda: 86 87, en la derecha: 85 87
+sentencia_salto (90)
+    en la izquierda: 88 89, en la derecha: 11
+sentencia_retorno (91)
+    en la izquierda: 90 91, en la derecha: 12
+operador_unario (92)
+    en la izquierda: 92 93 94 95 96 97, en la derecha: 58
+llamada_funcion (93)
+    en la izquierda: 98, en la derecha: 39
+parametros (94)
+    en la izquierda: 99 100 101, en la derecha: 98 101
+
+
+estado 0
+
+    0 $accept: . input $end
+
+    error  desplazar e ir al estado 1
+
+    $end                   reduce usando la regla 1 (input)
+    IF                     reduce usando la regla 1 (input)
+    SWITCH                 reduce usando la regla 1 (input)
+    WHILE                  reduce usando la regla 1 (input)
+    DO                     reduce usando la regla 1 (input)
+    FOR                    reduce usando la regla 1 (input)
+    CONTINUE               reduce usando la regla 1 (input)
+    BREAK                  reduce usando la regla 1 (input)
+    RETURN                 reduce usando la regla 1 (input)
+    TIPO_DATO              reduce usando la regla 1 (input)
+    OPERADOR_INCREMENTO    reduce usando la regla 1 (input)
+    OPERADOR_SIZEOF        reduce usando la regla 1 (input)
+    IDENTIFICADOR          reduce usando la regla 1 (input)
+    CONSTANTE_CADENA       reduce usando la regla 1 (input)
+    CONSTANTE_DECIMAL      reduce usando la regla 1 (input)
+    CONSTANTE_OCTAL        reduce usando la regla 1 (input)
+    CONSTANTE_HEXADECIMAL  reduce usando la regla 1 (input)
+    CONSTANTE_CARACTER     reduce usando la regla 1 (input)
+    CONSTANTE_REAL         reduce usando la regla 1 (input)
+    '&'                    reduce usando la regla 1 (input)
+    '-'                    reduce usando la regla 1 (input)
+    '+'                    reduce usando la regla 1 (input)
+    '*'                    reduce usando la regla 1 (input)
+    '('                    reduce usando la regla 1 (input)
+    '\n'                   reduce usando la regla 1 (input)
+    '{'                    reduce usando la regla 1 (input)
+    '~'                    reduce usando la regla 1 (input)
+    '!'                    reduce usando la regla 1 (input)
+
+    input  ir al estado 2
+
+
+estado 1
+
+    3 input: error . line
+
+    IF                     desplazar e ir al estado 3
+    SWITCH                 desplazar e ir al estado 4
+    WHILE                  desplazar e ir al estado 5
+    DO                     desplazar e ir al estado 6
+    FOR                    desplazar e ir al estado 7
+    CONTINUE               desplazar e ir al estado 8
+    BREAK                  desplazar e ir al estado 9
+    RETURN                 desplazar e ir al estado 10
+    TIPO_DATO              desplazar e ir al estado 11
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '\n'                   desplazar e ir al estado 26
+    '{'                    desplazar e ir al estado 27
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    line                   ir al estado 30
+    sentencia              ir al estado 31
+    bloque_sentencias      ir al estado 32
+    sentencia_expresion    ir al estado 33
+    expresion              ir al estado 34
+    expresion_logica       ir al estado 35
+    expresion_prefija      ir al estado 36
+    expresion_postfija     ir al estado 37
+    expresion_indexada     ir al estado 38
+    expresion_constante    ir al estado 39
+    asignacion             ir al estado 40
+    sentencia_bifurcacion  ir al estado 41
+    sentencia_bucle        ir al estado 42
+    sentencia_salto        ir al estado 43
+    sentencia_retorno      ir al estado 44
+    operador_unario        ir al estado 45
+    llamada_funcion        ir al estado 46
+
+
+estado 2
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end                   desplazar e ir al estado 47
+    IF                     desplazar e ir al estado 3
+    SWITCH                 desplazar e ir al estado 4
+    WHILE                  desplazar e ir al estado 5
+    DO                     desplazar e ir al estado 6
+    FOR                    desplazar e ir al estado 7
+    CONTINUE               desplazar e ir al estado 8
+    BREAK                  desplazar e ir al estado 9
+    RETURN                 desplazar e ir al estado 10
+    TIPO_DATO              desplazar e ir al estado 11
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '\n'                   desplazar e ir al estado 26
+    '{'                    desplazar e ir al estado 27
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    line                   ir al estado 48
+    sentencia              ir al estado 31
+    bloque_sentencias      ir al estado 32
+    sentencia_expresion    ir al estado 33
+    expresion              ir al estado 34
+    expresion_logica       ir al estado 35
+    expresion_prefija      ir al estado 36
+    expresion_postfija     ir al estado 37
+    expresion_indexada     ir al estado 38
+    expresion_constante    ir al estado 39
+    asignacion             ir al estado 40
+    sentencia_bifurcacion  ir al estado 41
+    sentencia_bucle        ir al estado 42
+    sentencia_salto        ir al estado 43
+    sentencia_retorno      ir al estado 44
+    operador_unario        ir al estado 45
+    llamada_funcion        ir al estado 46
+
+
+estado 3
+
+   76 sentencia_bifurcacion: IF . '(' expresion ')' bloque_sentencias
+   77                      | IF . '(' expresion ')' bloque_sentencias ELSE bloque_sentencias
+
+    '('  desplazar e ir al estado 49
+
+
+estado 4
+
+   78 sentencia_bifurcacion: SWITCH . '(' expresion ')' '{' sentencia_caso_list '}'
+
+    '('  desplazar e ir al estado 50
+
+
+estado 5
+
+   83 sentencia_bucle: WHILE . '(' expresion ')' bloque_sentencias
+
+    '('  desplazar e ir al estado 51
+
+
+estado 6
+
+   84 sentencia_bucle: DO . bloque_sentencias WHILE '(' expresion ')' ';'
+
+    '{'  desplazar e ir al estado 27
+
+    bloque_sentencias  ir al estado 52
+
+
+estado 7
+
+   85 sentencia_bucle: FOR . '(' lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias
+
+    '('  desplazar e ir al estado 53
+
+
+estado 8
+
+   88 sentencia_salto: CONTINUE . ';'
+
+    ';'  desplazar e ir al estado 54
+
+
+estado 9
+
+   89 sentencia_salto: BREAK . ';'
+
+    ';'  desplazar e ir al estado 55
+
+
+estado 10
+
+   90 sentencia_retorno: RETURN . ';'
+   91                  | RETURN . expresion ';'
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    ';'                    desplazar e ir al estado 56
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 57
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 11
+
+    5 line: TIPO_DATO . declaracion
+
+    IDENTIFICADOR  desplazar e ir al estado 59
+
+    declaracion            ir al estado 60
+    declaracion_funcion    ir al estado 61
+    declaracion_variables  ir al estado 62
+    identVariable          ir al estado 63
+
+
+estado 12
+
+   57 expresion_prefija: OPERADOR_INCREMENTO . expresion_prefija
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 64
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion_prefija    ir al estado 65
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+
+
+estado 13
+
+   56 expresion_prefija: OPERADOR_SIZEOF . '(' TIPO_DATO ')'
+
+    '('  desplazar e ir al estado 66
+
+
+estado 14
+
+   62 expresion_indexada: IDENTIFICADOR .
+   98 llamada_funcion: IDENTIFICADOR . '(' parametros ')'
+
+    '('  desplazar e ir al estado 67
+
+    $default  reduce usando la regla 62 (expresion_indexada)
+
+
+estado 15
+
+   66 expresion_constante: CONSTANTE_CADENA .
+
+    $default  reduce usando la regla 66 (expresion_constante)
+
+
+estado 16
+
+   67 expresion_constante: CONSTANTE_DECIMAL .
+
+    $default  reduce usando la regla 67 (expresion_constante)
+
+
+estado 17
+
+   68 expresion_constante: CONSTANTE_OCTAL .
+
+    $default  reduce usando la regla 68 (expresion_constante)
+
+
+estado 18
+
+   69 expresion_constante: CONSTANTE_HEXADECIMAL .
+
+    $default  reduce usando la regla 69 (expresion_constante)
+
+
+estado 19
+
+   70 expresion_constante: CONSTANTE_CARACTER .
+
+    $default  reduce usando la regla 70 (expresion_constante)
+
+
+estado 20
+
+   71 expresion_constante: CONSTANTE_REAL .
+
+    $default  reduce usando la regla 71 (expresion_constante)
+
+
+estado 21
+
+   92 operador_unario: '&' .
+
+    $default  reduce usando la regla 92 (operador_unario)
+
+
+estado 22
+
+   95 operador_unario: '-' .
+
+    $default  reduce usando la regla 95 (operador_unario)
+
+
+estado 23
+
+   94 operador_unario: '+' .
+
+    $default  reduce usando la regla 94 (operador_unario)
+
+
+estado 24
+
+   93 operador_unario: '*' .
+
+    $default  reduce usando la regla 93 (operador_unario)
+
+
+estado 25
+
+   72 expresion_constante: '(' . expresion ')'
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 68
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 26
+
+    4 line: '\n' .
+   13 sentencia: '\n' .
+
+    $end                   reduce usando la regla 4 (line)
+    $end                   [reduce usando la regla 13 (sentencia)]
+    IF                     reduce usando la regla 4 (line)
+    IF                     [reduce usando la regla 13 (sentencia)]
+    SWITCH                 reduce usando la regla 4 (line)
+    SWITCH                 [reduce usando la regla 13 (sentencia)]
+    WHILE                  reduce usando la regla 4 (line)
+    WHILE                  [reduce usando la regla 13 (sentencia)]
+    DO                     reduce usando la regla 4 (line)
+    DO                     [reduce usando la regla 13 (sentencia)]
+    FOR                    reduce usando la regla 4 (line)
+    FOR                    [reduce usando la regla 13 (sentencia)]
+    CONTINUE               reduce usando la regla 4 (line)
+    CONTINUE               [reduce usando la regla 13 (sentencia)]
+    BREAK                  reduce usando la regla 4 (line)
+    BREAK                  [reduce usando la regla 13 (sentencia)]
+    RETURN                 reduce usando la regla 4 (line)
+    RETURN                 [reduce usando la regla 13 (sentencia)]
+    TIPO_DATO              reduce usando la regla 4 (line)
+    TIPO_DATO              [reduce usando la regla 13 (sentencia)]
+    OPERADOR_INCREMENTO    reduce usando la regla 4 (line)
+    OPERADOR_INCREMENTO    [reduce usando la regla 13 (sentencia)]
+    OPERADOR_SIZEOF        reduce usando la regla 4 (line)
+    OPERADOR_SIZEOF        [reduce usando la regla 13 (sentencia)]
+    IDENTIFICADOR          reduce usando la regla 4 (line)
+    IDENTIFICADOR          [reduce usando la regla 13 (sentencia)]
+    CONSTANTE_CADENA       reduce usando la regla 4 (line)
+    CONSTANTE_CADENA       [reduce usando la regla 13 (sentencia)]
+    CONSTANTE_DECIMAL      reduce usando la regla 4 (line)
+    CONSTANTE_DECIMAL      [reduce usando la regla 13 (sentencia)]
+    CONSTANTE_OCTAL        reduce usando la regla 4 (line)
+    CONSTANTE_OCTAL        [reduce usando la regla 13 (sentencia)]
+    CONSTANTE_HEXADECIMAL  reduce usando la regla 4 (line)
+    CONSTANTE_HEXADECIMAL  [reduce usando la regla 13 (sentencia)]
+    CONSTANTE_CARACTER     reduce usando la regla 4 (line)
+    CONSTANTE_CARACTER     [reduce usando la regla 13 (sentencia)]
+    CONSTANTE_REAL         reduce usando la regla 4 (line)
+    CONSTANTE_REAL         [reduce usando la regla 13 (sentencia)]
+    '&'                    reduce usando la regla 4 (line)
+    '&'                    [reduce usando la regla 13 (sentencia)]
+    '-'                    reduce usando la regla 4 (line)
+    '-'                    [reduce usando la regla 13 (sentencia)]
+    '+'                    reduce usando la regla 4 (line)
+    '+'                    [reduce usando la regla 13 (sentencia)]
+    '*'                    reduce usando la regla 4 (line)
+    '*'                    [reduce usando la regla 13 (sentencia)]
+    '('                    reduce usando la regla 4 (line)
+    '('                    [reduce usando la regla 13 (sentencia)]
+    '\n'                   reduce usando la regla 4 (line)
+    '\n'                   [reduce usando la regla 13 (sentencia)]
+    '{'                    reduce usando la regla 4 (line)
+    '{'                    [reduce usando la regla 13 (sentencia)]
+    '~'                    reduce usando la regla 4 (line)
+    '~'                    [reduce usando la regla 13 (sentencia)]
+    '!'                    reduce usando la regla 4 (line)
+    '!'                    [reduce usando la regla 13 (sentencia)]
+    $default               reduce usando la regla 4 (line)
+
+
+estado 27
+
+   14 bloque_sentencias: '{' . '}'
+   16                  | '{' . '\n' declaracion_list $@1 sentencia_list '\n' '}'
+
+    '\n'  desplazar e ir al estado 69
+    '}'   desplazar e ir al estado 70
+
+
+estado 28
+
+   96 operador_unario: '~' .
+
+    $default  reduce usando la regla 96 (operador_unario)
+
+
+estado 29
+
+   97 operador_unario: '!' .
+
+    $default  reduce usando la regla 97 (operador_unario)
+
+
+estado 30
+
+    3 input: error line .
+
+    $default  reduce usando la regla 3 (input)
+
+
+estado 31
+
+    6 line: sentencia .
+
+    $default  reduce usando la regla 6 (line)
+
+
+estado 32
+
+    7 sentencia: bloque_sentencias .
+
+    $default  reduce usando la regla 7 (sentencia)
+
+
+estado 33
+
+    8 sentencia: sentencia_expresion .
+
+    $default  reduce usando la regla 8 (sentencia)
+
+
+estado 34
+
+   34 sentencia_expresion: expresion . ';'
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ';'                      desplazar e ir al estado 84
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 35
+
+   36 expresion: expresion_logica .
+   37          | expresion_logica . '?' expresion ':' expresion
+
+    '?'  desplazar e ir al estado 87
+
+    '?'       [reduce usando la regla 36 (expresion)]
+    $default  reduce usando la regla 36 (expresion)
+
+
+estado 36
+
+   44 expresion_logica: expresion_prefija .
+
+    $default  reduce usando la regla 44 (expresion_logica)
+
+
+estado 37
+
+   55 expresion_prefija: expresion_postfija .
+   61 expresion_postfija: expresion_postfija . OPERADOR_INCREMENTO
+
+    OPERADOR_INCREMENTO  desplazar e ir al estado 88
+
+    $default  reduce usando la regla 55 (expresion_prefija)
+
+
+estado 38
+
+   60 expresion_postfija: expresion_indexada .
+   63 expresion_indexada: expresion_indexada . '[' expresion ']'
+   64                   | expresion_indexada . '.' IDENTIFICADOR
+   65                   | expresion_indexada . FLECHA IDENTIFICADOR
+   73 asignacion: expresion_indexada . operador_asignacion expresion
+
+    OPERADOR_ASIGNACION  desplazar e ir al estado 89
+    FLECHA               desplazar e ir al estado 90
+    '='                  desplazar e ir al estado 91
+    '['                  desplazar e ir al estado 92
+    '.'                  desplazar e ir al estado 93
+
+    OPERADOR_ASIGNACION  [reduce usando la regla 60 (expresion_postfija)]
+    $default             reduce usando la regla 60 (expresion_postfija)
+
+    operador_asignacion  ir al estado 94
+
+
+estado 39
+
+   59 expresion_postfija: expresion_constante .
+
+    $default  reduce usando la regla 59 (expresion_postfija)
+
+
+estado 40
+
+   35 sentencia_expresion: asignacion . ';'
+
+    ';'  desplazar e ir al estado 95
+
+
+estado 41
+
+    9 sentencia: sentencia_bifurcacion .
+
+    $default  reduce usando la regla 9 (sentencia)
+
+
+estado 42
+
+   10 sentencia: sentencia_bucle .
+
+    $default  reduce usando la regla 10 (sentencia)
+
+
+estado 43
+
+   11 sentencia: sentencia_salto .
+
+    $default  reduce usando la regla 11 (sentencia)
+
+
+estado 44
+
+   12 sentencia: sentencia_retorno .
+
+    $default  reduce usando la regla 12 (sentencia)
+
+
+estado 45
+
+   58 expresion_prefija: operador_unario . expresion_prefija
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 64
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion_prefija    ir al estado 96
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+
+
+estado 46
+
+   39 expresion: llamada_funcion .
+
+    $default  reduce usando la regla 39 (expresion)
+
+
+estado 47
+
+    0 $accept: input $end .
+
+    $default  aceptar
+
+
+estado 48
+
+    2 input: input line .
+
+    $default  reduce usando la regla 2 (input)
+
+
+estado 49
+
+   76 sentencia_bifurcacion: IF '(' . expresion ')' bloque_sentencias
+   77                      | IF '(' . expresion ')' bloque_sentencias ELSE bloque_sentencias
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 97
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 50
+
+   78 sentencia_bifurcacion: SWITCH '(' . expresion ')' '{' sentencia_caso_list '}'
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 98
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 51
+
+   83 sentencia_bucle: WHILE '(' . expresion ')' bloque_sentencias
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 99
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 52
+
+   84 sentencia_bucle: DO bloque_sentencias . WHILE '(' expresion ')' ';'
+
+    WHILE  desplazar e ir al estado 100
+
+
+estado 53
+
+   85 sentencia_bucle: FOR '(' . lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias
+
+    IDENTIFICADOR  desplazar e ir al estado 64
+
+    expresion_indexada  ir al estado 101
+    asignacion          ir al estado 102
+    lista_asignaciones  ir al estado 103
+
+
+estado 54
+
+   88 sentencia_salto: CONTINUE ';' .
+
+    $default  reduce usando la regla 88 (sentencia_salto)
+
+
+estado 55
+
+   89 sentencia_salto: BREAK ';' .
+
+    $default  reduce usando la regla 89 (sentencia_salto)
+
+
+estado 56
+
+   90 sentencia_retorno: RETURN ';' .
+
+    $default  reduce usando la regla 90 (sentencia_retorno)
+
+
+estado 57
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   91 sentencia_retorno: RETURN expresion . ';'
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ';'                      desplazar e ir al estado 104
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 58
+
+   60 expresion_postfija: expresion_indexada .
+   63 expresion_indexada: expresion_indexada . '[' expresion ']'
+   64                   | expresion_indexada . '.' IDENTIFICADOR
+   65                   | expresion_indexada . FLECHA IDENTIFICADOR
+
+    FLECHA  desplazar e ir al estado 90
+    '['     desplazar e ir al estado 92
+    '.'     desplazar e ir al estado 93
+
+    $default  reduce usando la regla 60 (expresion_postfija)
+
+
+estado 59
+
+   22 declaracion_funcion: IDENTIFICADOR . '(' listaParametros ')' def_dec
+   30 identVariable: IDENTIFICADOR .
+   31              | IDENTIFICADOR . '=' expresion_constante
+
+    '='  desplazar e ir al estado 105
+    '('  desplazar e ir al estado 106
+
+    $default  reduce usando la regla 30 (identVariable)
+
+
+estado 60
+
+    5 line: TIPO_DATO declaracion .
+
+    $default  reduce usando la regla 5 (line)
+
+
+estado 61
+
+   20 declaracion: declaracion_funcion .
+
+    $default  reduce usando la regla 20 (declaracion)
+
+
+estado 62
+
+   21 declaracion: declaracion_variables . ';'
+
+    ';'  desplazar e ir al estado 107
+
+
+estado 63
+
+   25 declaracion_variables: identVariable .
+   26                      | identVariable . ',' declaracion_variables
+
+    ','  desplazar e ir al estado 108
+
+    $default  reduce usando la regla 25 (declaracion_variables)
+
+
+estado 64
+
+   62 expresion_indexada: IDENTIFICADOR .
+
+    $default  reduce usando la regla 62 (expresion_indexada)
+
+
+estado 65
+
+   57 expresion_prefija: OPERADOR_INCREMENTO expresion_prefija .
+
+    $default  reduce usando la regla 57 (expresion_prefija)
+
+
+estado 66
+
+   56 expresion_prefija: OPERADOR_SIZEOF '(' . TIPO_DATO ')'
+
+    TIPO_DATO  desplazar e ir al estado 109
+
+
+estado 67
+
+   98 llamada_funcion: IDENTIFICADOR '(' . parametros ')'
+
+    IDENTIFICADOR  desplazar e ir al estado 110
+
+    $default  reduce usando la regla 99 (parametros)
+
+    parametros  ir al estado 111
+
+
+estado 68
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   72 expresion_constante: '(' expresion . ')'
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ')'                      desplazar e ir al estado 112
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 69
+
+   16 bloque_sentencias: '{' '\n' . declaracion_list $@1 sentencia_list '\n' '}'
+
+    TIPO_DATO  desplazar e ir al estado 113
+
+    $default  reduce usando la regla 17 (declaracion_list)
+
+    declaracion_list  ir al estado 114
+
+
+estado 70
+
+   14 bloque_sentencias: '{' '}' .
+
+    $default  reduce usando la regla 14 (bloque_sentencias)
+
+
+estado 71
+
+   46 operacion_logica: OPERADOR_ASIGNACION .
+
+    $default  reduce usando la regla 46 (operacion_logica)
+
+
+estado 72
+
+   47 operacion_logica: OPERADOR_O_LOGICO .
+
+    $default  reduce usando la regla 47 (operacion_logica)
+
+
+estado 73
+
+   48 operacion_logica: OPERADOR_Y_LOGICO .
+
+    $default  reduce usando la regla 48 (operacion_logica)
+
+
+estado 74
+
+   49 operacion_logica: OPERADOR_O_INCLUSIVO .
+
+    $default  reduce usando la regla 49 (operacion_logica)
+
+
+estado 75
+
+   50 operacion_logica: OPERADOR_O_EXCLUSIVO .
+
+    $default  reduce usando la regla 50 (operacion_logica)
+
+
+estado 76
+
+   52 operacion_logica: OPERADOR_IGUALDAD .
+
+    $default  reduce usando la regla 52 (operacion_logica)
+
+
+estado 77
+
+   54 operacion_logica: OPERADOR_RELACIONAL .
+
+    $default  reduce usando la regla 54 (operacion_logica)
+
+
+estado 78
+
+   53 operacion_logica: OPERADOR_CORRIMIENTO .
+
+    $default  reduce usando la regla 53 (operacion_logica)
+
+
+estado 79
+
+   43 operacion_matematica: OPERADOR_MULTIPLICATIVO .
+
+    $default  reduce usando la regla 43 (operacion_matematica)
+
+
+estado 80
+
+   51 operacion_logica: '&' .
+
+    $default  reduce usando la regla 51 (operacion_logica)
+
+
+estado 81
+
+   40 operacion_matematica: '-' .
+
+    $default  reduce usando la regla 40 (operacion_matematica)
+
+
+estado 82
+
+   41 operacion_matematica: '+' .
+
+    $default  reduce usando la regla 41 (operacion_matematica)
+
+
+estado 83
+
+   42 operacion_matematica: '*' .
+
+    $default  reduce usando la regla 42 (operacion_matematica)
+
+
+estado 84
+
+   34 sentencia_expresion: expresion ';' .
+
+    $default  reduce usando la regla 34 (sentencia_expresion)
+
+
+estado 85
+
+   38 expresion: expresion operacion_matematica . expresion
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 115
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 86
+
+   45 expresion_logica: expresion operacion_logica . expresion
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 116
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 87
+
+   37 expresion: expresion_logica '?' . expresion ':' expresion
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 117
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 88
+
+   61 expresion_postfija: expresion_postfija OPERADOR_INCREMENTO .
+
+    $default  reduce usando la regla 61 (expresion_postfija)
+
+
+estado 89
+
+   75 operador_asignacion: OPERADOR_ASIGNACION .
+
+    $default  reduce usando la regla 75 (operador_asignacion)
+
+
+estado 90
+
+   65 expresion_indexada: expresion_indexada FLECHA . IDENTIFICADOR
+
+    IDENTIFICADOR  desplazar e ir al estado 118
+
+
+estado 91
+
+   74 operador_asignacion: '=' .
+
+    $default  reduce usando la regla 74 (operador_asignacion)
+
+
+estado 92
+
+   63 expresion_indexada: expresion_indexada '[' . expresion ']'
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 119
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 93
+
+   64 expresion_indexada: expresion_indexada '.' . IDENTIFICADOR
+
+    IDENTIFICADOR  desplazar e ir al estado 120
+
+
+estado 94
+
+   73 asignacion: expresion_indexada operador_asignacion . expresion
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 121
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 95
+
+   35 sentencia_expresion: asignacion ';' .
+
+    $default  reduce usando la regla 35 (sentencia_expresion)
+
+
+estado 96
+
+   58 expresion_prefija: operador_unario expresion_prefija .
+
+    $default  reduce usando la regla 58 (expresion_prefija)
+
+
+estado 97
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   76 sentencia_bifurcacion: IF '(' expresion . ')' bloque_sentencias
+   77                      | IF '(' expresion . ')' bloque_sentencias ELSE bloque_sentencias
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ')'                      desplazar e ir al estado 122
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 98
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   78 sentencia_bifurcacion: SWITCH '(' expresion . ')' '{' sentencia_caso_list '}'
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ')'                      desplazar e ir al estado 123
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 99
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   83 sentencia_bucle: WHILE '(' expresion . ')' bloque_sentencias
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ')'                      desplazar e ir al estado 124
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 100
+
+   84 sentencia_bucle: DO bloque_sentencias WHILE . '(' expresion ')' ';'
+
+    '('  desplazar e ir al estado 125
+
+
+estado 101
+
+   63 expresion_indexada: expresion_indexada . '[' expresion ']'
+   64                   | expresion_indexada . '.' IDENTIFICADOR
+   65                   | expresion_indexada . FLECHA IDENTIFICADOR
+   73 asignacion: expresion_indexada . operador_asignacion expresion
+
+    OPERADOR_ASIGNACION  desplazar e ir al estado 89
+    FLECHA               desplazar e ir al estado 90
+    '='                  desplazar e ir al estado 91
+    '['                  desplazar e ir al estado 92
+    '.'                  desplazar e ir al estado 93
+
+    operador_asignacion  ir al estado 94
+
+
+estado 102
+
+   86 lista_asignaciones: asignacion .
+   87                   | asignacion . ',' lista_asignaciones
+
+    ','  desplazar e ir al estado 126
+
+    $default  reduce usando la regla 86 (lista_asignaciones)
+
+
+estado 103
+
+   85 sentencia_bucle: FOR '(' lista_asignaciones . ';' expresion ';' expresion ')' bloque_sentencias
+
+    ';'  desplazar e ir al estado 127
+
+
+estado 104
+
+   91 sentencia_retorno: RETURN expresion ';' .
+
+    $default  reduce usando la regla 91 (sentencia_retorno)
+
+
+estado 105
+
+   31 identVariable: IDENTIFICADOR '=' . expresion_constante
+
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '('                    desplazar e ir al estado 25
+
+    expresion_constante  ir al estado 128
+
+
+estado 106
+
+   22 declaracion_funcion: IDENTIFICADOR '(' . listaParametros ')' def_dec
+
+    TIPO_DATO  desplazar e ir al estado 129
+
+    $default  reduce usando la regla 27 (listaParametros)
+
+    listaParametros  ir al estado 130
+
+
+estado 107
+
+   21 declaracion: declaracion_variables ';' .
+
+    $default  reduce usando la regla 21 (declaracion)
+
+
+estado 108
+
+   26 declaracion_variables: identVariable ',' . declaracion_variables
+
+    IDENTIFICADOR  desplazar e ir al estado 131
+
+    declaracion_variables  ir al estado 132
+    identVariable          ir al estado 63
+
+
+estado 109
+
+   56 expresion_prefija: OPERADOR_SIZEOF '(' TIPO_DATO . ')'
+
+    ')'  desplazar e ir al estado 133
+
+
+estado 110
+
+  100 parametros: IDENTIFICADOR .
+  101           | IDENTIFICADOR . ',' parametros
+
+    ','  desplazar e ir al estado 134
+
+    $default  reduce usando la regla 100 (parametros)
+
+
+estado 111
+
+   98 llamada_funcion: IDENTIFICADOR '(' parametros . ')'
+
+    ')'  desplazar e ir al estado 135
+
+
+estado 112
+
+   72 expresion_constante: '(' expresion ')' .
+
+    $default  reduce usando la regla 72 (expresion_constante)
+
+
+estado 113
+
+   19 declaracion_list: TIPO_DATO . declaracion $@2 '\n' declaracion_list
+
+    IDENTIFICADOR  desplazar e ir al estado 59
+
+    declaracion            ir al estado 136
+    declaracion_funcion    ir al estado 61
+    declaracion_variables  ir al estado 62
+    identVariable          ir al estado 63
+
+
+estado 114
+
+   16 bloque_sentencias: '{' '\n' declaracion_list . $@1 sentencia_list '\n' '}'
+
+    $default  reduce usando la regla 15 ($@1)
+
+    $@1  ir al estado 137
+
+
+estado 115
+
+   38 expresion: expresion . operacion_matematica expresion
+   38          | expresion operacion_matematica expresion .
+   45 expresion_logica: expresion . operacion_logica expresion
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+
+    OPERADOR_ASIGNACION      [reduce usando la regla 38 (expresion)]
+    OPERADOR_O_LOGICO        [reduce usando la regla 38 (expresion)]
+    OPERADOR_Y_LOGICO        [reduce usando la regla 38 (expresion)]
+    OPERADOR_O_INCLUSIVO     [reduce usando la regla 38 (expresion)]
+    OPERADOR_O_EXCLUSIVO     [reduce usando la regla 38 (expresion)]
+    OPERADOR_IGUALDAD        [reduce usando la regla 38 (expresion)]
+    OPERADOR_RELACIONAL      [reduce usando la regla 38 (expresion)]
+    OPERADOR_CORRIMIENTO     [reduce usando la regla 38 (expresion)]
+    OPERADOR_MULTIPLICATIVO  [reduce usando la regla 38 (expresion)]
+    '&'                      [reduce usando la regla 38 (expresion)]
+    '-'                      [reduce usando la regla 38 (expresion)]
+    '+'                      [reduce usando la regla 38 (expresion)]
+    '*'                      [reduce usando la regla 38 (expresion)]
+    $default                 reduce usando la regla 38 (expresion)
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 116
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   45                 | expresion operacion_logica expresion .
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+
+    OPERADOR_ASIGNACION      [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_O_LOGICO        [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_Y_LOGICO        [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_O_INCLUSIVO     [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_O_EXCLUSIVO     [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_IGUALDAD        [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_RELACIONAL      [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_CORRIMIENTO     [reduce usando la regla 45 (expresion_logica)]
+    OPERADOR_MULTIPLICATIVO  [reduce usando la regla 45 (expresion_logica)]
+    '&'                      [reduce usando la regla 45 (expresion_logica)]
+    '-'                      [reduce usando la regla 45 (expresion_logica)]
+    '+'                      [reduce usando la regla 45 (expresion_logica)]
+    '*'                      [reduce usando la regla 45 (expresion_logica)]
+    $default                 reduce usando la regla 45 (expresion_logica)
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 117
+
+   37 expresion: expresion_logica '?' expresion . ':' expresion
+   38          | expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    ':'                      desplazar e ir al estado 138
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 118
+
+   65 expresion_indexada: expresion_indexada FLECHA IDENTIFICADOR .
+
+    $default  reduce usando la regla 65 (expresion_indexada)
+
+
+estado 119
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   63 expresion_indexada: expresion_indexada '[' expresion . ']'
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ']'                      desplazar e ir al estado 139
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 120
+
+   64 expresion_indexada: expresion_indexada '.' IDENTIFICADOR .
+
+    $default  reduce usando la regla 64 (expresion_indexada)
+
+
+estado 121
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   73 asignacion: expresion_indexada operador_asignacion expresion .
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+
+    $default  reduce usando la regla 73 (asignacion)
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 122
+
+   76 sentencia_bifurcacion: IF '(' expresion ')' . bloque_sentencias
+   77                      | IF '(' expresion ')' . bloque_sentencias ELSE bloque_sentencias
+
+    '{'  desplazar e ir al estado 27
+
+    bloque_sentencias  ir al estado 140
+
+
+estado 123
+
+   78 sentencia_bifurcacion: SWITCH '(' expresion ')' . '{' sentencia_caso_list '}'
+
+    '{'  desplazar e ir al estado 141
+
+
+estado 124
+
+   83 sentencia_bucle: WHILE '(' expresion ')' . bloque_sentencias
+
+    '{'  desplazar e ir al estado 27
+
+    bloque_sentencias  ir al estado 142
+
+
+estado 125
+
+   84 sentencia_bucle: DO bloque_sentencias WHILE '(' . expresion ')' ';'
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 143
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 126
+
+   87 lista_asignaciones: asignacion ',' . lista_asignaciones
+
+    IDENTIFICADOR  desplazar e ir al estado 64
+
+    expresion_indexada  ir al estado 101
+    asignacion          ir al estado 102
+    lista_asignaciones  ir al estado 144
+
+
+estado 127
+
+   85 sentencia_bucle: FOR '(' lista_asignaciones ';' . expresion ';' expresion ')' bloque_sentencias
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 145
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 128
+
+   31 identVariable: IDENTIFICADOR '=' expresion_constante .
+
+    $default  reduce usando la regla 31 (identVariable)
+
+
+estado 129
+
+   28 listaParametros: TIPO_DATO . IDENTIFICADOR ',' listaParametros
+   29                | TIPO_DATO . IDENTIFICADOR
+
+    IDENTIFICADOR  desplazar e ir al estado 146
+
+
+estado 130
+
+   22 declaracion_funcion: IDENTIFICADOR '(' listaParametros . ')' def_dec
+
+    ')'  desplazar e ir al estado 147
+
+
+estado 131
+
+   30 identVariable: IDENTIFICADOR .
+   31              | IDENTIFICADOR . '=' expresion_constante
+
+    '='  desplazar e ir al estado 105
+
+    $default  reduce usando la regla 30 (identVariable)
+
+
+estado 132
+
+   26 declaracion_variables: identVariable ',' declaracion_variables .
+
+    $default  reduce usando la regla 26 (declaracion_variables)
+
+
+estado 133
+
+   56 expresion_prefija: OPERADOR_SIZEOF '(' TIPO_DATO ')' .
+
+    $default  reduce usando la regla 56 (expresion_prefija)
+
+
+estado 134
+
+  101 parametros: IDENTIFICADOR ',' . parametros
+
+    IDENTIFICADOR  desplazar e ir al estado 110
+
+    $default  reduce usando la regla 99 (parametros)
+
+    parametros  ir al estado 148
+
+
+estado 135
+
+   98 llamada_funcion: IDENTIFICADOR '(' parametros ')' .
+
+    $default  reduce usando la regla 98 (llamada_funcion)
+
+
+estado 136
+
+   19 declaracion_list: TIPO_DATO declaracion . $@2 '\n' declaracion_list
+
+    $default  reduce usando la regla 18 ($@2)
+
+    $@2  ir al estado 149
+
+
+estado 137
+
+   16 bloque_sentencias: '{' '\n' declaracion_list $@1 . sentencia_list '\n' '}'
+
+    $default  reduce usando la regla 32 (sentencia_list)
+
+    sentencia_list  ir al estado 150
+
+
+estado 138
+
+   37 expresion: expresion_logica '?' expresion ':' . expresion
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 151
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 139
+
+   63 expresion_indexada: expresion_indexada '[' expresion ']' .
+
+    $default  reduce usando la regla 63 (expresion_indexada)
+
+
+estado 140
+
+   76 sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias .
+   77                      | IF '(' expresion ')' bloque_sentencias . ELSE bloque_sentencias
+
+    ELSE  desplazar e ir al estado 152
+
+    $default  reduce usando la regla 76 (sentencia_bifurcacion)
+
+
+estado 141
+
+   78 sentencia_bifurcacion: SWITCH '(' expresion ')' '{' . sentencia_caso_list '}'
+
+    CASE     desplazar e ir al estado 153
+    DEFAULT  desplazar e ir al estado 154
+
+    $default  reduce usando la regla 79 (sentencia_caso_list)
+
+    sentencia_caso_list  ir al estado 155
+    sentencia_caso       ir al estado 156
+
+
+estado 142
+
+   83 sentencia_bucle: WHILE '(' expresion ')' bloque_sentencias .
+
+    $default  reduce usando la regla 83 (sentencia_bucle)
+
+
+estado 143
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   84 sentencia_bucle: DO bloque_sentencias WHILE '(' expresion . ')' ';'
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ')'                      desplazar e ir al estado 157
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 144
+
+   87 lista_asignaciones: asignacion ',' lista_asignaciones .
+
+    $default  reduce usando la regla 87 (lista_asignaciones)
+
+
+estado 145
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   85 sentencia_bucle: FOR '(' lista_asignaciones ';' expresion . ';' expresion ')' bloque_sentencias
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ';'                      desplazar e ir al estado 158
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 146
+
+   28 listaParametros: TIPO_DATO IDENTIFICADOR . ',' listaParametros
+   29                | TIPO_DATO IDENTIFICADOR .
+
+    ','  desplazar e ir al estado 159
+
+    $default  reduce usando la regla 29 (listaParametros)
+
+
+estado 147
+
+   22 declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' . def_dec
+
+    '{'  desplazar e ir al estado 27
+    ';'  desplazar e ir al estado 160
+
+    bloque_sentencias  ir al estado 161
+    def_dec            ir al estado 162
+
+
+estado 148
+
+  101 parametros: IDENTIFICADOR ',' parametros .
+
+    $default  reduce usando la regla 101 (parametros)
+
+
+estado 149
+
+   19 declaracion_list: TIPO_DATO declaracion $@2 . '\n' declaracion_list
+
+    '\n'  desplazar e ir al estado 163
+
+
+estado 150
+
+   16 bloque_sentencias: '{' '\n' declaracion_list $@1 sentencia_list . '\n' '}'
+   33 sentencia_list: sentencia_list . sentencia
+
+    IF                     desplazar e ir al estado 3
+    SWITCH                 desplazar e ir al estado 4
+    WHILE                  desplazar e ir al estado 5
+    DO                     desplazar e ir al estado 6
+    FOR                    desplazar e ir al estado 7
+    CONTINUE               desplazar e ir al estado 8
+    BREAK                  desplazar e ir al estado 9
+    RETURN                 desplazar e ir al estado 10
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '\n'                   desplazar e ir al estado 164
+    '{'                    desplazar e ir al estado 27
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    sentencia              ir al estado 165
+    bloque_sentencias      ir al estado 32
+    sentencia_expresion    ir al estado 33
+    expresion              ir al estado 34
+    expresion_logica       ir al estado 35
+    expresion_prefija      ir al estado 36
+    expresion_postfija     ir al estado 37
+    expresion_indexada     ir al estado 38
+    expresion_constante    ir al estado 39
+    asignacion             ir al estado 40
+    sentencia_bifurcacion  ir al estado 41
+    sentencia_bucle        ir al estado 42
+    sentencia_salto        ir al estado 43
+    sentencia_retorno      ir al estado 44
+    operador_unario        ir al estado 45
+    llamada_funcion        ir al estado 46
+
+
+estado 151
+
+   37 expresion: expresion_logica '?' expresion ':' expresion .
+   38          | expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+
+    OPERADOR_O_INCLUSIVO     [reduce usando la regla 37 (expresion)]
+    OPERADOR_O_EXCLUSIVO     [reduce usando la regla 37 (expresion)]
+    OPERADOR_IGUALDAD        [reduce usando la regla 37 (expresion)]
+    OPERADOR_MULTIPLICATIVO  [reduce usando la regla 37 (expresion)]
+    $default                 reduce usando la regla 37 (expresion)
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 152
+
+   77 sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias ELSE . bloque_sentencias
+
+    '{'  desplazar e ir al estado 27
+
+    bloque_sentencias  ir al estado 166
+
+
+estado 153
+
+   81 sentencia_caso: CASE . expresion ':' sentencia
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 167
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 154
+
+   82 sentencia_caso: DEFAULT . ':' sentencia
+
+    ':'  desplazar e ir al estado 168
+
+
+estado 155
+
+   78 sentencia_bifurcacion: SWITCH '(' expresion ')' '{' sentencia_caso_list . '}'
+
+    '}'  desplazar e ir al estado 169
+
+
+estado 156
+
+   80 sentencia_caso_list: sentencia_caso . sentencia_caso_list
+
+    CASE     desplazar e ir al estado 153
+    DEFAULT  desplazar e ir al estado 154
+
+    $default  reduce usando la regla 79 (sentencia_caso_list)
+
+    sentencia_caso_list  ir al estado 170
+    sentencia_caso       ir al estado 156
+
+
+estado 157
+
+   84 sentencia_bucle: DO bloque_sentencias WHILE '(' expresion ')' . ';'
+
+    ';'  desplazar e ir al estado 171
+
+
+estado 158
+
+   85 sentencia_bucle: FOR '(' lista_asignaciones ';' expresion ';' . expresion ')' bloque_sentencias
+
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    expresion            ir al estado 172
+    expresion_logica     ir al estado 35
+    expresion_prefija    ir al estado 36
+    expresion_postfija   ir al estado 37
+    expresion_indexada   ir al estado 58
+    expresion_constante  ir al estado 39
+    operador_unario      ir al estado 45
+    llamada_funcion      ir al estado 46
+
+
+estado 159
+
+   28 listaParametros: TIPO_DATO IDENTIFICADOR ',' . listaParametros
+
+    TIPO_DATO  desplazar e ir al estado 129
+
+    $default  reduce usando la regla 27 (listaParametros)
+
+    listaParametros  ir al estado 173
+
+
+estado 160
+
+   24 def_dec: ';' .
+
+    $default  reduce usando la regla 24 (def_dec)
+
+
+estado 161
+
+   23 def_dec: bloque_sentencias .
+
+    $default  reduce usando la regla 23 (def_dec)
+
+
+estado 162
+
+   22 declaracion_funcion: IDENTIFICADOR '(' listaParametros ')' def_dec .
+
+    $default  reduce usando la regla 22 (declaracion_funcion)
+
+
+estado 163
+
+   19 declaracion_list: TIPO_DATO declaracion $@2 '\n' . declaracion_list
+
+    TIPO_DATO  desplazar e ir al estado 113
+
+    $default  reduce usando la regla 17 (declaracion_list)
+
+    declaracion_list  ir al estado 174
+
+
+estado 164
+
+   13 sentencia: '\n' .
+   16 bloque_sentencias: '{' '\n' declaracion_list $@1 sentencia_list '\n' . '}'
+
+    '}'  desplazar e ir al estado 175
+
+    $default  reduce usando la regla 13 (sentencia)
+
+
+estado 165
+
+   33 sentencia_list: sentencia_list sentencia .
+
+    $default  reduce usando la regla 33 (sentencia_list)
+
+
+estado 166
+
+   77 sentencia_bifurcacion: IF '(' expresion ')' bloque_sentencias ELSE bloque_sentencias .
+
+    $default  reduce usando la regla 77 (sentencia_bifurcacion)
+
+
+estado 167
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   81 sentencia_caso: CASE expresion . ':' sentencia
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    ':'                      desplazar e ir al estado 176
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 168
+
+   82 sentencia_caso: DEFAULT ':' . sentencia
+
+    IF                     desplazar e ir al estado 3
+    SWITCH                 desplazar e ir al estado 4
+    WHILE                  desplazar e ir al estado 5
+    DO                     desplazar e ir al estado 6
+    FOR                    desplazar e ir al estado 7
+    CONTINUE               desplazar e ir al estado 8
+    BREAK                  desplazar e ir al estado 9
+    RETURN                 desplazar e ir al estado 10
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '\n'                   desplazar e ir al estado 177
+    '{'                    desplazar e ir al estado 27
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    sentencia              ir al estado 178
+    bloque_sentencias      ir al estado 32
+    sentencia_expresion    ir al estado 33
+    expresion              ir al estado 34
+    expresion_logica       ir al estado 35
+    expresion_prefija      ir al estado 36
+    expresion_postfija     ir al estado 37
+    expresion_indexada     ir al estado 38
+    expresion_constante    ir al estado 39
+    asignacion             ir al estado 40
+    sentencia_bifurcacion  ir al estado 41
+    sentencia_bucle        ir al estado 42
+    sentencia_salto        ir al estado 43
+    sentencia_retorno      ir al estado 44
+    operador_unario        ir al estado 45
+    llamada_funcion        ir al estado 46
+
+
+estado 169
+
+   78 sentencia_bifurcacion: SWITCH '(' expresion ')' '{' sentencia_caso_list '}' .
+
+    $default  reduce usando la regla 78 (sentencia_bifurcacion)
+
+
+estado 170
+
+   80 sentencia_caso_list: sentencia_caso sentencia_caso_list .
+
+    $default  reduce usando la regla 80 (sentencia_caso_list)
+
+
+estado 171
+
+   84 sentencia_bucle: DO bloque_sentencias WHILE '(' expresion ')' ';' .
+
+    $default  reduce usando la regla 84 (sentencia_bucle)
+
+
+estado 172
+
+   38 expresion: expresion . operacion_matematica expresion
+   45 expresion_logica: expresion . operacion_logica expresion
+   85 sentencia_bucle: FOR '(' lista_asignaciones ';' expresion ';' expresion . ')' bloque_sentencias
+
+    OPERADOR_ASIGNACION      desplazar e ir al estado 71
+    OPERADOR_O_LOGICO        desplazar e ir al estado 72
+    OPERADOR_Y_LOGICO        desplazar e ir al estado 73
+    OPERADOR_O_INCLUSIVO     desplazar e ir al estado 74
+    OPERADOR_O_EXCLUSIVO     desplazar e ir al estado 75
+    OPERADOR_IGUALDAD        desplazar e ir al estado 76
+    OPERADOR_RELACIONAL      desplazar e ir al estado 77
+    OPERADOR_CORRIMIENTO     desplazar e ir al estado 78
+    OPERADOR_MULTIPLICATIVO  desplazar e ir al estado 79
+    '&'                      desplazar e ir al estado 80
+    '-'                      desplazar e ir al estado 81
+    '+'                      desplazar e ir al estado 82
+    '*'                      desplazar e ir al estado 83
+    ')'                      desplazar e ir al estado 179
+
+    operacion_matematica  ir al estado 85
+    operacion_logica      ir al estado 86
+
+
+estado 173
+
+   28 listaParametros: TIPO_DATO IDENTIFICADOR ',' listaParametros .
+
+    $default  reduce usando la regla 28 (listaParametros)
+
+
+estado 174
+
+   19 declaracion_list: TIPO_DATO declaracion $@2 '\n' declaracion_list .
+
+    $default  reduce usando la regla 19 (declaracion_list)
+
+
+estado 175
+
+   16 bloque_sentencias: '{' '\n' declaracion_list $@1 sentencia_list '\n' '}' .
+
+    $default  reduce usando la regla 16 (bloque_sentencias)
+
+
+estado 176
+
+   81 sentencia_caso: CASE expresion ':' . sentencia
+
+    IF                     desplazar e ir al estado 3
+    SWITCH                 desplazar e ir al estado 4
+    WHILE                  desplazar e ir al estado 5
+    DO                     desplazar e ir al estado 6
+    FOR                    desplazar e ir al estado 7
+    CONTINUE               desplazar e ir al estado 8
+    BREAK                  desplazar e ir al estado 9
+    RETURN                 desplazar e ir al estado 10
+    OPERADOR_INCREMENTO    desplazar e ir al estado 12
+    OPERADOR_SIZEOF        desplazar e ir al estado 13
+    IDENTIFICADOR          desplazar e ir al estado 14
+    CONSTANTE_CADENA       desplazar e ir al estado 15
+    CONSTANTE_DECIMAL      desplazar e ir al estado 16
+    CONSTANTE_OCTAL        desplazar e ir al estado 17
+    CONSTANTE_HEXADECIMAL  desplazar e ir al estado 18
+    CONSTANTE_CARACTER     desplazar e ir al estado 19
+    CONSTANTE_REAL         desplazar e ir al estado 20
+    '&'                    desplazar e ir al estado 21
+    '-'                    desplazar e ir al estado 22
+    '+'                    desplazar e ir al estado 23
+    '*'                    desplazar e ir al estado 24
+    '('                    desplazar e ir al estado 25
+    '\n'                   desplazar e ir al estado 177
+    '{'                    desplazar e ir al estado 27
+    '~'                    desplazar e ir al estado 28
+    '!'                    desplazar e ir al estado 29
+
+    sentencia              ir al estado 180
+    bloque_sentencias      ir al estado 32
+    sentencia_expresion    ir al estado 33
+    expresion              ir al estado 34
+    expresion_logica       ir al estado 35
+    expresion_prefija      ir al estado 36
+    expresion_postfija     ir al estado 37
+    expresion_indexada     ir al estado 38
+    expresion_constante    ir al estado 39
+    asignacion             ir al estado 40
+    sentencia_bifurcacion  ir al estado 41
+    sentencia_bucle        ir al estado 42
+    sentencia_salto        ir al estado 43
+    sentencia_retorno      ir al estado 44
+    operador_unario        ir al estado 45
+    llamada_funcion        ir al estado 46
+
+
+estado 177
+
+   13 sentencia: '\n' .
+
+    $default  reduce usando la regla 13 (sentencia)
+
+
+estado 178
+
+   82 sentencia_caso: DEFAULT ':' sentencia .
+
+    $default  reduce usando la regla 82 (sentencia_caso)
+
+
+estado 179
+
+   85 sentencia_bucle: FOR '(' lista_asignaciones ';' expresion ';' expresion ')' . bloque_sentencias
+
+    '{'  desplazar e ir al estado 27
+
+    bloque_sentencias  ir al estado 181
+
+
+estado 180
+
+   81 sentencia_caso: CASE expresion ':' sentencia .
+
+    $default  reduce usando la regla 81 (sentencia_caso)
+
+
+estado 181
+
+   85 sentencia_bucle: FOR '(' lista_asignaciones ';' expresion ';' expresion ')' bloque_sentencias .
+
+    $default  reduce usando la regla 85 (sentencia_bucle)

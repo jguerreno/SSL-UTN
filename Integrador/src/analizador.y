@@ -9,7 +9,6 @@
 
 
 #include "lib.h"
-//#include"variables.h"
 #include"sentencias.h"
 
 
@@ -20,11 +19,7 @@ int yylex(void);
 extern int yylineno;
 extern FILE *yyin;
 
-int yyerror (const char *s){
-    printf("-------- ERRROR ---------\n");
-    printf ("%s %d\n", s,yylineno);
-    return -1;
-}
+void yyerror (const char *s) {}
 
 
 //
@@ -200,7 +195,7 @@ sentencia_expresion: expresion ';'
 /****************************** EXPRESIONES ************************************/
 expresion: expresion_logica                                
          | expresion_logica '?' expresion ':' expresion    
-         | expresion operacion_matematica expresion
+         | expresion operacion_matematica expresion         //{validacionOperacionBinaria(expresionVal1,expresionVal2); validacionBinaria=0;}
          | llamada_funcion
 ;
 
@@ -242,7 +237,7 @@ expresion_indexada: IDENTIFICADOR
                   | expresion_indexada FLECHA IDENTIFICADOR
 ;
 
-expresion_constante: CONSTANTE_CADENA
+expresion_constante: CONSTANTE_CADENA           //{if(validacionBinario==0){expresionVal1=strudup($<cadena>1);validacionBinario=1;}else{expresionVal2=strudup($<cadena>1);;validacionBinario=0;}}
                    | CONSTANTE_DECIMAL
                    | CONSTANTE_OCTAL
                    | CONSTANTE_HEXADECIMAL
