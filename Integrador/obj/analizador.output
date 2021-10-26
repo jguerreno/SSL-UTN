@@ -1,13 +1,3 @@
-Terminals unused in grammar
-
-   '|'
-   '^'
-   '<'
-   '>'
-   '/'
-   '%'
-
-
 Rules useless in parser due to conflicts
 
    37 sentencia_list: error sentencia_list
@@ -24,7 +14,7 @@ Estado 119 conflictos: 13 desplazamiento(s)/reducción(ones)
 Estado 120 conflictos: 13 desplazamiento(s)/reducción(ones)
 Estado 142 conflictos: 1 desplazamiento(s)/reducción(ones)
 Estado 155 conflictos: 1 desplazamiento(s)/reducción(ones)
-Estado 157 conflictos: 4 desplazamiento(s)/reducción(ones)
+Estado 157 conflictos: 2 desplazamiento(s)/reducción(ones)
 Estado 169 conflictos: 1 desplazamiento(s)/reducción(ones)
 Estado 170 conflictos: 27 desplazamiento(s)/reducción(ones)
 
@@ -181,7 +171,6 @@ Terminales con las reglas donde aparecen
 $end (0) 0
 '\n' (10) 4 14 18 21
 '!' (33) 101
-'%' (37)
 '&' (38) 55 96
 '(' (40) 25 60 76 80 81 82 87 88 89 102
 ')' (41) 25 60 76 80 81 82 87 88 89 102
@@ -190,18 +179,13 @@ $end (0) 0
 ',' (44) 29 31 91 105
 '-' (45) 44 99
 '.' (46) 68
-'/' (47)
 ':' (58) 41 85 86
 ';' (59) 24 27 38 39 88 89 92 93 94 95
-'<' (60)
 '=' (61) 34 78
-'>' (62)
 '?' (63) 41
 '[' (91) 67
 ']' (93) 67
-'^' (94)
 '{' (123) 16 18 82
-'|' (124)
 '}' (125) 16 18 82
 '~' (126) 100
 error (256) 3 7 15 22 37
@@ -240,79 +224,79 @@ CONSTANTE_REAL (288) 75
 
 No terminales con las reglas donde aparecen
 
-$accept (59)
+$accept (53)
     en la izquierda: 0
-input (60)
+input (54)
     en la izquierda: 1 2 3, en la derecha: 0 2
-line (61)
+line (55)
     en la izquierda: 4 5 6 7, en la derecha: 2 3 7
-sentencia (62)
+sentencia (56)
     en la izquierda: 8 9 10 11 12 13 14 15, en la derecha: 6 15 36
     85 86
-bloque_sentencias (63)
+bloque_sentencias (57)
     en la izquierda: 16 18, en la derecha: 8 26 80 81 87 88 89
-$@1 (64)
+$@1 (58)
     en la izquierda: 17, en la derecha: 18
-declaracion_list (65)
+declaracion_list (59)
     en la izquierda: 19 21 22, en la derecha: 18 21 22
-$@2 (66)
+$@2 (60)
     en la izquierda: 20, en la derecha: 21
-declaracion (67)
+declaracion (61)
     en la izquierda: 23 24, en la derecha: 5 21
-declaracion_funcion (68)
+declaracion_funcion (62)
     en la izquierda: 25, en la derecha: 23
-def_dec (69)
+def_dec (63)
     en la izquierda: 26 27, en la derecha: 25
-declaracion_variables (70)
+declaracion_variables (64)
     en la izquierda: 28 29, en la derecha: 24 29
-listaParametros (71)
+listaParametros (65)
     en la izquierda: 30 31 32, en la derecha: 25 31
-identVariable (72)
+identVariable (66)
     en la izquierda: 33 34, en la derecha: 28 29
-sentencia_list (73)
+sentencia_list (67)
     en la izquierda: 35 36 37, en la derecha: 18 36 37
-sentencia_expresion (74)
+sentencia_expresion (68)
     en la izquierda: 38 39, en la derecha: 9
-expresion (75)
+expresion (69)
     en la izquierda: 40 41 42 43, en la derecha: 38 41 42 49 67 76
     77 80 81 82 85 87 88 89 95
-operacion_matematica (76)
+operacion_matematica (70)
     en la izquierda: 44 45 46 47, en la derecha: 42
-expresion_logica (77)
+expresion_logica (71)
     en la izquierda: 48 49, en la derecha: 40 41
-operacion_logica (78)
+operacion_logica (72)
     en la izquierda: 50 51 52 53 54 55 56 57 58, en la derecha: 49
-expresion_prefija (79)
+expresion_prefija (73)
     en la izquierda: 59 60 61 62, en la derecha: 48 61 62
-expresion_postfija (80)
+expresion_postfija (74)
     en la izquierda: 63 64 65, en la derecha: 59 65
-expresion_indexada (81)
+expresion_indexada (75)
     en la izquierda: 66 67 68 69, en la derecha: 64 67 68 69 77
-expresion_constante (82)
+expresion_constante (76)
     en la izquierda: 70 71 72 73 74 75 76, en la derecha: 34 63
-asignacion (83)
+asignacion (77)
     en la izquierda: 77, en la derecha: 39 90 91
-operador_asignacion (84)
+operador_asignacion (78)
     en la izquierda: 78 79, en la derecha: 77
-sentencia_bifurcacion (85)
+sentencia_bifurcacion (79)
     en la izquierda: 80 81 82, en la derecha: 10
-sentencia_caso_list (86)
+sentencia_caso_list (80)
     en la izquierda: 83 84, en la derecha: 82 84
-sentencia_caso (87)
+sentencia_caso (81)
     en la izquierda: 85 86, en la derecha: 84
-sentencia_bucle (88)
+sentencia_bucle (82)
     en la izquierda: 87 88 89, en la derecha: 11
-lista_asignaciones (89)
+lista_asignaciones (83)
     en la izquierda: 90 91, en la derecha: 89 91
-sentencia_salto (90)
+sentencia_salto (84)
     en la izquierda: 92 93, en la derecha: 12
-sentencia_retorno (91)
+sentencia_retorno (85)
     en la izquierda: 94 95, en la derecha: 13
-operador_unario (92)
+operador_unario (86)
     en la izquierda: 96 97 98 99 100 101, en la derecha: 62
-llamada_funcion (93)
+llamada_funcion (87)
     en la izquierda: 102, en la derecha: 43
-parametros (94)
+parametros (88)
     en la izquierda: 103 104 105, en la derecha: 102 105
 
 
@@ -2637,11 +2621,9 @@ estado 157
     '+'                      desplazar e ir al estado 85
     '*'                      desplazar e ir al estado 86
 
-    OPERADOR_O_INCLUSIVO     [reduce usando la regla 41 (expresion)]
-    OPERADOR_O_EXCLUSIVO     [reduce usando la regla 41 (expresion)]
-    OPERADOR_IGUALDAD        [reduce usando la regla 41 (expresion)]
-    OPERADOR_MULTIPLICATIVO  [reduce usando la regla 41 (expresion)]
-    $default                 reduce usando la regla 41 (expresion)
+    OPERADOR_O_EXCLUSIVO  [reduce usando la regla 41 (expresion)]
+    OPERADOR_IGUALDAD     [reduce usando la regla 41 (expresion)]
+    $default              reduce usando la regla 41 (expresion)
 
     operacion_matematica  ir al estado 88
     operacion_logica      ir al estado 89

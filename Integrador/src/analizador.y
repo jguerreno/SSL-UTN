@@ -103,13 +103,12 @@ ParametroNode* parametrosLlamadaFuncion = NULL;
 %right '?' ':'
 %left OPERADOR_O_LOGICO
 %left OPERADOR_Y_LOGICO
-%left '|'
-%left '^'
+%left OPERADOR_O_INCLUSIVO
 %left '&'
-%left OPERADOR_RELACIONAL '<' '>'
+%left OPERADOR_RELACIONAL
 %left OPERADOR_CORRIMIENTO
 %left '-' '+'
-%left '*' '/' '%'
+%left '*' OPERADOR_MULTIPLICATIVO
 %right OPERADOR_INCREMENTO OPERADOR_SIZEOF
 %left ')'
 %right '('
