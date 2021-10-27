@@ -8,6 +8,7 @@
 
 #include "lib.h"
 #include"sentencias.h"
+#include"validarOperacion.h"
 
 
 #define YYDEBUG 1
@@ -45,6 +46,12 @@ char* tipo = NULL;
 
 // Llamada a Funciones
 ParametroNode* parametrosLlamadaFuncion = NULL;
+
+//Aux para validacion de tipos
+int validacionBinaria = 0;
+char *auxTipo1 = '';
+char *auxTipo2 = '';
+
 
 %}
 
@@ -185,7 +192,9 @@ sentencia_expresion: expresion ';'
 /****************************** EXPRESIONES ************************************/
 expresion: expresion_logica                                
          | expresion_logica '?' expresion ':' expresion    
-         | expresion operacion_matematica expresion         //{validacionOperacionBinaria(expresionVal1,expresionVal2); validacionBinaria=0;}
+         | expresion operacion_matematica expresion         { validacionOperacionBinaria(auxTipo1,auxTipo2); 
+                                                              validacionBinaria=0;
+                                                            }
          | llamada_funcion
 ;
 
@@ -227,7 +236,7 @@ expresion_indexada: IDENTIFICADOR
                   | expresion_indexada FLECHA IDENTIFICADOR
 ;
 
-expresion_constante: CONSTANTE_CADENA           //{if(validacionBinario==0){expresionVal1=strudup($<cadena>1);validacionBinario=1;}else{expresionVal2=strudup($<cadena>1);;validacionBinario=0;// todo esto iria dentro de una funcion}}
+expresion_constante: CONSTANTE_CADENA           { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
                    | CONSTANTE_DECIMAL
                    | CONSTANTE_OCTAL
                    | CONSTANTE_HEXADECIMAL
