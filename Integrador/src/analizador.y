@@ -49,8 +49,8 @@ ParametroNode* parametrosLlamadaFuncion = NULL;
 
 //Aux para validacion de tipos
 int validacionBinaria = 0;
-char *auxTipo1 = '';
-char *auxTipo2 = '';
+char auxTipo1[100]; 
+char auxTipo2[100];
 
 
 %}
@@ -237,11 +237,11 @@ expresion_indexada: IDENTIFICADOR
 ;
 
 expresion_constante: CONSTANTE_CADENA           { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
-                   | CONSTANTE_DECIMAL
-                   | CONSTANTE_OCTAL
-                   | CONSTANTE_HEXADECIMAL
-                   | CONSTANTE_CARACTER
-                   | CONSTANTE_REAL
+                   | CONSTANTE_DECIMAL          { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
+                   | CONSTANTE_OCTAL            { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
+                   | CONSTANTE_HEXADECIMAL      { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
+                   | CONSTANTE_CARACTER         { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
+                   | CONSTANTE_REAL             { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
                    | '(' expresion ')'
 ;
 

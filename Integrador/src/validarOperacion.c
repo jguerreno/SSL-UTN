@@ -14,7 +14,13 @@ int agregarTipo(char *tipo1,char *tipo2,char *valor,int flag){
 }
 
 int validarOperacionBinaria(char *tipo1, char*tipo2){
-    return (strcmp(tipo1,tipo2) == 0);
+    if (strcmp(tipo1,tipo2) == 0){
+        printf("OPERACION VALIDA \n");
+        return 1;
+    }else{
+        printf("OPERACION INVALIDA  entre %s y %s \n",tipo1,tipo2);
+        return -1;
+    }
 }
 
 
