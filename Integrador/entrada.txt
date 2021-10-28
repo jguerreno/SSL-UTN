@@ -1,0 +1,42 @@
+int #entero1=10;
+char caracter1='a', caracter2='b';
+int a=0;
+char b;
+
+char b
+
+a = 10+;
+
+void push(int a, int c);
+
+void push(int a, int c){
+    int entero2=10;
+    char caracter3='a', caracter4='b';
+    int a=0;
+    char b;
+    
+    a = 10+10+'a'*2;
+
+    /* 1. allocate node */
+    /* 2. put in the data  */
+    new_node->data  = new_data;
+    /* 3. Make next of new node as head */
+    new_node->next = head_ref;
+    /* 4. move the head to point to the new node */
+    head_ref = new_node;
+
+
+    if(hola>10){
+        i++;
+    }else{
+        return 0;
+    }
+
+    while(a<9){
+        a++;
+    }
+}
+
+int main(){
+    push(a,entero2,v);
+}

@@ -2,8 +2,6 @@
 .DS_Store
 .vscode
 
-
-entrada.txt
 salida.txt
 lex.yy.c
 parser.tab.c
