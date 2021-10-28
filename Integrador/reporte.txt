@@ -26,6 +26,7 @@ Linea: 	 	 	 	 	 	 6
 -------------------- ERRORES SEMANTICOS --------------------
 Error: 	 	 Cantidad incorrecta de parametros en llamada a push
 Error: 	 	 Variable no declarada v
+Error: 	 	 OPERACION INVALIDA  entre int y char
 Error: 	 	 Multiples declaraciones de b
 Error: 	 	 Multiples declaraciones de a
 Error: 	 	 Multiples declaraciones de b

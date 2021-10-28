@@ -6,8 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "lib.h"
-#include"sentencias.h"
+//#include "lib.h"
 #include"validarOperacion.h"
 
 
@@ -192,7 +191,7 @@ sentencia_expresion: expresion ';'
 /****************************** EXPRESIONES ************************************/
 expresion: expresion_logica                                
          | expresion_logica '?' expresion ':' expresion    
-         | expresion operacion_matematica expresion         { validacionOperacionBinaria(auxTipo1,auxTipo2); 
+         | expresion operacion_matematica expresion         { validarOperacionBinaria(auxTipo1,auxTipo2); 
                                                               validacionBinaria=0;
                                                             }
          | llamada_funcion
@@ -236,12 +235,12 @@ expresion_indexada: IDENTIFICADOR
                   | expresion_indexada FLECHA IDENTIFICADOR
 ;
 
-expresion_constante: CONSTANTE_CADENA           { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
-                   | CONSTANTE_DECIMAL          { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
-                   | CONSTANTE_OCTAL            { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
-                   | CONSTANTE_HEXADECIMAL      { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
-                   | CONSTANTE_CARACTER         { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
-                   | CONSTANTE_REAL             { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,$<cadena>1,validacionBinaria); }
+expresion_constante: CONSTANTE_CADENA           { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"char",validacionBinaria); }
+                   | CONSTANTE_DECIMAL          { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  }
+                   | CONSTANTE_OCTAL            { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  }
+                   | CONSTANTE_HEXADECIMAL      { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  }
+                   | CONSTANTE_CARACTER         { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"char",validacionBinaria); }
+                   | CONSTANTE_REAL             { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"float",validacionBinaria);}
                    | '(' expresion ')'
 ;
 

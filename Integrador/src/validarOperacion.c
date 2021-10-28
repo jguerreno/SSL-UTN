@@ -14,11 +14,31 @@ int agregarTipo(char *tipo1,char *tipo2,char *valor,int flag){
 }
 
 int validarOperacionBinaria(char *tipo1, char*tipo2){
+    /*
     if (strcmp(tipo1,tipo2) == 0){
         printf("OPERACION VALIDA \n");
         return 1;
     }else{
         printf("OPERACION INVALIDA  entre %s y %s \n",tipo1,tipo2);
+        memset(tipo1,0,strlen(tipo1));
+        memset(tipo2,0,strlen(tipo2));
+
+        return -1;
+    }
+    */
+   if (strcmp(tipo1,tipo2) == 0) {
+        return 1;
+    }
+    else {
+        char errorSemantico[100] = "OPERACION INVALIDA  entre ";
+        strcat(errorSemantico, tipo1);
+        strcat(errorSemantico, " y ");
+        strcat(errorSemantico, tipo2);
+        pushErrorSemantico(&listaErroresSemanticos, errorSemantico);
+        
+        memset(tipo1,0,strlen(tipo1));
+        memset(tipo2,0,strlen(tipo2));
+
         return -1;
     }
 }
