@@ -18,7 +18,7 @@ extern FILE *yyin;
 
 void yyerror (const char *s) {}
 
-//
+// Errores Sintacticos
 EstructuraInvalidaNode* listaErroresSintacticos = NULL;
 
 // Errores Lexicos
@@ -51,8 +51,8 @@ int validacionBinaria = 0;
 char auxTipo1[100]; 
 char auxTipo2[100];
 
-
 %}
+
 
 %union {
     int entero;
@@ -101,7 +101,7 @@ char auxTipo2[100];
 %token <entero> CONSTANTE_CARACTER
 %token <real>   CONSTANTE_REAL
 
-//ERROR
+// ERROR
 %token <cadena> error
 
 // Type
@@ -140,6 +140,7 @@ sentencia: bloque_sentencias
          | sentencia_salto             
          | sentencia_retorno           
          | '\n'
+         | ';'
          | error sentencia { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
 
 ;
@@ -235,7 +236,7 @@ expresion_indexada: IDENTIFICADOR
                   | expresion_indexada FLECHA IDENTIFICADOR
 ;
 
-expresion_constante: CONSTANTE_CADENA           { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"char",validacionBinaria); }
+expresion_constante: CONSTANTE_CADENA           { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"char*",validacionBinaria); }
                    | CONSTANTE_DECIMAL          { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  }
                    | CONSTANTE_OCTAL            { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  }
                    | CONSTANTE_HEXADECIMAL      { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  }

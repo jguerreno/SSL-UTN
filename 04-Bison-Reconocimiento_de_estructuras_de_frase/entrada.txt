@@ -1,22 +1,21 @@
 int #entero1=10;
 char caracter1='a', caracter2='b';
-int a=0;
-char b;
 
-char b
+int saludar();
 
-a = 10+;
+if(hola)
 
-void push(int a, int c);
+9
 
-void push(int a, int c){
+int a=10
+
+void push(int head_ref, int new_data){
     int entero2=10;
     char caracter3='a', caracter4='b';
     int a=0;
     char b;
-    ;
+    int a=10
     
-    a = 10+10+'a'*2;
 
     /* 1. allocate node */
     /* 2. put in the data  */
@@ -26,6 +25,7 @@ void push(int a, int c){
     /* 4. move the head to point to the new node */
     head_ref = new_node;
 
+    a = (10;
 
     if(hola>10){
         i++;
@@ -39,5 +39,5 @@ void push(int a, int c){
 }
 
 int main(){
-    push(a,entero2,v);
+    push();
 }

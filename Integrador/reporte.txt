@@ -14,13 +14,12 @@ caracter1	 	 	 	 	 	 char
 caracter2	 	 	 	 	 	 char
 entero1	 	 	 	 	 	 int
 
--------------------- ESTRUCTURAS INVALIDAS --------------------
+-------------------- ERRORES LEXICOS --------------------
 Estructura	 	 	 
 #	 	 	 	 	 	 	
 
 -------------------- ESTRUCTURAS INVALIDAS --------------------
-Linea: 	 	 	 	 	 	 8
-Linea: 	 	 	 	 	 	 8
+Linea: 	 	 	 	 	 	 7
 Linea: 	 	 	 	 	 	 6
 
 -------------------- ERRORES SEMANTICOS --------------------

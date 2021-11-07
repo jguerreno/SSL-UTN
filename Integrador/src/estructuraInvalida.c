@@ -85,7 +85,7 @@ EstructuraErrorLexico* searchErrorLexico(EstructuraErrorLexico* head, char* erro
 
 void printListErrorLexico(FILE *reporte, EstructuraErrorLexico* node){
     
-    fprintf(reporte,"-------------------- ESTRUCTURAS INVALIDAS --------------------\n");
+    fprintf(reporte,"-------------------- ERRORES LEXICOS --------------------\n");
     fprintf(reporte,"Estructura\t \t \t \n");
 
     while (node != NULL){
