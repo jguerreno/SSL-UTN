@@ -129,7 +129,6 @@ line: '\n'
     | TIPO_DATO declaracion         { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, $<cadena>1, identificadorFuncion, &flagFuncion, &flagVariable);}
     | sentencia
     | error line                    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); } 
-
 ;
 
 /****************************** SENTENCIAS ************************************/
@@ -142,7 +141,6 @@ sentencia: bloque_sentencias
          | '\n'
          | ';'
          | error sentencia { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); }
-
 ;
 
 bloque_sentencias: '{' '}'                                                
@@ -230,7 +228,7 @@ expresion_postfija: expresion_constante
                   | expresion_postfija OPERADOR_INCREMENTO
 ;
 
-expresion_indexada: IDENTIFICADOR
+expresion_indexada: IDENTIFICADOR                               { agregarTipoDeDato(listaVariables, $<cadena>1); }
                   | expresion_indexada '[' expresion ']'
                   | expresion_indexada '.' IDENTIFICADOR
                   | expresion_indexada FLECHA IDENTIFICADOR

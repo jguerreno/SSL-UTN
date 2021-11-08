@@ -44,6 +44,23 @@ int validarOperacionBinaria(char *tipo1, char*tipo2){
 }
 
 
+
+
+
+void agregarTipoDeDato(VariableNode* listaVariables, char* identificador) {
+    VariableNode* existenciaNombreEnVariables = searchVariable(listaVariables, identificador);
+
+    if(existenciaNombreEnVariables != NULL) {
+        validacionBinaria = agregarTipo(auxTipo1, auxTipo2, existenciaNombreEnVariables->data.tipoDato, validacionBinaria);
+    }
+    else {
+        char errorSemantico[100] = "Variable no declarada ";
+        strcat(errorSemantico, identificador);
+        pushErrorSemantico(&listaErroresSemanticos, errorSemantico);
+    }
+}
+
+
 /** 
  * 
  * if(validacionBinario==0){

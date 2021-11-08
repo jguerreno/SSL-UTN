@@ -539,17 +539,17 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   123,   123,   124,   125,   128,   129,   130,   131,   136,
-     137,   138,   139,   140,   141,   142,   143,   144,   148,   149,
-     149,   152,   153,   153,   154,   158,   159,   162,   165,   166,
-     169,   170,   173,   174,   175,   178,   179,   182,   183,   184,
-     188,   189,   193,   194,   195,   198,   201,   202,   203,   204,
-     207,   208,   211,   212,   213,   214,   215,   216,   217,   218,
-     219,   222,   223,   224,   225,   228,   229,   230,   233,   234,
-     235,   236,   239,   240,   241,   242,   243,   244,   245,   248,
-     251,   252,   255,   256,   257,   260,   261,   264,   265,   268,
-     269,   270,   273,   274,   277,   278,   281,   282,   285,   286,
-     287,   288,   289,   290,   293,   296,   297,   298
+       0,   123,   123,   124,   125,   128,   129,   130,   131,   135,
+     136,   137,   138,   139,   140,   141,   142,   143,   146,   147,
+     147,   150,   151,   151,   152,   156,   157,   160,   163,   164,
+     167,   168,   171,   172,   173,   176,   177,   180,   181,   182,
+     186,   187,   191,   192,   193,   196,   199,   200,   201,   202,
+     205,   206,   209,   210,   211,   212,   213,   214,   215,   216,
+     217,   220,   221,   222,   223,   226,   227,   228,   231,   232,
+     233,   234,   237,   238,   239,   240,   241,   242,   243,   246,
+     249,   250,   253,   254,   255,   258,   259,   262,   263,   266,
+     267,   268,   271,   272,   275,   276,   279,   280,   283,   284,
+     285,   286,   287,   288,   291,   294,   295,   296
 };
 #endif
 
@@ -1712,7 +1712,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 125 "../src/analizador.y"
-    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); ;}
+    { pushEstructuraInvalida(&listaErroresSintacticos, yylineno); ;}
     break;
 
   case 6:
@@ -1732,170 +1732,177 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 144 "../src/analizador.y"
+#line 143 "../src/analizador.y"
     { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); ;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 149 "../src/analizador.y"
+#line 147 "../src/analizador.y"
     { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, tipo, identificadorFuncion, &flagFuncion, &flagVariable); ;}
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 153 "../src/analizador.y"
+#line 151 "../src/analizador.y"
     { declaracionFuncionVariable(&listaParametros, &listaNombreDeVariables, (yyvsp[(1) - (2)].cadena), identificadorFuncion, &flagFuncion, &flagVariable); ;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 153 "../src/analizador.y"
+#line 151 "../src/analizador.y"
     { tipo = strdup((yyvsp[(1) - (5)].cadena)); ;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 154 "../src/analizador.y"
+#line 152 "../src/analizador.y"
     { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); ;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 159 "../src/analizador.y"
+#line 157 "../src/analizador.y"
     {flagVariable = 1;;}
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 162 "../src/analizador.y"
+#line 160 "../src/analizador.y"
     { identificadorFuncion = strdup((yyvsp[(1) - (5)].cadena)); ;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 166 "../src/analizador.y"
+#line 164 "../src/analizador.y"
     { flagFuncion = 1;;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 174 "../src/analizador.y"
+#line 172 "../src/analizador.y"
     { pushParametro(&listaParametros, (yyvsp[(1) - (4)].cadena), (yyvsp[(2) - (4)].cadena));;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 175 "../src/analizador.y"
+#line 173 "../src/analizador.y"
     { pushParametro(&listaParametros, (yyvsp[(1) - (2)].cadena), (yyvsp[(2) - (2)].cadena));;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 178 "../src/analizador.y"
+#line 176 "../src/analizador.y"
     { pushNombreVariable(&listaNombreDeVariables, (yyvsp[(1) - (1)].cadena)); ;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 179 "../src/analizador.y"
+#line 177 "../src/analizador.y"
     { pushNombreVariable(&listaNombreDeVariables, (yyvsp[(1) - (3)].cadena)); ;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 184 "../src/analizador.y"
+#line 182 "../src/analizador.y"
     { pushEstructuraInvalida(&listaErroresSintacticos, yylineno-1); ;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 195 "../src/analizador.y"
+#line 193 "../src/analizador.y"
     { validarOperacionBinaria(auxTipo1,auxTipo2); 
                                                               validacionBinaria=0;
                                                             ;}
     break;
 
+  case 68:
+
+/* Line 1455 of yacc.c  */
+#line 231 "../src/analizador.y"
+    { agregarTipoDeDato(listaVariables, (yyvsp[(1) - (1)].cadena)); ;}
+    break;
+
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 239 "../src/analizador.y"
+#line 237 "../src/analizador.y"
     { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"char*",validacionBinaria); ;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 240 "../src/analizador.y"
+#line 238 "../src/analizador.y"
     { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  ;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 241 "../src/analizador.y"
+#line 239 "../src/analizador.y"
     { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  ;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 242 "../src/analizador.y"
+#line 240 "../src/analizador.y"
     { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"int",validacionBinaria);  ;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 243 "../src/analizador.y"
+#line 241 "../src/analizador.y"
     { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"char",validacionBinaria); ;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 244 "../src/analizador.y"
+#line 242 "../src/analizador.y"
     { validacionBinaria = agregarTipo(auxTipo1,auxTipo2,"float",validacionBinaria);;}
     break;
 
   case 104:
 
 /* Line 1455 of yacc.c  */
-#line 293 "../src/analizador.y"
+#line 291 "../src/analizador.y"
     { chequearLlamadaFuncion((yyvsp[(1) - (4)].cadena), &parametrosLlamadaFuncion);;}
     break;
 
   case 106:
 
 /* Line 1455 of yacc.c  */
-#line 297 "../src/analizador.y"
+#line 295 "../src/analizador.y"
     { addParametroLlamadaFuncion(&parametrosLlamadaFuncion, (yyvsp[(1) - (1)].cadena));;}
     break;
 
   case 107:
 
 /* Line 1455 of yacc.c  */
-#line 298 "../src/analizador.y"
+#line 296 "../src/analizador.y"
     { addParametroLlamadaFuncion(&parametrosLlamadaFuncion, (yyvsp[(1) - (3)].cadena));;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1899 "analizador.tab.c"
+#line 1906 "analizador.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2107,7 +2114,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 301 "../src/analizador.y"
+#line 299 "../src/analizador.y"
 
 
 int main ()

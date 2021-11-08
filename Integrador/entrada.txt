@@ -16,7 +16,7 @@ void push(int a, int c){
     char b;
     ;
     
-    a = 10+10+'a'*2;
+    a = 10+10+b*2;
 
     /* 1. allocate node */
     /* 2. put in the data  */

@@ -25,6 +25,14 @@ Linea: 	 	 	 	 	 	 6
 -------------------- ERRORES SEMANTICOS --------------------
 Error: 	 	 Cantidad incorrecta de parametros en llamada a push
 Error: 	 	 Variable no declarada v
+Error: 	 	 Variable no declarada i
+Error: 	 	 Variable no declarada hola
+Error: 	 	 Variable no declarada new_node
+Error: 	 	 Variable no declarada head_ref
+Error: 	 	 Variable no declarada head_ref
+Error: 	 	 Variable no declarada new_node
+Error: 	 	 Variable no declarada new_data
+Error: 	 	 Variable no declarada new_node
 Error: 	 	 OPERACION INVALIDA  entre int y char
 Error: 	 	 Multiples declaraciones de b
 Error: 	 	 Multiples declaraciones de a
